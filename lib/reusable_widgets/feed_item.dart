@@ -6,13 +6,20 @@ import '../utils/stringUtils.dart';
 import '../utils/widgetUtils.dart';
 
 class FeedItem extends StatefulWidget {
-  FeedItem({Key key, this.title, this.startDate, this.imageUrl, this.details})
+  FeedItem(
+      {Key key,
+      this.title,
+      this.startDate,
+      this.imageUrl,
+      this.details,
+      this.numberOfLinesOnMinimized})
       : super(key: key);
 
   final String title;
   final String startDate;
   final String imageUrl;
   final String details;
+  final int numberOfLinesOnMinimized;
 
   @override
   _FeedItemState createState() => new _FeedItemState();
@@ -32,8 +39,10 @@ class _FeedItemState extends State<FeedItem> {
     print("Feed Item Expanded: " + '$_expanded');
 
     Widget feedItem = new Card(
-      margin: const EdgeInsets.all(global.marginpaddingFromScreen),
-      elevation: 1.0,
+      margin: _expanded
+          ? const EdgeInsets.all(global.marginpaddingFromScreenTop)
+          : const EdgeInsets.all(global.marginpaddingFromScreenBottom),
+      elevation: _expanded ? global.cardHover : global.cardResting,
       clipBehavior: Clip.hardEdge,
       shape: new RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(global.boxborderRadius),
@@ -74,7 +83,8 @@ class _FeedItemState extends State<FeedItem> {
                   ? null
                   : new ExpandableTextBox(
                       text: widget.details,
-                      numberOfMinimalLines: 4,
+                      numberOfMinimalLines:
+                          widget.numberOfLinesOnMinimized ?? 4,
                       expanded: _expanded,
                       textStyle: Theme.of(context).textTheme.body2,
                     ),

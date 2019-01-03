@@ -6,8 +6,17 @@ import 'package:flutter/material.dart';
 double boxborderRadius = 5.0;
 double imageHeightStandard = 60;
 const double paddingFromWalls = 10.0;
-const double marginpaddingFromScreen = 4.0;
+const double marginpaddingFromScreenTop = 4.0;
+const double marginpaddingFromScreenBottom = 6.0;
 const double dividerPadding = 6.0;
+
+//elevation
+const double cardResting = 1.0;
+const double cardHover = 8.0;
+const double dialog = 24.0;
+const double navigationDrawer = 16.0;
+const double menus = 8;
+const double switchWidget = 1;
 
 // icon Values
 double iconSize = 25.0;

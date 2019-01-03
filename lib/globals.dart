@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 // Border values
 double boxborderRadius = 5.0;
 double imageHeightStandard = 60;
-const double feedMargin = 10.0;
+const double paddingFromWalls = 10.0;
+const double marginpaddingFromScreen = 4.0;
+const double dividerPadding = 6.0;
 
 // icon Values
 double iconSize = 25.0;

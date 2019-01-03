@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import './calendar_tile.dart';
 import 'package:date_utils/date_utils.dart';
+import 'package:service_application/globals.dart' as global;
 
 typedef DayBuilder(BuildContext context, DateTime day);
 
@@ -204,7 +205,12 @@ class _CalendarState extends State<Calendar> {
       return new Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          new Text(Utils.fullDayFormat(selectedDate)),
+          new Container(
+            padding: new EdgeInsets.only(left: global.paddingFromWalls),
+            child: new Text(
+              Utils.fullDayFormat(selectedDate),
+            ),
+          ),
           new IconButton(
             iconSize: 20.0,
             padding: new EdgeInsets.all(0.0),
@@ -223,6 +229,7 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return new Card(
+      margin: const EdgeInsets.all(global.marginpaddingFromScreen),
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

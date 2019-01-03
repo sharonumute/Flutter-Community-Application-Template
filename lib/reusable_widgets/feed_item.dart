@@ -32,7 +32,7 @@ class _FeedItemState extends State<FeedItem> {
     print("Feed Item Expanded: " + '$_expanded');
 
     Widget feedItem = new Card(
-      margin: const EdgeInsets.all(4.0),
+      margin: const EdgeInsets.all(global.marginpaddingFromScreen),
       elevation: 1.0,
       clipBehavior: Clip.hardEdge,
       shape: new RoundedRectangleBorder(
@@ -41,7 +41,7 @@ class _FeedItemState extends State<FeedItem> {
       child: InkWell(
         onTap: _toggleExpansion,
         child: Container(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(global.paddingFromWalls),
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +51,7 @@ class _FeedItemState extends State<FeedItem> {
                   Expanded(
                     child: ifEmptyOrNull(widget.startDate)
                         ? new Padding(
-                            padding: EdgeInsets.all(6.0),
+                            padding: EdgeInsets.all(global.dividerPadding),
                           )
                         : new Text(
                             widget.startDate,
@@ -79,7 +79,7 @@ class _FeedItemState extends State<FeedItem> {
                       textStyle: Theme.of(context).textTheme.body2,
                     ),
               new Padding(
-                padding: EdgeInsets.all(6.0),
+                padding: EdgeInsets.all(global.dividerPadding),
               ),
               ifEmptyOrNull(widget.imageUrl)
                   ? null

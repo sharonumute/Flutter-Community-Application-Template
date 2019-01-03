@@ -411,28 +411,3 @@ class _CalendarState extends State<Calendar> {
     }
   }
 }
-
-class ExpansionCrossFade extends StatelessWidget {
-  final Widget collapsed;
-  final Widget expanded;
-  final bool isExpanded;
-
-  ExpansionCrossFade({this.collapsed, this.expanded, this.isExpanded});
-
-  @override
-  Widget build(BuildContext context) {
-    return new Flexible(
-      flex: 1,
-      child: new AnimatedCrossFade(
-        firstChild: collapsed,
-        secondChild: expanded,
-        firstCurve: const Interval(0.0, 1.0, curve: Curves.fastOutSlowIn),
-        secondCurve: const Interval(0.0, 1.0, curve: Curves.fastOutSlowIn),
-        sizeCurve: Curves.decelerate,
-        crossFadeState:
-            isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-        duration: const Duration(milliseconds: 300),
-      ),
-    );
-  }
-}

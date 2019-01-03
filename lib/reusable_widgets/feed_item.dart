@@ -31,7 +31,7 @@ class _FeedItemState extends State<FeedItem> {
   Widget build(BuildContext context) {
     print("Feed Item Expanded: " + '$_expanded');
 
-    return new Card(
+    Widget feedItem = new Card(
       margin: const EdgeInsets.all(4.0),
       elevation: 1.0,
       clipBehavior: Clip.hardEdge,
@@ -91,6 +91,13 @@ class _FeedItemState extends State<FeedItem> {
           ),
         ),
       ),
+    );
+
+    return new ExpansionCrossFade(
+      collapsed: feedItem,
+      expanded: feedItem,
+      isExpanded: _expanded,
+      flex: 0,
     );
   }
 }

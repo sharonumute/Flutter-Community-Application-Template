@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: new AppBar(
         title: new Text(widget.title),
       ),
-      body: new Center(
+      body: new SingleChildScrollView(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

@@ -55,6 +55,7 @@ class _FeedItemState extends State<FeedItem> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              //Date and chevron icon row
               new Row(
                 children: <Widget>[
                   Expanded(
@@ -65,7 +66,7 @@ class _FeedItemState extends State<FeedItem> {
                         : new Text(
                             widget.startDate,
                             style: Theme.of(context).textTheme.body1,
-                          ),
+                          ), // if there's no date, replace with blank spacing
                   ),
                   new Icon(
                     _expanded ? Icons.expand_less : Icons.expand_more,
@@ -73,12 +74,14 @@ class _FeedItemState extends State<FeedItem> {
                   )
                 ],
               ),
+              // Header
               ifEmptyOrNull(widget.title)
                   ? null
                   : new Text(
                       widget.title,
                       style: Theme.of(context).textTheme.headline,
                     ),
+              // Details
               ifEmptyOrNull(widget.details)
                   ? null
                   : new ExpandableTextBox(
@@ -88,9 +91,11 @@ class _FeedItemState extends State<FeedItem> {
                       expanded: _expanded,
                       textStyle: Theme.of(context).textTheme.body2,
                     ),
+              // Blank spacing
               new Padding(
                 padding: EdgeInsets.all(global.dividerPadding),
               ),
+              // Event image
               ifEmptyOrNull(widget.imageUrl)
                   ? null
                   : new ExpandableImage(

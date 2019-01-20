@@ -22,6 +22,35 @@ class Event {
   }
 }
 
+class SermonObject {
+  String title;
+  String content;
+  DateTime date;
+  Person speaker;
+  String imageUrl;
+
+  SermonObject(DateTime date, String title, String content, String imageUrl,
+      Person speaker) {
+    this.date = date;
+    this.title = title;
+    this.content = content;
+    this.imageUrl = imageUrl;
+    this.speaker = speaker;
+  }
+}
+
+class Person {
+  String name;
+  String imageUrl;
+  String personInformation;
+
+  Person(String name, String imageUrl, String content) {
+    this.name = name;
+    this.imageUrl = imageUrl;
+    this.personInformation = personInformation;
+  }
+}
+
 /// From of `https://pub.dartlang.org/packages/flutter_calendar#-readme-tab-` to include events
 class ExpansionCrossFade extends StatelessWidget {
   final Widget collapsed;

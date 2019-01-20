@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'reusable_widgets/expandable_image.dart';
 import 'reusable_widgets/expandable_textBox.dart';
 import 'reusable_widgets/feed_item.dart';
+import 'reusable_widgets/sermon_item.dart';
+import 'reusable_widgets/persona.dart';
 import './importedWidgets/flutter_calendar.dart';
 import './utils/widgetUtils.dart';
 import './themes.dart';
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Flutter Demo',
-      theme: darkTheme,
+      theme: lightTheme,
       home: new MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -38,7 +40,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    String sampleTitle = "Sample Title";
+    String sampleTitle =
+        "Serving the lord with all your heart with all your mind and everything";
     String sampleImageUrl =
         "https://www.gettyimages.ca/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg";
     String sampleLongText =
@@ -66,26 +69,33 @@ class _MyHomePageState extends State<MyHomePage> {
         sampleLongText,
         sampleImageUrl,
         Colors.black);
-
+    Person samplePerson =
+        new Person("Mavis Baywin", sampleImageUrl, sampleLongText);
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
       ),
       body: new SingleChildScrollView(
+        scrollDirection: Axis.vertical, //TODO make scroll
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new FeedItem(
+            /* new FeedItem(
               startDate: "Jan 01",
               title: sampleTitle,
               details: sampleLongText,
               imageUrl: sampleImageUrl,
-            ),
+            ),*/
             new Calendar(
               isExpandable: true,
               /*onDateSelected: (date) => onDatePressed,*/
               events: sampleEvents,
             ),
+            new SermonItem(
+                title: sampleTitle,
+                preacher: samplePerson,
+                sermon: sampleLongText,
+                date: "January 5 2019")
           ],
         ),
       ),

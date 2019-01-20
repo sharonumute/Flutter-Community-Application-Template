@@ -92,6 +92,12 @@ ThemeData lightTheme = ThemeData(
   ),
   scaffoldBackgroundColor: globals.themeLightBackground,
   textTheme: TextTheme(
+    display1: TextStyle(
+      fontSize: 60.0,
+      fontFamily: 'Roboto',
+      fontWeight: globals.boldTextWeight,
+      color: globals.normalBlackText,
+    ),
     headline: TextStyle(
       fontSize: 24.0,
       fontFamily: 'Roboto',
@@ -215,6 +221,12 @@ ThemeData darkTheme = ThemeData(
   ),
   scaffoldBackgroundColor: globals.themeBlackBackground,
   textTheme: TextTheme(
+    display1: TextStyle(
+      fontSize: 60.0,
+      fontFamily: 'Roboto',
+      fontWeight: globals.boldTextWeight,
+      color: globals.normalWhiteText,
+    ),
     headline: TextStyle(
       fontSize: 24.0,
       fontFamily: 'Roboto',

@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 double boxborderRadius = 5.0;
 double imageHeightStandard = 60;
 const double paddingFromWalls = 10.0;
+const double paddingFromScreen = 20.0;
 const double marginpaddingFromScreenTop = 4.0;
 const double marginpaddingFromScreenBottom = 6.0;
+const double marginForAvatarImages = 8.0;
 const double dividerPadding = 6.0;
 
 //elevation

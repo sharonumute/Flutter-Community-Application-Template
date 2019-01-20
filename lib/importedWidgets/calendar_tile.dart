@@ -77,10 +77,14 @@ class CalendarTile extends StatelessWidget {
                   Utils.formatDay(date).toString(),
                   style: isSelected
                       ? new TextStyle(
-                          color: Theme.of(context).brightness ==
-                                  Brightness.light
-                              ? Theme.of(context).primaryTextTheme.body1.color
-                              : Theme.of(context).primaryColor,
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                                  ? Theme.of(context)
+                                      .primaryTextTheme
+                                      .body1
+                                      .foreground
+                                      .color
+                                  : Theme.of(context).primaryColor,
                         )
                       : dateStyles,
                   textAlign: TextAlign.center,

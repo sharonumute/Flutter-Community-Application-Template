@@ -24,18 +24,18 @@ class Event {
 
 class SermonObject {
   String title;
-  String content;
+  String sermon;
   DateTime date;
-  Person speaker;
+  Person preacher;
   String imageUrl;
 
-  SermonObject(DateTime date, String title, String content, String imageUrl,
-      Person speaker) {
+  SermonObject(DateTime date, String title, String sermon, String imageUrl,
+      Person preacher) {
     this.date = date;
     this.title = title;
-    this.content = content;
+    this.sermon = sermon;
     this.imageUrl = imageUrl;
-    this.speaker = speaker;
+    this.preacher = preacher;
   }
 }
 

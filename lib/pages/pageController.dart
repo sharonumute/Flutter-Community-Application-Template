@@ -1,0 +1,2 @@
+const FEED_PAGE = "FEED_PAGE";
+const HOME_PAGE = FEED_PAGE;

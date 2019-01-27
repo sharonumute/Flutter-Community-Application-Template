@@ -4,6 +4,37 @@ import './persona.dart';
 import '../globals.dart' as global;
 import '../utils/stringUtils.dart';
 import '../utils/widgetUtils.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+import '../store/state.dart';
+import '../store/actions.dart';
+
+class SermonItemConatiner extends StatelessWidget {
+  final SermonObject sermon;
+  final int numberOfLinesOnMinimized;
+
+  SermonItemConatiner({Key key, this.sermon, this.numberOfLinesOnMinimized})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, _ViewModel>(
+      converter: (Store<AppState> store) {
+        return _ViewModel.from(store, sermon);
+      },
+      builder: (context, vm) {
+        return SermonItem(
+          title: sermon.title,
+          date: sermon.date.toString(),
+          preacher: sermon.preacher,
+          sermon: sermon.sermon,
+          numberOfLinesOnMinimized: numberOfLinesOnMinimized,
+          onSermonSelected: vm.onSermonSelected,
+        );
+      },
+    );
+  }
+}
 
 class SermonItem extends StatelessWidget {
   SermonItem(
@@ -12,7 +43,8 @@ class SermonItem extends StatelessWidget {
       this.date,
       this.preacher,
       this.sermon,
-      this.numberOfLinesOnMinimized = 2})
+      this.numberOfLinesOnMinimized = 2,
+      this.onSermonSelected})
       : super(key: key);
 
   final String title;
@@ -20,6 +52,7 @@ class SermonItem extends StatelessWidget {
   final Person preacher;
   final String sermon;
   final int numberOfLinesOnMinimized;
+  final Function onSermonSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +112,15 @@ class SermonItem extends StatelessWidget {
       );
     }
 
+    void _onSermonSelected() {
+      _openSermon();
+      try {
+        onSermonSelected();
+      } on NoSuchMethodError catch (e) {
+        print("\nComponent not hooked up to store, action failed to call\n");
+      }
+    }
+
     return new Card(
       margin: const EdgeInsets.all(global.marginpaddingFromScreenTop),
       elevation: global.cardResting,
@@ -87,7 +129,7 @@ class SermonItem extends StatelessWidget {
         borderRadius: new BorderRadius.circular(global.boxborderRadius),
       ),
       child: InkWell(
-        onTap: _openSermon,
+        onTap: _onSermonSelected,
         child: Container(
           padding: const EdgeInsets.all(global.paddingFromWalls),
           child: new Column(
@@ -137,6 +179,20 @@ class SermonItem extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _ViewModel {
+  final Function onSermonSelected;
+
+  _ViewModel({
+    @required this.onSermonSelected,
+  });
+
+  factory _ViewModel.from(Store<AppState> store, SermonObject sermon) {
+    return _ViewModel(
+      onSermonSelected: () => store.dispatch(SermonSelectedAction(sermon)),
     );
   }
 }

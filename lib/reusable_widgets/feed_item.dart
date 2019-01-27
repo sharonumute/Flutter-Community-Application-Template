@@ -4,22 +4,55 @@ import './expandable_textBox.dart';
 import '../globals.dart' as global;
 import '../utils/stringUtils.dart';
 import '../utils/widgetUtils.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+import '../store/state.dart';
+import '../store/actions.dart';
+
+class FeedItemConatiner extends StatelessWidget {
+  final Event event;
+  final int numberOfLinesOnMinimized;
+
+  FeedItemConatiner({Key key, this.event, this.numberOfLinesOnMinimized})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StoreConnector<AppState, _ViewModel>(
+      converter: (Store<AppState> store) {
+        return _ViewModel.from(store, event);
+      },
+      builder: (context, vm) {
+        return FeedItem(
+          startDate: event.startDate.toString(),
+          title: event.title,
+          details: event.details,
+          imageUrl: event.imageUrl,
+          numberOfLinesOnMinimized: numberOfLinesOnMinimized,
+          onEventSelected: vm.onEventSelected,
+        );
+      },
+    );
+  }
+}
 
 class FeedItem extends StatefulWidget {
-  FeedItem(
-      {Key key,
-      this.title,
-      this.startDate,
-      this.imageUrl,
-      this.details,
-      this.numberOfLinesOnMinimized})
-      : super(key: key);
+  FeedItem({
+    Key key,
+    this.title,
+    this.startDate,
+    this.imageUrl,
+    this.details,
+    this.numberOfLinesOnMinimized,
+    this.onEventSelected,
+  }) : super(key: key);
 
   final String title;
   final String startDate;
   final String imageUrl;
   final String details;
   final int numberOfLinesOnMinimized;
+  final Function onEventSelected;
 
   @override
   _FeedItemState createState() => new _FeedItemState();
@@ -27,6 +60,15 @@ class FeedItem extends StatefulWidget {
 
 class _FeedItemState extends State<FeedItem> {
   bool _expanded = false;
+
+  void _onEventSelected() {
+    this._toggleExpansion();
+    try {
+      widget.onEventSelected();
+    } on NoSuchMethodError catch (e) {
+      print("\nComponent not hooked up to store, action failed to call\n");
+    }
+  }
 
   void _toggleExpansion() {
     setState(() {
@@ -48,7 +90,7 @@ class _FeedItemState extends State<FeedItem> {
         borderRadius: new BorderRadius.circular(global.boxborderRadius),
       ),
       child: InkWell(
-        onTap: _toggleExpansion,
+        onTap: _onEventSelected,
         child: Container(
           padding: const EdgeInsets.all(global.paddingFromWalls),
           child: new Column(
@@ -113,6 +155,20 @@ class _FeedItemState extends State<FeedItem> {
       expanded: feedItem,
       isExpanded: _expanded,
       flex: 0,
+    );
+  }
+}
+
+class _ViewModel {
+  final Function onEventSelected;
+
+  _ViewModel({
+    @required this.onEventSelected,
+  });
+
+  factory _ViewModel.from(Store<AppState> store, Event event) {
+    return _ViewModel(
+      onEventSelected: () => store.dispatch(EventSelectedAction(event)),
     );
   }
 }

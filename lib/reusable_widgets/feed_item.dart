@@ -8,6 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import '../store/state.dart';
 import '../store/actions.dart';
+import '../error_management/error_messages.dart' as ErrorMessage;
 
 class FeedItemConatiner extends StatelessWidget {
   final Event event;
@@ -66,7 +67,7 @@ class _FeedItemState extends State<FeedItem> {
     try {
       widget.onEventSelected();
     } on NoSuchMethodError catch (e) {
-      print("\nComponent not hooked up to store, action failed to call\n");
+      print(ErrorMessage.STORELESS_COMPONENT_WITH_UNDEFINED_VIEWMODEL_FUNCTION);
     }
   }
 

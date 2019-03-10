@@ -14,7 +14,7 @@ class CalendarTile extends StatelessWidget {
   final TextStyle dayOfWeekStyles;
   final TextStyle dateStyles;
   final Widget child;
-  final Map<DateTime, Event> events;
+  final List<Event> validEventTest;
 
   CalendarTile({
     this.onDateSelected,
@@ -25,12 +25,13 @@ class CalendarTile extends StatelessWidget {
     this.dayOfWeekStyles,
     this.isDayOfWeek: false,
     this.isSelected: false,
-    this.events,
+    this.validEventTest,
   });
 
   Widget renderDateOrDayOfWeek(BuildContext context) {
     bool hasEvent =
-        this.events != null ? this.events.containsKey(this.date) : false;
+        this.validEventTest != null && this.validEventTest.isNotEmpty;
+
     if (isDayOfWeek) {
       return new InkWell(
         child: new Container(
@@ -50,7 +51,7 @@ class CalendarTile extends StatelessWidget {
                 hasEvent
                     ? new Icon(
                         Icons.brightness_1,
-                        color: this.events[this.date].color,
+                        color: this.validEventTest[0].color,
                         size: 6.0,
                       )
                     : null,
@@ -97,7 +98,7 @@ class CalendarTile extends StatelessWidget {
                 hasEvent
                     ? new Icon(
                         Icons.brightness_1,
-                        color: this.events[this.date].color,
+                        color: this.validEventTest[0].color,
                         size: 6.0,
                       )
                     : null,

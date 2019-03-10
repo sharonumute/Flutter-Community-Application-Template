@@ -6,9 +6,8 @@ import 'package:service_application/store/state.dart';
 import 'package:service_application/store/reducers.dart';
 import 'package:service_application/themes.dart';
 import 'package:service_application/pages/feed_page.dart';
+import 'package:service_application/pages/calendar_page.dart';
 import 'package:service_application/store/actions.dart';
-import 'package:service_application/globals.dart' as global;
-import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 
 void main() {
   final store = new Store<AppState>(appReducer, initialState: new AppState());
@@ -27,10 +26,13 @@ class MyApp extends StatelessWidget {
     return new StoreProvider<AppState>(
       store: store,
       child: new MaterialApp(
-        title: 'Service Application Demo',
+        title: 'Service Application',
         theme: darkTheme,
         home: new StoreBuilder<AppState>(
-          onInit: (store) => {store.dispatch(new FetchEventsAction(store))},
+          onInit: (store) {
+            store.dispatch(new FetchEventsAction(store));
+            store.dispatch(new FetchCalendarEventsAction(store));
+          },
           builder: (context, store) {
             var isLoading = store.state.isLoading;
             if (isLoading) {
@@ -95,7 +97,7 @@ class _AppPage extends State<AppPage> with SingleTickerProviderStateMixin {
         controller: _tabController,
         children: <Widget>[
           new FeedPageConatiner(),
-          Icon(Icons.directions_transit),
+          new CalendarPageConatiner(),
           Icon(Icons.directions_bike),
         ],
       ),

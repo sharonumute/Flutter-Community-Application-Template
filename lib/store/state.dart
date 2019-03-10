@@ -8,12 +8,14 @@ class AppState {
   final bool isLoading;
   final List<SermonObject> sermons;
   final List<Event> events;
+  final Map<DateTime, List<Event>> calendarEvents;
   final String currentPage;
 
   AppState({
     this.isLoading = false,
     this.sermons = const [],
     this.events = const [],
+    this.calendarEvents = const {},
     this.currentPage = PageController.HOME_PAGE,
   });
 
@@ -23,12 +25,14 @@ class AppState {
     bool isLoading,
     List<SermonObject> sermons,
     List<Event> events,
+    Map<DateTime, List<Event>> calendarEvents,
     String currentPage,
   }) {
     return AppState(
       isLoading: isLoading ?? this.isLoading,
       sermons: sermons ?? this.sermons,
       events: events ?? this.events,
+      calendarEvents: calendarEvents ?? this.calendarEvents,
       currentPage: currentPage ?? this.currentPage,
     );
   }
@@ -38,6 +42,7 @@ class AppState {
       isLoading.hashCode ^
       sermons.hashCode ^
       events.hashCode ^
+      calendarEvents.hashCode ^
       currentPage.hashCode;
 
   @override
@@ -48,10 +53,11 @@ class AppState {
           isLoading == other.isLoading &&
           sermons == other.sermons &&
           events == other.events &&
+          calendarEvents == other.calendarEvents &&
           currentPage == other.currentPage;
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, sermons: $sermons, events: $events, currentPage: $currentPage}';
+    return 'AppState{isLoading: $isLoading, sermons: $sermons, events: $events, calendarEvents: $calendarEvents, currentPage: $currentPage}';
   }
 }

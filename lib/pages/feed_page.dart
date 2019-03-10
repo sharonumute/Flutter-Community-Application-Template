@@ -19,7 +19,7 @@ class FeedPageConatiner extends StatelessWidget {
       },
       builder: (context, vm) {
         return FeedPage(
-          events: vm.events,
+          news: vm.news,
         );
       },
     );
@@ -27,9 +27,9 @@ class FeedPageConatiner extends StatelessWidget {
 }
 
 class FeedPage extends StatefulWidget {
-  final List<Event> events;
+  final List<Event> news;
 
-  FeedPage({Key key, @required this.events}) : super(key: key);
+  FeedPage({Key key, @required this.news}) : super(key: key);
 
   @override
   _FeedPageState createState() => new _FeedPageState();
@@ -41,9 +41,9 @@ class _FeedPageState extends State<FeedPage> {
     return new Scaffold(
       body: new ListView.builder(
         padding: const EdgeInsets.only(top: global.paddingFromScreen),
-        itemCount: widget.events.length,
+        itemCount: widget.news.length,
         itemBuilder: (BuildContext context, int index) {
-          return new FeedItemConatiner(event: widget.events[index]);
+          return new FeedItemConatiner(event: widget.news[index]);
         },
       ),
     );
@@ -51,17 +51,17 @@ class _FeedPageState extends State<FeedPage> {
 }
 
 class _ViewModel {
-  final List<Event> events;
+  final List<Event> news;
 
   _ViewModel({
-    @required this.events,
+    @required this.news,
   });
 
   factory _ViewModel.from(Store<AppState> store) {
-    final events = eventsSelector(store.state);
+    final news = eventsSelector(store.state);
 
     return _ViewModel(
-      events: events,
+      news: news,
     );
   }
 }

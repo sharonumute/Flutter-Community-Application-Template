@@ -2,6 +2,7 @@ import 'package:service_application/utils/widgetUtils.dart';
 import 'package:service_application/store/state.dart';
 import 'package:redux/redux.dart';
 
+/// Sermon Actions
 class FetchSermonsAction {
   FetchSermonsAction();
 
@@ -33,6 +34,30 @@ class SermonSelectedAction {
   }
 }
 
+///Calendar Event Actions
+class FetchCalendarEventsAction {
+  final Store<AppState> store;
+
+  FetchCalendarEventsAction(this.store);
+
+  @override
+  String toString() {
+    return 'Fetching calendar events...';
+  }
+}
+
+class CalendarEventsLoadedAction {
+  final Map<DateTime, List<Event>> calendarEvents;
+
+  CalendarEventsLoadedAction(this.calendarEvents);
+
+  @override
+  String toString() {
+    return 'CalendarEventsLoadedAction{calendar events: $calendarEvents}';
+  }
+}
+
+///Event Actions
 class FetchEventsAction {
   final Store<AppState> store;
 
@@ -66,6 +91,7 @@ class EventSelectedAction {
   }
 }
 
+/// Page Actions
 class ChangePageAction {
   final String page;
 

@@ -1,9 +1,9 @@
 import "package:service_application/store/state.dart";
 import 'package:service_application/store/actions.dart';
 import 'package:service_application/utils/widgetUtils.dart';
+import 'package:service_application/utils/stringUtils.dart';
 import 'package:redux/redux.dart';
 import 'dart:convert';
-import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
 
 AppState appReducer(AppState state, action) {
@@ -11,6 +11,7 @@ AppState appReducer(AppState state, action) {
     isLoading: loadingReducer(state.isLoading, action),
     sermons: sermonsReducer(state.sermons, action),
     events: eventsReducer(state.events, action),
+    calendarEvents: calendarEventsReducer(state.calendarEvents, action),
     currentPage: pageReducer(state.currentPage, action),
   );
 }
@@ -18,8 +19,10 @@ AppState appReducer(AppState state, action) {
 final loadingReducer = combineReducers<bool>([
   TypedReducer<bool, SermonsLoadedAction>(_setLoadedFalse),
   TypedReducer<bool, EventsLoadedAction>(_setLoadedFalse),
+  TypedReducer<bool, CalendarEventsLoadedAction>(_setLoadedFalse),
   TypedReducer<bool, FetchSermonsAction>(_setLoadedTrue),
   TypedReducer<bool, FetchEventsAction>(_fetchEvents),
+  TypedReducer<bool, FetchCalendarEventsAction>(_fetchCalendarEvents),
 ]);
 
 bool _setLoadedFalse(bool state, action) {
@@ -36,12 +39,40 @@ bool _fetchEvents(bool state, FetchEventsAction action) {
 
     List<Event> eventObjects = [];
     for (Map<String, dynamic> event in events) {
-      Event eventObject = Event.fromJson(event);
-      eventObjects.add(eventObject);
+      Event newsObject = Event.fromJson(event);
+      eventObjects.add(newsObject);
     }
 
     action.store.dispatch(new EventsLoadedAction(eventObjects));
-    print("events produced: ${eventObjects.length}");
+    print("events fetched and loaded: ${eventObjects.length}");
+  });
+
+  return true;
+}
+
+bool _fetchCalendarEvents(bool state, FetchCalendarEventsAction action) {
+  rootBundle.loadString("assets/test_data.json").then((data) {
+    final calendarEvents = json.decode(data)["Events"];
+
+    Map<DateTime, List<Event>> calendarEventObjects = {};
+    for (Map<String, dynamic> event in calendarEvents) {
+      Event eventObject = Event.fromJson(event);
+
+      DateTime startDate = eventObject.startDate;
+
+      if (startDate != null && !ifEmptyOrNull(startDate.toString())) {
+        DateTime eventRegisterDate =
+            new DateTime(startDate.year, startDate.month, startDate.day);
+
+        if (calendarEventObjects[eventRegisterDate] == null) {
+          calendarEventObjects[eventRegisterDate] = new List<Event>();
+        }
+        calendarEventObjects[eventRegisterDate].add(eventObject);
+      }
+    }
+
+    action.store.dispatch(new CalendarEventsLoadedAction(calendarEventObjects));
+    print("calendar events fetched and loaded: ${calendarEventObjects.length}");
   });
 
   return true;
@@ -54,6 +85,16 @@ final sermonsReducer = combineReducers<List<SermonObject>>([
 List<SermonObject> loadSermonsIntoApp(
     List<SermonObject> state, SermonsLoadedAction action) {
   return action.sermons;
+}
+
+final calendarEventsReducer = combineReducers<Map<DateTime, List<Event>>>([
+  TypedReducer<Map<DateTime, List<Event>>, CalendarEventsLoadedAction>(
+      loadCalendarEventsIntoApp),
+]);
+
+Map<DateTime, List<Event>> loadCalendarEventsIntoApp(
+    Map<DateTime, List<Event>> state, CalendarEventsLoadedAction action) {
+  return action.calendarEvents;
 }
 
 final eventsReducer = combineReducers<List<Event>>([

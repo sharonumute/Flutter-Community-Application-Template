@@ -19,7 +19,7 @@ class Calendar extends StatefulWidget {
   final bool showTodayAction;
   final bool showCalendarPickerIcon;
   final DateTime initialCalendarDateOverride;
-  final Map<DateTime, Event> events;
+  final Map<DateTime, List<Event>> events;
 
   Calendar(
       {this.onDateSelected,
@@ -170,7 +170,7 @@ class _CalendarState extends State<Calendar> {
                 child: this.widget.dayBuilder(context, day),
                 date: day,
                 onDateSelected: () => handleSelectedDateAndUserCallback(day),
-                events: this.widget.events),
+                validEventTest: this.widget.events[day]),
           );
         } else {
           dayWidgets.add(
@@ -179,7 +179,7 @@ class _CalendarState extends State<Calendar> {
                 date: day,
                 dateStyles: configureDateStyle(monthStarted, monthEnded),
                 isSelected: Utils.isSameDay(selectedDate, day),
-                events: this.widget.events),
+                validEventTest: this.widget.events[day]),
           );
         }
       },

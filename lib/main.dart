@@ -27,8 +27,9 @@ class MyApp extends StatelessWidget {
     return new StoreProvider<AppState>(
       store: store,
       child: new MaterialApp(
-        title: 'Service Application',
+        title: 'Victory Chapel Mobile',
         theme: lightTheme,
+        darkTheme: darkTheme,
         home: new StoreBuilder<AppState>(
           onInit: (store) {
             store.dispatch(new FetchEventsAction(store));

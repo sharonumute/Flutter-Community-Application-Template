@@ -2,9 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import '../store/selectors.dart';
-import '../store/state.dart';
-import '../utils/widgetUtils.dart';
+import 'package:service_application/globals.dart' as global;
+import 'package:service_application/store/selectors.dart';
+import 'package:service_application/store/state.dart';
+import 'package:service_application/utils/widgetUtils.dart';
+import 'package:service_application/reusable_widgets/feed_item.dart';
 
 class FeedPageConatiner extends StatelessWidget {
   FeedPageConatiner({Key key}) : super(key: key);
@@ -24,16 +26,26 @@ class FeedPageConatiner extends StatelessWidget {
   }
 }
 
-class FeedPage extends StatelessWidget {
+class FeedPage extends StatefulWidget {
   final List<Event> events;
 
   FeedPage({Key key, @required this.events}) : super(key: key);
 
   @override
+  _FeedPageState createState() => new _FeedPageState();
+}
+
+class _FeedPageState extends State<FeedPage> {
+  @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(),
-      body: new Center(),
+      body: new ListView.builder(
+        padding: const EdgeInsets.only(top: global.paddingFromScreen),
+        itemCount: widget.events.length,
+        itemBuilder: (BuildContext context, int index) {
+          return new FeedItemConatiner(event: widget.events[index]);
+        },
+      ),
     );
   }
 }

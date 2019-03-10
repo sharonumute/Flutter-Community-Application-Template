@@ -1,4 +1,15 @@
-import '../utils/widgetUtils.dart';
+import 'package:service_application/utils/widgetUtils.dart';
+import 'package:service_application/store/state.dart';
+import 'package:redux/redux.dart';
+
+class FetchSermonsAction {
+  FetchSermonsAction();
+
+  @override
+  String toString() {
+    return 'Fetching sermons...';
+  }
+}
 
 class SermonsLoadedAction {
   final List<SermonObject> sermons;
@@ -19,6 +30,17 @@ class SermonSelectedAction {
   @override
   String toString() {
     return 'SermonSelectedAction{sermon: $sermon}';
+  }
+}
+
+class FetchEventsAction {
+  final Store<AppState> store;
+
+  FetchEventsAction(this.store);
+
+  @override
+  String toString() {
+    return 'Fetching events...';
   }
 }
 

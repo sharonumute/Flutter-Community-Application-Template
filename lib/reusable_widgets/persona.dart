@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../globals.dart' as globals;
-import "../utils/widgetUtils.dart";
+import 'package:service_application/globals.dart' as globals;
+import "package:service_application/utils/widgetUtils.dart";
 
 /// Create a circular persona object that expands to show
 /// Full persona information on click

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:date_utils/date_utils.dart';
-import '../utils/widgetUtils.dart';
+import 'package:service_application/utils/widgetUtils.dart';
 
 bool notNull(Object o) => o != null;
 

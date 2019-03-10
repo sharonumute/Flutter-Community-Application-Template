@@ -1,7 +1,10 @@
-import "./state.dart";
-import './actions.dart';
-import '../utils/widgetUtils.dart';
+import "package:service_application/store/state.dart";
+import 'package:service_application/store/actions.dart';
+import 'package:service_application/utils/widgetUtils.dart';
 import 'package:redux/redux.dart';
+import 'dart:convert';
+import 'dart:async' show Future;
+import 'package:flutter/services.dart' show rootBundle;
 
 AppState appReducer(AppState state, action) {
   return AppState(
@@ -13,12 +16,35 @@ AppState appReducer(AppState state, action) {
 }
 
 final loadingReducer = combineReducers<bool>([
-  TypedReducer<bool, SermonsLoadedAction>(_setLoaded),
-  TypedReducer<bool, EventsLoadedAction>(_setLoaded),
+  TypedReducer<bool, SermonsLoadedAction>(_setLoadedFalse),
+  TypedReducer<bool, EventsLoadedAction>(_setLoadedFalse),
+  TypedReducer<bool, FetchSermonsAction>(_setLoadedTrue),
+  TypedReducer<bool, FetchEventsAction>(_fetchEvents),
 ]);
 
-bool _setLoaded(bool state, action) {
+bool _setLoadedFalse(bool state, action) {
   return false;
+}
+
+bool _setLoadedTrue(bool state, action) {
+  return true;
+}
+
+bool _fetchEvents(bool state, FetchEventsAction action) {
+  rootBundle.loadString("assets/test_data.json").then((data) {
+    final events = json.decode(data)["Events"];
+
+    List<Event> eventObjects = [];
+    for (Map<String, dynamic> event in events) {
+      Event eventObject = Event.fromJson(event);
+      eventObjects.add(eventObject);
+    }
+
+    action.store.dispatch(new EventsLoadedAction(eventObjects));
+    print("events produced: ${eventObjects.length}");
+  });
+
+  return true;
 }
 
 final sermonsReducer = combineReducers<List<SermonObject>>([

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import './expandable_image.dart';
-import './expandable_textBox.dart';
-import '../globals.dart' as global;
-import '../utils/stringUtils.dart';
-import '../utils/widgetUtils.dart';
+import 'package:service_application/reusable_widgets/expandable_image.dart';
+import 'package:service_application/reusable_widgets/expandable_textBox.dart';
+import 'package:service_application/globals.dart' as global;
+import 'package:service_application/utils/stringUtils.dart';
+import 'package:service_application/utils/widgetUtils.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import '../store/state.dart';
-import '../store/actions.dart';
-import '../error_management/error_messages.dart' as ErrorMessage;
+import 'package:service_application/store/state.dart';
+import 'package:service_application/store/actions.dart';
+import 'package:service_application/error_management/error_messages.dart'
+    as ErrorMessage;
 
 class FeedItemConatiner extends StatelessWidget {
   final Event event;
@@ -83,10 +84,18 @@ class _FeedItemState extends State<FeedItem> {
 
     Widget feedItem = new Card(
       margin: _expanded
-          ? const EdgeInsets.all(global.marginpaddingFromScreenTop)
-          : const EdgeInsets.all(global.marginpaddingFromScreenBottom),
+          ? const EdgeInsets.only(
+              left: global.marginpaddingFromScreenHover,
+              right: global.marginpaddingFromScreenHover,
+              top: 0.0,
+              bottom: 20.0)
+          : const EdgeInsets.only(
+              left: global.marginpaddingFromScreenFlat,
+              right: global.marginpaddingFromScreenFlat,
+              top: 0.0,
+              bottom: 20.0),
       elevation: _expanded ? global.cardHover : global.cardResting,
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: Clip.antiAlias,
       shape: new RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(global.boxborderRadius),
       ),
@@ -152,11 +161,7 @@ class _FeedItemState extends State<FeedItem> {
     );
 
     return new ExpansionCrossFade(
-      collapsed: feedItem,
-      expanded: feedItem,
-      isExpanded: _expanded,
-      flex: 0,
-    );
+        collapsed: feedItem, expanded: feedItem, isExpanded: _expanded);
   }
 }
 

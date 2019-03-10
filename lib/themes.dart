@@ -1,7 +1,7 @@
 library service_app.themes;
 
 import 'package:flutter/material.dart';
-import './globals.dart' as globals;
+import 'package:service_application/globals.dart' as globals;
 
 ThemeData lightTheme = ThemeData(
   accentColor: globals.themeLightPrimary,
@@ -136,6 +136,10 @@ ThemeData lightTheme = ThemeData(
   buttonTheme: ButtonThemeData(
     textTheme: ButtonTextTheme.accent,
   ),
+  tabBarTheme: TabBarTheme(
+    labelColor: Color.fromRGBO(255, 255, 255, 1.0),
+    unselectedLabelColor: Color.fromRGBO(255, 255, 255, 0.7),
+  ),
 );
 
 ThemeData darkTheme = ThemeData(
@@ -265,5 +269,9 @@ ThemeData darkTheme = ThemeData(
   buttonTheme: ButtonThemeData(
     textTheme: ButtonTextTheme.normal,
     buttonColor: globals.themeLightPrimary,
+  ),
+  tabBarTheme: TabBarTheme(
+    labelColor: Color.fromRGBO(255, 255, 255, 1.0),
+    unselectedLabelColor: Color.fromRGBO(255, 255, 255, 0.7),
   ),
 );

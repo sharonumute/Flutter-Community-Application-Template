@@ -1,9 +1,9 @@
 import 'dart:async';
-import '../utils/widgetUtils.dart';
-import '../utils/dateUtils.dart';
+import 'package:service_application/utils/widgetUtils.dart';
+import 'package:service_application/utils/dateUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
-import './calendar_tile.dart';
+import 'package:service_application/imported_widgets/calendar_tile.dart';
 import 'package:date_utils/date_utils.dart';
 import 'package:service_application/globals.dart' as global;
 
@@ -229,7 +229,7 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return new Card(
-      margin: const EdgeInsets.all(global.marginpaddingFromScreenTop),
+      margin: const EdgeInsets.all(global.marginpaddingFromScreenHover),
       elevation: global.cardResting,
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.start,

@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
-import '../utils/widgetUtils.dart';
-import "../pages/pageController.dart" as PageController;
+import 'package:service_application/utils/widgetUtils.dart';
+import "package:service_application/pages/pageController.dart"
+    as PageController;
 
 @immutable
 class AppState {

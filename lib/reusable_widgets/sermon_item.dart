@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import './expandable_textBox.dart';
-import './persona.dart';
-import '../globals.dart' as global;
-import '../utils/stringUtils.dart';
-import '../utils/widgetUtils.dart';
+import 'package:service_application/reusable_widgets/expandable_textBox.dart';
+import 'package:service_application/reusable_widgets/persona.dart';
+import 'package:service_application/globals.dart' as global;
+import 'package:service_application/utils/stringUtils.dart';
+import 'package:service_application/utils/widgetUtils.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import '../store/state.dart';
-import '../store/actions.dart';
-import '../error_management/error_messages.dart' as ErrorMessage;
+import 'package:service_application/store/state.dart';
+import 'package:service_application/store/actions.dart';
+import 'package:service_application/error_management/error_messages.dart'
+    as ErrorMessage;
 
 class SermonItemConatiner extends StatelessWidget {
   final SermonObject sermon;
@@ -124,7 +125,7 @@ class SermonItem extends StatelessWidget {
     }
 
     return new Card(
-      margin: const EdgeInsets.all(global.marginpaddingFromScreenTop),
+      margin: const EdgeInsets.all(global.marginpaddingFromScreenHover),
       elevation: global.cardResting,
       clipBehavior: Clip.hardEdge,
       shape: new RoundedRectangleBorder(

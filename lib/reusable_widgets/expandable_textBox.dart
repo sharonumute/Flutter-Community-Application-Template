@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../globals.dart' as globals;
+import 'package:service_application/globals.dart' as globals;
 
 /// Create a text box that can easly be expanded and minimized
 ///

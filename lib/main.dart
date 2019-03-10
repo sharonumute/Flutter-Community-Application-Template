@@ -1,108 +1,103 @@
 import 'package:flutter/material.dart';
-import 'reusable_widgets/expandable_image.dart';
-import 'reusable_widgets/expandable_textBox.dart';
-import 'reusable_widgets/feed_item.dart';
-import 'reusable_widgets/sermon_item.dart';
-import 'reusable_widgets/persona.dart';
-import './importedWidgets/flutter_calendar.dart';
-import './utils/widgetUtils.dart';
-import './themes.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+import 'package:service_application/store/state.dart';
+import 'package:service_application/store/reducers.dart';
+import 'package:service_application/themes.dart';
+import 'package:service_application/pages/feed_page.dart';
+import 'package:service_application/store/actions.dart';
+import 'package:service_application/globals.dart' as global;
+import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 
-void main() => runApp(new MyApp());
+void main() {
+  final store = new Store<AppState>(appReducer, initialState: new AppState());
+  runApp(new MyApp(
+    store: store,
+  ));
+}
 
 class MyApp extends StatelessWidget {
+  final Store<AppState> store;
+
+  MyApp({Key key, this.store}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Flutter Demo',
-      theme: lightTheme,
-      home: new MyHomePage(title: 'Flutter Demo Home Page'),
+    return new StoreProvider<AppState>(
+      store: store,
+      child: new MaterialApp(
+        title: 'Service Application Demo',
+        theme: darkTheme,
+        home: new StoreBuilder<AppState>(
+          onInit: (store) => {store.dispatch(new FetchEventsAction(store))},
+          builder: (context, store) {
+            var isLoading = store.state.isLoading;
+            if (isLoading) {
+              return new Scaffold(
+                body: new Center(
+                  child: new Text("loading"),
+                ),
+              );
+            } else {
+              return new AppPage();
+            }
+          },
+        ),
+      ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+class AppPage extends StatefulWidget {
+  AppPage({Key key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _AppPage createState() => new _AppPage();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _AppPage extends State<AppPage> with SingleTickerProviderStateMixin {
+  TabController _tabController;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _tabController = new TabController(length: 3, vsync: this, initialIndex: 0);
+    _tabController.offset = 0.5;
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    String sampleTitle =
-        "Serving the lord with all your heart with all your mind and everything";
-    String sampleImageUrl =
-        "https://www.gettyimages.ca/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg";
-    String sampleLongText =
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus posuere urna ut nibh tempor aliquet. Etiam enim ante, maximus ac placerat ac, vehicula vel nulla. Aliquam risus dolor, mollis ut nisi sit amet, sodales dapibus eros. Etiam a velit diam. Fusce imperdiet quam sit amet congue ornare. Proin mollis tempus consequat. Morbi ut tristique felis, ullamcorper auctor dolor. Phasellus mattis odio sed lorem aliquet tincidunt. Donec elementum commodo vehicula. Aenean nec placerat urna. Curabitur accumsan nulla nec tempor aliquam. Maecenas ultrices urna urna.";
-
-    Map<DateTime, Event> sampleEvents = new Map<DateTime, Event>();
-    sampleEvents[new DateTime(2018, 12, 30)] = new Event(
-        new DateTime(2018, 12, 30),
-        new DateTime.now(),
-        sampleTitle,
-        sampleLongText,
-        sampleImageUrl,
-        Colors.green);
-    sampleEvents[new DateTime(2018, 12, 1)] = new Event(
-        new DateTime(2018, 12, 1),
-        new DateTime.now(),
-        sampleTitle,
-        sampleLongText,
-        sampleImageUrl,
-        Colors.red);
-    sampleEvents[new DateTime(2018, 12, 10)] = new Event(
-        new DateTime(2018, 12, 10),
-        new DateTime.now(),
-        sampleTitle,
-        sampleLongText,
-        sampleImageUrl,
-        Colors.black);
-    Person samplePerson =
-        new Person("Mavis Baywin", sampleImageUrl, sampleLongText);
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.title),
-      ),
-      body: new SingleChildScrollView(
-        scrollDirection: Axis.vertical, //TODO make scroll
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            /* new FeedItem(
-              startDate: "Jan 01",
-              title: sampleTitle,
-              details: sampleLongText,
-              imageUrl: sampleImageUrl,
-            ),*/
-            new Calendar(
-              isExpandable: true,
-              /*onDateSelected: (date) => onDatePressed,*/
-              events: sampleEvents,
-            ),
-            new SermonItem(
-                title: sampleTitle,
-                preacher: samplePerson,
-                sermon: sampleLongText,
-                date: "January 5 2019")
+        centerTitle: true,
+        title: new Text(
+          "Victory Chapel",
+        ),
+        bottom: new TabBar(
+          controller: _tabController,
+          labelStyle: Theme.of(context).textTheme.subhead,
+          unselectedLabelStyle: Theme.of(context).textTheme.subhead,
+          tabs: <Widget>[
+            new Tab(icon: Icon(Icons.rss_feed), text: "Feed"),
+            new Tab(icon: Icon(Icons.calendar_today), text: "Calendar"),
+            new Tab(icon: Icon(Icons.local_library), text: "Sermons"),
           ],
         ),
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
+      body: new TabBarView(
+        controller: _tabController,
+        children: <Widget>[
+          new FeedPageConatiner(),
+          Icon(Icons.directions_transit),
+          Icon(Icons.directions_bike),
+        ],
       ),
     );
   }

@@ -26,7 +26,8 @@ class FeedItemConatiner extends StatelessWidget {
       },
       builder: (context, vm) {
         return FeedItem(
-          startDate: event.startDate.toString(),
+          startDate:
+              "${event.startDate.year}-${event.startDate.month}-${event.startDate.day}",
           title: event.title,
           details: event.details,
           imageUrl: event.imageUrl,
@@ -88,7 +89,7 @@ class _FeedItemState extends State<FeedItem> {
               left: global.marginpaddingFromScreenHover,
               right: global.marginpaddingFromScreenHover,
               top: 0.0,
-              bottom: 20.0)
+              bottom: 15.0)
           : const EdgeInsets.only(
               left: global.marginpaddingFromScreenFlat,
               right: global.marginpaddingFromScreenFlat,

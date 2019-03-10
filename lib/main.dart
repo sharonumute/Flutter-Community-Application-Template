@@ -7,6 +7,7 @@ import 'package:service_application/store/reducers.dart';
 import 'package:service_application/themes.dart';
 import 'package:service_application/pages/feed_page.dart';
 import 'package:service_application/pages/calendar_page.dart';
+import 'package:service_application/pages/sermon_page.dart';
 import 'package:service_application/store/actions.dart';
 
 void main() {
@@ -27,18 +28,19 @@ class MyApp extends StatelessWidget {
       store: store,
       child: new MaterialApp(
         title: 'Service Application',
-        theme: darkTheme,
+        theme: lightTheme,
         home: new StoreBuilder<AppState>(
           onInit: (store) {
             store.dispatch(new FetchEventsAction(store));
             store.dispatch(new FetchCalendarEventsAction(store));
+            store.dispatch(new FetchSermonsAction(store));
           },
           builder: (context, store) {
             var isLoading = store.state.isLoading;
             if (isLoading) {
               return new Scaffold(
                 body: new Center(
-                  child: new Text("loading"),
+                  child: new CircularProgressIndicator(),
                 ),
               );
             } else {
@@ -98,7 +100,7 @@ class _AppPage extends State<AppPage> with SingleTickerProviderStateMixin {
         children: <Widget>[
           new FeedPageConatiner(),
           new CalendarPageConatiner(),
-          Icon(Icons.directions_bike),
+          new SermonPageConatiner(),
         ],
       ),
     );

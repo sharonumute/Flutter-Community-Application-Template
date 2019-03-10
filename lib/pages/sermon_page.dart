@@ -6,10 +6,10 @@ import 'package:service_application/globals.dart' as global;
 import 'package:service_application/store/selectors.dart';
 import 'package:service_application/store/state.dart';
 import 'package:service_application/utils/widgetUtils.dart';
-import 'package:service_application/reusable_widgets/feed_item.dart';
+import 'package:service_application/reusable_widgets/sermon_item.dart';
 
-class FeedPageConatiner extends StatelessWidget {
-  FeedPageConatiner({Key key}) : super(key: key);
+class SermonPageConatiner extends StatelessWidget {
+  SermonPageConatiner({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,32 +18,32 @@ class FeedPageConatiner extends StatelessWidget {
         return _ViewModel.from(store);
       },
       builder: (context, vm) {
-        return FeedPage(
-          events: vm.events,
+        return SermonPage(
+          sermons: vm.sermons,
         );
       },
     );
   }
 }
 
-class FeedPage extends StatefulWidget {
-  final List<Event> events;
+class SermonPage extends StatefulWidget {
+  final List<SermonObject> sermons;
 
-  FeedPage({Key key, @required this.events}) : super(key: key);
+  SermonPage({Key key, @required this.sermons}) : super(key: key);
 
   @override
-  _FeedPageState createState() => new _FeedPageState();
+  _SermonPageState createState() => new _SermonPageState();
 }
 
-class _FeedPageState extends State<FeedPage> {
+class _SermonPageState extends State<SermonPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       body: new ListView.builder(
-        padding: const EdgeInsets.only(top: global.paddingFromWalls),
-        itemCount: widget.events.length,
+        padding: const EdgeInsets.all(global.marginpaddingFromScreenHover),
+        itemCount: widget.sermons.length,
         itemBuilder: (BuildContext context, int index) {
-          return new FeedItemConatiner(event: widget.events[index]);
+          return new SermonItemConatiner(sermon: widget.sermons[index]);
         },
       ),
     );
@@ -51,17 +51,17 @@ class _FeedPageState extends State<FeedPage> {
 }
 
 class _ViewModel {
-  final List<Event> events;
+  final List<SermonObject> sermons;
 
   _ViewModel({
-    @required this.events,
+    @required this.sermons,
   });
 
   factory _ViewModel.from(Store<AppState> store) {
-    final events = eventsSelector(store.state);
+    final sermons = sermonsSelector(store.state);
 
     return _ViewModel(
-      events: events,
+      sermons: sermons,
     );
   }
 }

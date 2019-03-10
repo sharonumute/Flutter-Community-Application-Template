@@ -4,7 +4,9 @@ import 'package:redux/redux.dart';
 
 /// Sermon Actions
 class FetchSermonsAction {
-  FetchSermonsAction();
+  final Store<AppState> store;
+
+  FetchSermonsAction(this.store);
 
   @override
   String toString() {

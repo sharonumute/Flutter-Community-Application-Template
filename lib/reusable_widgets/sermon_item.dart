@@ -27,7 +27,7 @@ class SermonItemConatiner extends StatelessWidget {
       builder: (context, vm) {
         return SermonItem(
           title: sermon.title,
-          date: sermon.date.toString(),
+          date: "${sermon.date.year}-${sermon.date.month}-${sermon.date.day}",
           preacher: sermon.preacher,
           sermon: sermon.sermon,
           numberOfLinesOnMinimized: numberOfLinesOnMinimized,
@@ -125,7 +125,11 @@ class SermonItem extends StatelessWidget {
     }
 
     return new Card(
-      margin: const EdgeInsets.all(global.marginpaddingFromScreenHover),
+      margin: const EdgeInsets.only(
+          left: global.marginpaddingFromScreenHover,
+          right: global.marginpaddingFromScreenHover,
+          top: 5.0,
+          bottom: 5.0),
       elevation: global.cardResting,
       clipBehavior: Clip.hardEdge,
       shape: new RoundedRectangleBorder(

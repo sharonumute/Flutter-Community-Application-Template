@@ -20,7 +20,7 @@ final loadingReducer = combineReducers<bool>([
   TypedReducer<bool, SermonsLoadedAction>(_setLoadedFalse),
   TypedReducer<bool, EventsLoadedAction>(_setLoadedFalse),
   TypedReducer<bool, CalendarEventsLoadedAction>(_setLoadedFalse),
-  TypedReducer<bool, FetchSermonsAction>(_setLoadedTrue),
+  TypedReducer<bool, FetchSermonsAction>(_fetchSermons),
   TypedReducer<bool, FetchEventsAction>(_fetchEvents),
   TypedReducer<bool, FetchCalendarEventsAction>(_fetchCalendarEvents),
 ]);
@@ -29,7 +29,20 @@ bool _setLoadedFalse(bool state, action) {
   return false;
 }
 
-bool _setLoadedTrue(bool state, action) {
+bool _fetchSermons(bool state, FetchSermonsAction action) {
+  rootBundle.loadString("assets/test_data.json").then((data) {
+    final sermons = json.decode(data)["Sermons"];
+
+    List<SermonObject> sermonObjects = [];
+    for (Map<String, dynamic> sermon in sermons) {
+      SermonObject sermonObject = SermonObject.fromJson(sermon);
+      sermonObjects.add(sermonObject);
+    }
+
+    action.store.dispatch(new SermonsLoadedAction(sermonObjects));
+    print("sermons fetched and loaded: ${sermonObjects.length}");
+  });
+
   return true;
 }
 
@@ -39,8 +52,8 @@ bool _fetchEvents(bool state, FetchEventsAction action) {
 
     List<Event> eventObjects = [];
     for (Map<String, dynamic> event in events) {
-      Event newsObject = Event.fromJson(event);
-      eventObjects.add(newsObject);
+      Event eventObject = Event.fromJson(event);
+      eventObjects.add(eventObject);
     }
 
     action.store.dispatch(new EventsLoadedAction(eventObjects));

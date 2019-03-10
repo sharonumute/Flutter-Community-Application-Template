@@ -17,12 +17,12 @@ ThemeData lightTheme = ThemeData(
       color: globals.normalWhiteText,
     ),
   ),
-  backgroundColor: globals.themeLightBackground,
+  backgroundColor: globals.themeLightAppBackground,
   cardColor: globals.themeLightBackground,
   colorScheme: ColorScheme(
       primary: globals.themeLightPrimary,
       surface: globals.themeLightBackground,
-      background: globals.themeLightBackground,
+      background: globals.themeLightAppBackground,
       brightness: Brightness.light,
       error: globals.errorRedText,
       onBackground: globals.mediumBlackText,
@@ -90,7 +90,7 @@ ThemeData lightTheme = ThemeData(
       foreground: Paint()..color = globals.normalWhiteText,
     ),
   ),
-  scaffoldBackgroundColor: globals.themeLightBackground,
+  scaffoldBackgroundColor: globals.themeLightAppBackground,
   textTheme: TextTheme(
     display1: TextStyle(
       fontSize: 60.0,

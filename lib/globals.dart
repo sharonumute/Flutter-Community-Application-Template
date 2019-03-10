@@ -31,15 +31,15 @@ FontWeight normalTextWeight = FontWeight.w400;
 // Black Theme Colors
 Color themeBlackBackground = Color.fromRGBO(33, 33, 33, 1);
 Color themeBlackPrimary = Color.fromRGBO(38, 50, 56, 1);
-Color themeBlackPrimaryDark =
-    Color.fromRGBO(38, 50, 56, 1); // TODO get actual dark
+Color themeBlackPrimaryDark = Color.fromRGBO(23, 29, 33, 1);
 Color themeBlackPrimaryLight = Color.fromRGBO(55, 71, 79, 1);
 
 // Light Theme Colors
+Color themeLightAppBackground = Color.fromRGBO(238, 238, 238, 1);
 Color themeLightBackground = Color.fromRGBO(250, 250, 250, 1);
-Color themeLightPrimary = Color.fromRGBO(68, 138, 255, 1);
-Color themeLightPrimaryDark = Color.fromRGBO(41, 121, 255, 1);
-Color themeLightPrimaryLight = Color.fromRGBO(130, 177, 255, 1);
+Color themeLightPrimary = Color.fromRGBO(41, 98, 255, 1);
+Color themeLightPrimaryDark = Color.fromRGBO(13, 71, 161, 1);
+Color themeLightPrimaryLight = Color.fromRGBO(68, 138, 255, 1);
 
 // General Theme Colors
 Color dafaultWhite = Color.fromRGBO(255, 255, 255, 1);

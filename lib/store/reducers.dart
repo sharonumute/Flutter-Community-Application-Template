@@ -2,6 +2,7 @@ import "package:service_application/store/state.dart";
 import 'package:service_application/store/actions.dart';
 import 'package:service_application/utils/widgetUtils.dart';
 import 'package:service_application/utils/stringUtils.dart';
+import 'package:service_application/utils/dateUtils.dart';
 import 'package:redux/redux.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
@@ -72,15 +73,25 @@ bool _fetchCalendarEvents(bool state, FetchCalendarEventsAction action) {
       Event eventObject = Event.fromJson(event);
 
       DateTime startDate = eventObject.startDate;
+      DateTime endDate = eventObject.endDate;
 
-      if (startDate != null && !ifEmptyOrNull(startDate.toString())) {
-        DateTime eventRegisterDate =
+      if (startDate != null &&
+          endDate != null &&
+          !ifEmptyOrNull(startDate.toString()) &&
+          !ifEmptyOrNull(endDate.toString())) {
+        DateTime eventStartDate =
             new DateTime(startDate.year, startDate.month, startDate.day);
 
-        if (calendarEventObjects[eventRegisterDate] == null) {
-          calendarEventObjects[eventRegisterDate] = new List<Event>();
+        DateTime eventEndDate =
+            new DateTime(endDate.year, endDate.month, endDate.day);
+
+        for (DateTime eventDay in onlyDaysInRange(
+            eventStartDate, eventEndDate.add(Duration(days: 1)))) {
+          if (calendarEventObjects[eventDay] == null) {
+            calendarEventObjects[eventDay] = new List<Event>();
+          }
+          calendarEventObjects[eventDay].add(eventObject);
         }
-        calendarEventObjects[eventRegisterDate].add(eventObject);
       }
     }
 

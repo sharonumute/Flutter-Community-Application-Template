@@ -1,48 +1,48 @@
 {
   "Events": [
     {
-      "start_date": "2019-07-20 20:18:04Z",
-      "end_date": "2019-07-20 20:18:04Z",
+      "start_date": "2019-03-09 20:18:04Z",
+      "end_date": "2019-03-11 20:18:04Z",
       "title": "Holy Baptism",
       "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus posuere urna ut nibh tempor aliquet. Etiam enim ante, maximus ac placerat ac, vehicula vel nulla. Aliquam risus dolor, mollis ut nisi sit amet, sodales dapibus eros. Etiam a velit diam. Fusce imperdiet quam sit amet congue ornare. Proin mollis tempus consequat. Morbi ut tristique felis, ullamcorper auctor dolor. Phasellus mattis odio sed lorem aliquet tincidunt. Donec elementum commodo vehicula. Aenean nec placerat urna. Curabitur accumsan nulla nec tempor aliquam. Maecenas ultrices urna urna.",
       "image_url": "https://www.gettyimages.ca/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg",
       "color": "F46242"
     },
     {
-      "start_date": "2019-07-20 20:19:04Z",
-      "end_date": "2019-09-01",
+      "start_date": "2019-03-01 20:19:04Z",
+      "end_date": "2019-03-20",
       "title": "Religious Teachings",
       "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus posuere urna ut nibh tempor aliquet. Etiam enim ante, maximus ac placerat ac, vehicula vel nulla. Aliquam risus dolor, mollis ut nisi sit amet, sodales dapibus eros. Etiam a velit diam. Fusce imperdiet quam sit amet congue ornare. Proin mollis tempus consequat. Morbi ut tristique felis, ullamcorper auctor dolor. Phasellus mattis odio sed lorem aliquet tincidunt. Donec elementum commodo vehicula. Aenean nec placerat urna. Curabitur accumsan nulla nec tempor aliquam. Maecenas ultrices urna urna.",
       "image_url": "http://www.mobileswall.com/wp-content/uploads/2015/09/640-HD-Wallpaper-Art-l.jpg",
       "color": "104ABC"
     },
     {
-      "start_date": "2019-01-01",
-      "end_date": "2019-02-01",
+      "start_date": "2019-03-22",
+      "end_date": "2019-03-22",
       "title": "Blessful Month",
       "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus posuere urna ut nibh tempor aliquet. Etiam enim ante, maximus ac placerat ac, vehicula vel nulla. Aliquam risus dolor, mollis ut nisi sit amet, sodales dapibus eros. Etiam a velit diam. Fusce imperdiet quam sit amet congue ornare. Proin mollis tempus consequat. Morbi ut tristique felis, ullamcorper auctor dolor. Phasellus mattis odio sed lorem aliquet tincidunt. Donec elementum commodo vehicula. Aenean nec placerat urna. Curabitur accumsan nulla nec tempor aliquam. Maecenas ultrices urna urna.",
       "image_url": "http://wallpapers.ae/wp-content/uploads/2015/09/Beautiful-multi-colours-Tortoise-hd-photo.jpg",
       "color": "19BC10"
     },
     {
-      "start_date": "2019-04-20",
-      "end_date": "2019-04-20",
+      "start_date": "2019-03-23",
+      "end_date": "2019-03-23",
       "title": "Lord's Day",
       "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus posuere urna ut nibh tempor aliquet. Etiam enim ante, maximus ac placerat ac, vehicula vel nulla. Aliquam risus dolor, mollis ut nisi sit amet, sodales dapibus eros. Etiam a velit diam. Fusce imperdiet quam sit amet congue ornare. Proin mollis tempus consequat. Morbi ut tristique felis, ullamcorper auctor dolor. Phasellus mattis odio sed lorem aliquet tincidunt. Donec elementum commodo vehicula. Aenean nec placerat urna. Curabitur accumsan nulla nec tempor aliquam. Maecenas ultrices urna urna.",
       "image_url": "https://wallpapercave.com/wp/bKsSx5C.jpg",
       "color": "19BC10"
     },
     {
-      "start_date": "2019-05-10",
-      "end_date": "2019-05-10",
+      "start_date": "2019-03-23",
+      "end_date": "2019-03-24",
       "title": "Day of prayers",
       "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus posuere urna ut nibh tempor aliquet. Etiam enim ante, maximus ac placerat ac, vehicula vel nulla. Aliquam risus dolor, mollis ut nisi sit amet, sodales dapibus eros. Etiam a velit diam. Fusce imperdiet quam sit amet congue ornare. Proin mollis tempus consequat. Morbi ut tristique felis, ullamcorper auctor dolor. Phasellus mattis odio sed lorem aliquet tincidunt. Donec elementum commodo vehicula. Aenean nec placerat urna. Curabitur accumsan nulla nec tempor aliquam. Maecenas ultrices urna urna.",
       "image_url": "https://images.all-free-download.com/images/graphiclarge/hd_egg_pictures_06_hd_pictures_170026.jpg",
       "color": "D0DB39"
     },
     {
-      "start_date": "2019-01-01",
-      "end_date": "2019-02-01",
+      "start_date": "2019-03-24",
+      "end_date": "2019-03-24",
       "title": "Worship Month",
       "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus posuere urna ut nibh tempor aliquet. Etiam enim ante, maximus ac placerat ac, vehicula vel nulla. Aliquam risus dolor, mollis ut nisi sit amet, sodales dapibus eros. Etiam a velit diam. Fusce imperdiet quam sit amet congue ornare. Proin mollis tempus consequat. Morbi ut tristique felis, ullamcorper auctor dolor. Phasellus mattis odio sed lorem aliquet tincidunt. Donec elementum commodo vehicula. Aenean nec placerat urna. Curabitur accumsan nulla nec tempor aliquam. Maecenas ultrices urna urna.",
       "image_url": "https://www.fransat.fr/wp-content/uploads/2016/01/tnt-hd-fransat-satellite.jpg",

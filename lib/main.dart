@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       store: store,
       child: new MaterialApp(
         title: 'Victory Chapel Mobile',
-        theme: lightTheme,
+        theme: darkTheme,
         darkTheme: darkTheme,
         home: new StoreBuilder<AppState>(
           onInit: (store) {
@@ -103,6 +103,45 @@ class _AppPage extends State<AppPage> with SingleTickerProviderStateMixin {
           new CalendarPageConatiner(),
           new SermonPageConatiner(),
         ],
+      ),
+      drawer: Drawer(
+        child: new Column(
+          children: <Widget>[
+            /** Header */
+            UserAccountsDrawerHeader(
+              accountName: Text(""),
+              accountEmail: Text("Victory Chapel Mobile"),
+            ),
+            /** Menu Items */
+            new Expanded(
+              child: ListView(
+                children: <Widget>[
+                  ListTile(
+                    title: Text("About"),
+                    leading: Icon(Icons.home),
+                  ),
+                ],
+              ),
+            ),
+            /** Bottom Row */
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                /** Settings Button */
+                new FlatButton.icon(
+                    onPressed: null,
+                    icon: Icon(Icons.settings),
+                    label: Text("Settings")),
+                /** Theme Switch Button */
+                new IconButton(
+                  icon: Icon(Icons.brightness_2),
+                  tooltip: 'Switch Themes',
+                  onPressed: null,
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -274,6 +274,7 @@ class _CalendarState extends State<Calendar> {
       selectedMonthsDays = Utils.daysInMonth(_selectedDate);
       displayMonth = Utils.formatMonth(_selectedDate);
     });
+    _launchDateSelectionCallback(_selectedDate);
   }
 
   void previousMonth() {
@@ -285,6 +286,7 @@ class _CalendarState extends State<Calendar> {
       selectedMonthsDays = Utils.daysInMonth(_selectedDate);
       displayMonth = Utils.formatMonth(_selectedDate);
     });
+    _launchDateSelectionCallback(_selectedDate);
   }
 
   void nextWeek() {

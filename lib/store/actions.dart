@@ -21,7 +21,7 @@ class SermonsLoadedAction {
 
   @override
   String toString() {
-    return 'SermonsLoadedAction{sermons: $sermons}';
+    return 'SermonsLoadedAction{Sermons: $sermons}';
   }
 }
 
@@ -32,7 +32,7 @@ class SermonSelectedAction {
 
   @override
   String toString() {
-    return 'SermonSelectedAction{sermon: $sermon}';
+    return 'SermonSelectedAction{Sermon: $sermon}';
   }
 }
 
@@ -55,7 +55,18 @@ class CalendarEventsLoadedAction {
 
   @override
   String toString() {
-    return 'CalendarEventsLoadedAction{calendar events: $calendarEvents}';
+    return 'CalendarEventsLoadedAction{Calendar events: $calendarEvents}';
+  }
+}
+
+class SetCurrentSelectedCalendarAction {
+  final String date;
+
+  SetCurrentSelectedCalendarAction(this.date);
+
+  @override
+  String toString() {
+    return 'SetCurrentSelectedCalendarAction{Current Selected Calendar Date: $date}';
   }
 }
 
@@ -78,7 +89,7 @@ class EventsLoadedAction {
 
   @override
   String toString() {
-    return 'EventsLoadedAction{events: $events}';
+    return 'EventsLoadedAction{Events: $events}';
   }
 }
 
@@ -89,18 +100,6 @@ class EventSelectedAction {
 
   @override
   String toString() {
-    return 'EventSelectedAction{event: $event}';
-  }
-}
-
-/// Page Actions
-class SetCurrentPageAction {
-  final int page;
-
-  SetCurrentPageAction(this.page);
-
-  @override
-  String toString() {
-    return 'SetCurrentPageAction{page: $page}';
+    return 'EventSelectedAction{Event: $event}';
   }
 }

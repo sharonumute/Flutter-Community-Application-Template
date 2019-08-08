@@ -9,6 +9,8 @@ import 'package:service_application/store/state.dart';
 import 'package:service_application/utils/widgetUtils.dart';
 import 'package:service_application/reusable_widgets/feed_item.dart';
 
+import '../store/actions.dart';
+
 class CalendarPageConatiner extends StatelessWidget {
   CalendarPageConatiner({Key key}) : super(key: key);
 
@@ -20,8 +22,9 @@ class CalendarPageConatiner extends StatelessWidget {
       },
       builder: (context, vm) {
         return CalendarPage(
-          events: vm.calendarEvents,
-        );
+            events: vm.calendarEvents,
+            userSelectedCalendarDate: vm.currentSelectedCalendarDate,
+            setCurrentSelectedCalendarDate: vm.setCurrentSelectedCalendarDate);
       },
     );
   }
@@ -29,8 +32,15 @@ class CalendarPageConatiner extends StatelessWidget {
 
 class CalendarPage extends StatefulWidget {
   final Map<DateTime, List<Event>> events;
+  final String userSelectedCalendarDate;
+  final Function setCurrentSelectedCalendarDate;
 
-  CalendarPage({Key key, @required this.events}) : super(key: key);
+  CalendarPage(
+      {Key key,
+      @required this.events,
+      @required this.userSelectedCalendarDate,
+      @required this.setCurrentSelectedCalendarDate})
+      : super(key: key);
 
   @override
   _CalendarPageState createState() => new _CalendarPageState();
@@ -53,6 +63,15 @@ class _CalendarPageState extends State<CalendarPage> {
     setState(() {
       _currentDisplayedEvents = eventsToDisplay;
     });
+
+    widget.setCurrentSelectedCalendarDate(day);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    changeCurrentDisplayedDates(
+        DateTime.parse(widget.userSelectedCalendarDate));
   }
 
   @override
@@ -64,6 +83,8 @@ class _CalendarPageState extends State<CalendarPage> {
             isExpandable: true,
             onDateSelected: (date) => changeCurrentDisplayedDates(date),
             events: widget.events,
+            initialCalendarDateOverride:
+                DateTime.parse(widget.userSelectedCalendarDate),
           ),
           new Padding(
             padding: EdgeInsets.all(global.dividerPadding),
@@ -79,16 +100,22 @@ class _CalendarPageState extends State<CalendarPage> {
 
 class _ViewModel {
   final Map<DateTime, List<Event>> calendarEvents;
+  final String currentSelectedCalendarDate;
+  final Function setCurrentSelectedCalendarDate;
 
   _ViewModel({
     @required this.calendarEvents,
+    @required this.currentSelectedCalendarDate,
+    @required this.setCurrentSelectedCalendarDate,
   });
 
   factory _ViewModel.from(Store<AppState> store) {
-    final eventsReceived = calendarEventsSelector(store.state);
-
     return _ViewModel(
-      calendarEvents: eventsReceived,
-    );
+        calendarEvents: calendarEventsSelector(store.state),
+        currentSelectedCalendarDate:
+            currentSelectedCalendarDateSelector(store.state),
+        setCurrentSelectedCalendarDate: (DateTime userSelectedDate) =>
+            store.dispatch(new SetCurrentSelectedCalendarAction(
+                userSelectedDate.toString())));
   }
 }

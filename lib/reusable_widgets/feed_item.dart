@@ -11,6 +11,8 @@ import 'package:service_application/store/actions.dart';
 import 'package:service_application/error_management/error_messages.dart'
     as ErrorMessage;
 
+import '../utils/dateUtils.dart';
+
 class FeedItemConatiner extends StatelessWidget {
   final Event event;
   final int numberOfLinesOnMinimized;
@@ -26,8 +28,7 @@ class FeedItemConatiner extends StatelessWidget {
       },
       builder: (context, vm) {
         return FeedItem(
-          startDate:
-              "${event.startDate.year}-${event.startDate.month}-${event.startDate.day}",
+          startDate: event.startDate,
           title: event.title,
           details: event.details,
           imageUrl: event.imageUrl,
@@ -51,7 +52,7 @@ class FeedItem extends StatefulWidget {
   }) : super(key: key);
 
   final String title;
-  final String startDate;
+  final DateTime startDate;
   final String imageUrl;
   final String details;
   final int numberOfLinesOnMinimized;
@@ -112,12 +113,12 @@ class _FeedItemState extends State<FeedItem> {
               new Row(
                 children: <Widget>[
                   Expanded(
-                    child: ifEmptyOrNull(widget.startDate)
+                    child: widget.startDate == null
                         ? new Padding(
                             padding: EdgeInsets.all(global.dividerPadding),
                           )
                         : new Text(
-                            widget.startDate,
+                            "Starts: ${presentationFullDayFormat(widget.startDate)}",
                             style: Theme.of(context).textTheme.body1,
                           ), // if there's no date, replace with blank spacing
                   ),

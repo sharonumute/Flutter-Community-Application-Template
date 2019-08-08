@@ -5,12 +5,15 @@ final DateFormat _dayFormat = new DateFormat("dd");
 final DateFormat _firstDayFormat = new DateFormat("MMM dd");
 final DateFormat _fullDayFormat = new DateFormat("EEE MMM dd, yyyy");
 final DateFormat _apiDayFormat = new DateFormat("yyyy-MM-dd");
+final DateFormat _presentationFullDayFormat = new DateFormat("MMMM dd, yyyy");
 
 String formatMonth(DateTime d) => _monthFormat.format(d);
 String formatDay(DateTime d) => _dayFormat.format(d);
 String formatFirstDay(DateTime d) => _firstDayFormat.format(d);
 String fullDayFormat(DateTime d) => _fullDayFormat.format(d);
 String apiDayFormat(DateTime d) => _apiDayFormat.format(d);
+String presentationFullDayFormat(DateTime d) =>
+    _presentationFullDayFormat.format(d);
 
 const List<String> weekdays = const [
   "Sun",
@@ -35,3 +38,18 @@ Iterable<DateTime> onlyDaysInRange(DateTime start, DateTime end) sync* {
     i = new DateTime(i.year, i.month, i.day, 0, 0, 0, 0);
   }
 }
+
+const List<String> months = const [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];

@@ -11,6 +11,8 @@ import 'package:service_application/store/actions.dart';
 import 'package:service_application/error_management/error_messages.dart'
     as ErrorMessage;
 
+import '../utils/dateUtils.dart';
+
 class SermonItemConatiner extends StatelessWidget {
   final SermonObject sermon;
   final int numberOfLinesOnMinimized;
@@ -27,7 +29,7 @@ class SermonItemConatiner extends StatelessWidget {
       builder: (context, vm) {
         return SermonItem(
           title: sermon.title,
-          date: "${sermon.date.year}-${sermon.date.month}-${sermon.date.day}",
+          date: sermon.date,
           preacher: sermon.preacher,
           sermon: sermon.sermon,
           numberOfLinesOnMinimized: numberOfLinesOnMinimized,
@@ -50,7 +52,7 @@ class SermonItem extends StatelessWidget {
       : super(key: key);
 
   final String title;
-  final String date;
+  final DateTime date;
   final Person preacher;
   final String sermon;
   final int numberOfLinesOnMinimized;
@@ -94,7 +96,7 @@ class SermonItem extends StatelessWidget {
                           ],
                         ),
                         new Text(
-                          date,
+                          "${presentationFullDayFormat(date)}",
                           style: Theme.of(context).textTheme.caption,
                         ),
                       ],
@@ -165,7 +167,7 @@ class SermonItem extends StatelessWidget {
                     ],
                   ),
                   new Text(
-                    date,
+                    "${presentationFullDayFormat(date)}",
                     style: Theme.of(context).textTheme.caption,
                   ),
                 ],

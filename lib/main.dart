@@ -35,6 +35,8 @@ class MyApp extends StatelessWidget {
             store.dispatch(new FetchEventsAction(store));
             store.dispatch(new FetchCalendarEventsAction(store));
             store.dispatch(new FetchSermonsAction(store));
+            store.dispatch(new SetCurrentSelectedCalendarAction(
+                (new DateTime(2019, 03, 11)).toString()));
           },
           builder: (context, store) {
             var isLoading = store.state.isLoading;

@@ -13,6 +13,8 @@ AppState appReducer(AppState state, action) {
     sermons: sermonsReducer(state.sermons, action),
     events: eventsReducer(state.events, action),
     calendarEvents: calendarEventsReducer(state.calendarEvents, action),
+    currentSelectedCalendarDate: currentSelectedCalendarDateReducer(
+        state.currentSelectedCalendarDate, action),
   );
 }
 
@@ -40,7 +42,7 @@ bool _fetchSermons(bool state, FetchSermonsAction action) {
     }
 
     action.store.dispatch(new SermonsLoadedAction(sermonObjects));
-    print("sermons fetched and loaded: ${sermonObjects.length}");
+    print("Sermons fetched and loaded: ${sermonObjects.length}");
   });
 
   return true;
@@ -57,7 +59,7 @@ bool _fetchEvents(bool state, FetchEventsAction action) {
     }
 
     action.store.dispatch(new EventsLoadedAction(eventObjects));
-    print("events fetched and loaded: ${eventObjects.length}");
+    print("Events fetched and loaded: ${eventObjects.length}");
   });
 
   return true;
@@ -95,7 +97,7 @@ bool _fetchCalendarEvents(bool state, FetchCalendarEventsAction action) {
     }
 
     action.store.dispatch(new CalendarEventsLoadedAction(calendarEventObjects));
-    print("calendar events fetched and loaded: ${calendarEventObjects.length}");
+    print("Calendar events fetched and loaded: ${calendarEventObjects.length}");
   });
 
   return true;
@@ -126,4 +128,15 @@ final eventsReducer = combineReducers<List<Event>>([
 
 List<Event> loadEventsIntoApp(List<Event> state, EventsLoadedAction action) {
   return action.events;
+}
+
+final currentSelectedCalendarDateReducer = combineReducers<String>([
+  TypedReducer<String, SetCurrentSelectedCalendarAction>(
+      setCurrentSelectedCalendarDate),
+]);
+
+String setCurrentSelectedCalendarDate(
+    String state, SetCurrentSelectedCalendarAction action) {
+  print("Calendar selected date set to: ${action.date}");
+  return action.date;
 }

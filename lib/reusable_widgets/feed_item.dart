@@ -68,7 +68,7 @@ class _FeedItemState extends State<FeedItem> {
     this._toggleExpansion();
     try {
       widget.onEventSelected();
-    } on NoSuchMethodError catch (e) {
+    } on NoSuchMethodError {
       print(ErrorMessage.STORELESS_COMPONENT_WITH_UNDEFINED_VIEWMODEL_FUNCTION);
     }
   }

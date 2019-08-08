@@ -118,7 +118,7 @@ class SermonItem extends StatelessWidget {
       _openSermon();
       try {
         onSermonSelected();
-      } on NoSuchMethodError catch (e) {
+      } on NoSuchMethodError {
         print(
             ErrorMessage.STORELESS_COMPONENT_WITH_UNDEFINED_VIEWMODEL_FUNCTION);
       }

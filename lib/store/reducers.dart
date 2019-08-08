@@ -13,7 +13,6 @@ AppState appReducer(AppState state, action) {
     sermons: sermonsReducer(state.sermons, action),
     events: eventsReducer(state.events, action),
     calendarEvents: calendarEventsReducer(state.calendarEvents, action),
-    currentPage: pageReducer(state.currentPage, action),
   );
 }
 
@@ -127,12 +126,4 @@ final eventsReducer = combineReducers<List<Event>>([
 
 List<Event> loadEventsIntoApp(List<Event> state, EventsLoadedAction action) {
   return action.events;
-}
-
-final pageReducer = combineReducers<String>([
-  TypedReducer<String, ChangePageAction>(setCurrentPage),
-]);
-
-String setCurrentPage(String state, ChangePageAction action) {
-  return action.page;
 }

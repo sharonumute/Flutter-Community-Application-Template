@@ -68,7 +68,7 @@ class _AppPage extends State<AppPage> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = new TabController(length: 3, vsync: this, initialIndex: 0);
-    _tabController.offset = 0.5;
+    _tabController.offset = 0;
   }
 
   @override
@@ -91,7 +91,7 @@ class _AppPage extends State<AppPage> with SingleTickerProviderStateMixin {
           unselectedLabelStyle: Theme.of(context).textTheme.subhead,
           tabs: <Widget>[
             new Tab(icon: Icon(Icons.rss_feed), text: "Feed"),
-            new Tab(icon: Icon(Icons.calendar_today), text: "Calendar"),
+            new Tab(icon: Icon(Icons.event), text: "Calendar"),
             new Tab(icon: Icon(Icons.local_library), text: "Sermons"),
           ],
         ),

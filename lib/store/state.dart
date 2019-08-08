@@ -1,7 +1,5 @@
 import 'package:meta/meta.dart';
 import 'package:service_application/utils/widgetUtils.dart';
-import "package:service_application/pages/pageController.dart"
-    as PageController;
 
 @immutable
 class AppState {
@@ -9,14 +7,12 @@ class AppState {
   final List<SermonObject> sermons;
   final List<Event> events;
   final Map<DateTime, List<Event>> calendarEvents;
-  final String currentPage;
 
   AppState({
     this.isLoading = false,
     this.sermons = const [],
     this.events = const [],
     this.calendarEvents = const {},
-    this.currentPage = PageController.HOME_PAGE,
   });
 
   factory AppState.loading() => AppState(isLoading: true);
@@ -26,14 +22,12 @@ class AppState {
     List<SermonObject> sermons,
     List<Event> events,
     Map<DateTime, List<Event>> calendarEvents,
-    String currentPage,
   }) {
     return AppState(
       isLoading: isLoading ?? this.isLoading,
       sermons: sermons ?? this.sermons,
       events: events ?? this.events,
       calendarEvents: calendarEvents ?? this.calendarEvents,
-      currentPage: currentPage ?? this.currentPage,
     );
   }
 
@@ -42,8 +36,7 @@ class AppState {
       isLoading.hashCode ^
       sermons.hashCode ^
       events.hashCode ^
-      calendarEvents.hashCode ^
-      currentPage.hashCode;
+      calendarEvents.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -53,11 +46,10 @@ class AppState {
           isLoading == other.isLoading &&
           sermons == other.sermons &&
           events == other.events &&
-          calendarEvents == other.calendarEvents &&
-          currentPage == other.currentPage;
+          calendarEvents == other.calendarEvents;
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, sermons: $sermons, events: $events, calendarEvents: $calendarEvents, currentPage: $currentPage}';
+    return 'AppState{isLoading: $isLoading, sermons: $sermons, events: $events, calendarEvents: $calendarEvents';
   }
 }

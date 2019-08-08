@@ -94,13 +94,13 @@ class EventSelectedAction {
 }
 
 /// Page Actions
-class ChangePageAction {
-  final String page;
+class SetCurrentPageAction {
+  final int page;
 
-  ChangePageAction(this.page);
+  SetCurrentPageAction(this.page);
 
   @override
   String toString() {
-    return 'ChangePageAction{page: $page}';
+    return 'SetCurrentPageAction{page: $page}';
   }
 }

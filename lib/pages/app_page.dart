@@ -47,7 +47,6 @@ class _AppPage extends State<AppPage> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = new TabController(length: 3, vsync: this, initialIndex: 0);
-    _tabController.offset = 0;
   }
 
   @override

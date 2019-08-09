@@ -60,7 +60,6 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
-    print(widget.store.state.isOnDarkTheme);
     return new MaterialApp(
       title: 'Victory Chapel Mobile',
       theme: widget.store.state.isOnDarkTheme ? darkTheme : lightTheme,

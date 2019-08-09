@@ -1,5 +1,6 @@
 import "package:service_application/store/state.dart";
 import 'package:service_application/store/actions.dart';
+import 'package:service_application/utils/preferenceUtils.dart';
 import 'package:service_application/utils/widgetUtils.dart';
 import 'package:service_application/utils/stringUtils.dart';
 import 'package:service_application/utils/dateUtils.dart';
@@ -15,6 +16,7 @@ AppState appReducer(AppState state, action) {
     calendarEvents: calendarEventsReducer(state.calendarEvents, action),
     currentSelectedCalendarDate: currentSelectedCalendarDateReducer(
         state.currentSelectedCalendarDate, action),
+    isOnDarkTheme: isOnDarkThemeReducer(state.isOnDarkTheme, action),
   );
 }
 
@@ -139,4 +141,14 @@ String setCurrentSelectedCalendarDate(
     String state, SetCurrentSelectedCalendarAction action) {
   print("Calendar selected date set to: ${action.date}");
   return action.date;
+}
+
+final isOnDarkThemeReducer = combineReducers<bool>([
+  TypedReducer<bool, SwitchThemesAction>(setIsOnDarkTheme),
+]);
+
+bool setIsOnDarkTheme(bool state, SwitchThemesAction action) {
+  print("Activated Dark Theme: ${action.isOnDarkTheme}");
+  setStoreSelectedTheme(action.isOnDarkTheme);
+  return action.isOnDarkTheme;
 }

@@ -7,3 +7,4 @@ Map<DateTime, List<Event>> calendarEventsSelector(AppState state) =>
     state.calendarEvents;
 String currentSelectedCalendarDateSelector(AppState state) =>
     state.currentSelectedCalendarDate;
+bool isOnDarkThemeSelector(AppState state) => state.isOnDarkTheme;

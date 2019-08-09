@@ -103,3 +103,14 @@ class EventSelectedAction {
     return 'EventSelectedAction{Event: $event}';
   }
 }
+
+class SwitchThemesAction {
+  final bool isOnDarkTheme;
+
+  SwitchThemesAction(this.isOnDarkTheme);
+
+  @override
+  String toString() {
+    return 'SwitchThemesAction{IsOnDarkTheme: $isOnDarkTheme}';
+  }
+}

@@ -8,14 +8,15 @@ class AppState {
   final List<Event> events;
   final Map<DateTime, List<Event>> calendarEvents;
   final String currentSelectedCalendarDate;
+  final bool isOnDarkTheme;
 
-  AppState({
-    this.isLoading = false,
-    this.sermons = const [],
-    this.events = const [],
-    this.calendarEvents = const {},
-    this.currentSelectedCalendarDate = "",
-  });
+  AppState(
+      {this.isLoading = false,
+      this.sermons = const [],
+      this.events = const [],
+      this.calendarEvents = const {},
+      this.currentSelectedCalendarDate = "",
+      this.isOnDarkTheme = true});
 
   factory AppState.loading() => AppState(isLoading: true);
 
@@ -25,15 +26,16 @@ class AppState {
     List<Event> events,
     Map<DateTime, List<Event>> calendarEvents,
     String currentSelectedCalendarDate,
+    bool isOnDarkTheme,
   }) {
     return AppState(
-      isLoading: isLoading ?? this.isLoading,
-      sermons: sermons ?? this.sermons,
-      events: events ?? this.events,
-      calendarEvents: calendarEvents ?? this.calendarEvents,
-      currentSelectedCalendarDate:
-          currentSelectedCalendarDate ?? this.currentSelectedCalendarDate,
-    );
+        isLoading: isLoading ?? this.isLoading,
+        sermons: sermons ?? this.sermons,
+        events: events ?? this.events,
+        calendarEvents: calendarEvents ?? this.calendarEvents,
+        currentSelectedCalendarDate:
+            currentSelectedCalendarDate ?? this.currentSelectedCalendarDate,
+        isOnDarkTheme: isOnDarkTheme ?? this.isOnDarkTheme);
   }
 
   @override
@@ -42,7 +44,8 @@ class AppState {
       sermons.hashCode ^
       events.hashCode ^
       calendarEvents.hashCode ^
-      currentSelectedCalendarDate.hashCode;
+      currentSelectedCalendarDate.hashCode ^
+      isOnDarkTheme.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -53,10 +56,11 @@ class AppState {
           sermons == other.sermons &&
           events == other.events &&
           calendarEvents == other.calendarEvents &&
-          currentSelectedCalendarDate == other.currentSelectedCalendarDate;
+          currentSelectedCalendarDate == other.currentSelectedCalendarDate &&
+          isOnDarkTheme == other.isOnDarkTheme;
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, sermons: $sermons, events: $events, calendarEvents: $calendarEvents, currentSelectedCalendarDate: $currentSelectedCalendarDate}';
+    return 'AppState{isLoading: $isLoading, sermons: $sermons, events: $events, calendarEvents: $calendarEvents, currentSelectedCalendarDate: $currentSelectedCalendarDate, isOnDarkTheme: $isOnDarkTheme}';
   }
 }

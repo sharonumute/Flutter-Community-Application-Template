@@ -8,8 +8,7 @@ import 'package:service_application/store/selectors.dart';
 import 'package:service_application/store/state.dart';
 import 'package:service_application/utils/widgetUtils.dart';
 import 'package:service_application/reusable_widgets/feed_item.dart';
-
-import '../store/actions.dart';
+import 'package:service_application/store/actions.dart';
 
 class CalendarPageContainer extends StatelessWidget {
   CalendarPageContainer({Key key}) : super(key: key);

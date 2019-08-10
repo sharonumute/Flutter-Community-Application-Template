@@ -2,14 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/globals.dart' as global;
-import 'package:service_application/imported_widgets/flutter_calendar.dart';
 import 'package:service_application/store/selectors.dart';
 import 'package:service_application/store/state.dart';
-import 'package:service_application/utils/widgetUtils.dart';
-import 'package:service_application/reusable_widgets/feed_item.dart';
-
-import '../store/actions.dart';
 
 class SettingPageContainer extends StatelessWidget {
   SettingPageContainer({Key key}) : super(key: key);

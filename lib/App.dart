@@ -4,13 +4,13 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:service_application/Store/Selectors.dart';
 import 'package:service_application/Store/State.dart';
-import 'package:service_application/pages/homepage_tabs/feed_page.dart';
-import 'package:service_application/pages/homepage_tabs/calendar_page.dart';
-import 'package:service_application/pages/homepage_tabs/sermon_page.dart';
+import 'package:service_application/Pages/HomepageTabPages/FeedPage.dart';
+import 'package:service_application/Pages/HomepageTabPages/CalendarPage.dart';
+import 'package:service_application/Pages/HomepageTabPages/SermonPage.dart';
 import 'package:service_application/Store/Actions.dart';
 
-class AppPageContainer extends StatelessWidget {
-  AppPageContainer({Key key}) : super(key: key);
+class AppContainer extends StatelessWidget {
+  AppContainer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class AppPageContainer extends StatelessWidget {
         return _ViewModel.from(store);
       },
       builder: (context, vm) {
-        return AppPage(
+        return App(
           isAppOnDarkTheme: vm.currentIsOnDarkMode,
           switchThemes: vm.setNewIsOnDarkMode,
         );
@@ -28,19 +28,18 @@ class AppPageContainer extends StatelessWidget {
   }
 }
 
-class AppPage extends StatefulWidget {
+class App extends StatefulWidget {
   final bool isAppOnDarkTheme;
   final Function switchThemes;
 
-  AppPage(
-      {Key key, @required this.isAppOnDarkTheme, @required this.switchThemes})
+  App({Key key, @required this.isAppOnDarkTheme, @required this.switchThemes})
       : super(key: key);
 
   @override
-  _AppPage createState() => new _AppPage();
+  _AppState createState() => new _AppState();
 }
 
-class _AppPage extends State<AppPage> with SingleTickerProviderStateMixin {
+class _AppState extends State<App> with SingleTickerProviderStateMixin {
   TabController _tabController;
 
   @override
@@ -122,9 +121,9 @@ class _AppPage extends State<AppPage> with SingleTickerProviderStateMixin {
                   onPressed: () {
                     widget.switchThemes(!widget.isAppOnDarkTheme);
                   },
-                )
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),

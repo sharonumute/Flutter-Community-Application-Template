@@ -25,13 +25,13 @@ class AppStoreContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreProvider<AppState>(
       store: store,
-      child: new MainAppContainer(),
+      child: new MainContainer(),
     );
   }
 }
 
-class MainAppContainer extends StatelessWidget {
-  MainAppContainer({Key key}) : super(key: key);
+class MainContainer extends StatelessWidget {
+  MainContainer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class MainAppContainer extends StatelessWidget {
         return _ViewModel.from(store);
       },
       builder: (context, vm) {
-        return MainApp(
+        return Main(
           store: vm.store,
         );
       },
@@ -48,16 +48,16 @@ class MainAppContainer extends StatelessWidget {
   }
 }
 
-class MainApp extends StatefulWidget {
+class Main extends StatefulWidget {
   final Store<AppState> store;
 
-  MainApp({Key key, this.store}) : super(key: key);
+  Main({Key key, this.store}) : super(key: key);
 
   @override
-  _MainAppState createState() => new _MainAppState();
+  _MainState createState() => new _MainState();
 }
 
-class _MainAppState extends State<MainApp> {
+class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -83,7 +83,7 @@ class _MainAppState extends State<MainApp> {
               ),
             );
           } else {
-            return new AppPageContainer();
+            return new AppContainer();
           }
         },
       ),

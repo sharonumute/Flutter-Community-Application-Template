@@ -13,11 +13,11 @@ import 'package:service_application/error_management/error_messages.dart'
 
 import '../utils/dateUtils.dart';
 
-class SermonItemConatiner extends StatelessWidget {
+class SermonItemContainer extends StatelessWidget {
   final SermonObject sermon;
   final int numberOfLinesOnMinimized;
 
-  SermonItemConatiner({Key key, this.sermon, this.numberOfLinesOnMinimized})
+  SermonItemContainer({Key key, this.sermon, this.numberOfLinesOnMinimized})
       : super(key: key);
 
   @override

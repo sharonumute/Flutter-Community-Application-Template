@@ -13,11 +13,11 @@ import 'package:service_application/error_management/error_messages.dart'
 
 import '../utils/dateUtils.dart';
 
-class FeedItemConatiner extends StatelessWidget {
+class FeedItemContainer extends StatelessWidget {
   final Event event;
   final int numberOfLinesOnMinimized;
 
-  FeedItemConatiner({Key key, this.event, this.numberOfLinesOnMinimized})
+  FeedItemContainer({Key key, this.event, this.numberOfLinesOnMinimized})
       : super(key: key);
 
   @override

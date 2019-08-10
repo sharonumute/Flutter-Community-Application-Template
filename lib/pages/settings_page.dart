@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:service_application/globals.dart' as global;
+import 'package:service_application/imported_widgets/flutter_calendar.dart';
 import 'package:service_application/store/selectors.dart';
 import 'package:service_application/store/state.dart';
 import 'package:service_application/utils/widgetUtils.dart';
 import 'package:service_application/reusable_widgets/feed_item.dart';
 
-class FeedPageContainer extends StatelessWidget {
-  FeedPageContainer({Key key}) : super(key: key);
+import '../store/actions.dart';
+
+class SettingPageContainer extends StatelessWidget {
+  SettingPageContainer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,32 +21,34 @@ class FeedPageContainer extends StatelessWidget {
         return _ViewModel.from(store);
       },
       builder: (context, vm) {
-        return FeedPage(
-          events: vm.events,
+        return SettingPage(
+          currentIsOnDarkMode: vm.currentIsOnDarkMode,
         );
       },
     );
   }
 }
 
-class FeedPage extends StatefulWidget {
-  final List<Event> events;
+class SettingPage extends StatefulWidget {
+  final bool currentIsOnDarkMode;
 
-  FeedPage({Key key, @required this.events}) : super(key: key);
+  SettingPage({
+    Key key,
+    @required this.currentIsOnDarkMode,
+  }) : super(key: key);
 
   @override
-  _FeedPageState createState() => new _FeedPageState();
+  _SettingPageState createState() => new _SettingPageState();
 }
 
-class _FeedPageState extends State<FeedPage> {
+class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       body: new ListView.builder(
-        padding: const EdgeInsets.only(top: global.paddingFromWalls),
-        itemCount: widget.events.length,
+        itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
-          return new FeedItemContainer(event: widget.events[index]);
+          return new Text("${widget.currentIsOnDarkMode}");
         },
       ),
     );
@@ -51,17 +56,15 @@ class _FeedPageState extends State<FeedPage> {
 }
 
 class _ViewModel {
-  final List<Event> events;
+  final bool currentIsOnDarkMode;
 
   _ViewModel({
-    @required this.events,
+    @required this.currentIsOnDarkMode,
   });
 
   factory _ViewModel.from(Store<AppState> store) {
-    final events = eventsSelector(store.state);
-
     return _ViewModel(
-      events: events,
+      currentIsOnDarkMode: isOnDarkThemeSelector(store.state),
     );
   }
 }

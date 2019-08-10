@@ -11,8 +11,8 @@ import 'package:service_application/reusable_widgets/feed_item.dart';
 
 import '../store/actions.dart';
 
-class CalendarPageConatiner extends StatelessWidget {
-  CalendarPageConatiner({Key key}) : super(key: key);
+class CalendarPageContainer extends StatelessWidget {
+  CalendarPageContainer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
     if (eventsThisDay != null && eventsThisDay.isNotEmpty) {
       for (Event event in eventsThisDay) {
-        eventsToDisplay.add(new FeedItemConatiner(event: event));
+        eventsToDisplay.add(new FeedItemContainer(event: event));
       }
     }
 

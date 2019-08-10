@@ -8,8 +8,8 @@ import 'package:service_application/store/state.dart';
 import 'package:service_application/utils/widgetUtils.dart';
 import 'package:service_application/reusable_widgets/sermon_item.dart';
 
-class SermonPageConatiner extends StatelessWidget {
-  SermonPageConatiner({Key key}) : super(key: key);
+class SermonPageContainer extends StatelessWidget {
+  SermonPageContainer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _SermonPageState extends State<SermonPage> {
         padding: const EdgeInsets.all(global.marginpaddingFromScreenHover),
         itemCount: widget.sermons.length,
         itemBuilder: (BuildContext context, int index) {
-          return new SermonItemConatiner(sermon: widget.sermons[index]);
+          return new SermonItemContainer(sermon: widget.sermons[index]);
         },
       ),
     );

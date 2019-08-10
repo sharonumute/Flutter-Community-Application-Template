@@ -9,8 +9,8 @@ import 'package:service_application/pages/calendar_page.dart';
 import 'package:service_application/pages/sermon_page.dart';
 import 'package:service_application/store/actions.dart';
 
-class AppPageConatiner extends StatelessWidget {
-  AppPageConatiner({Key key}) : super(key: key);
+class AppPageContainer extends StatelessWidget {
+  AppPageContainer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -82,9 +82,9 @@ class _AppPage extends State<AppPage> with SingleTickerProviderStateMixin {
       body: new TabBarView(
         controller: _tabController,
         children: <Widget>[
-          new FeedPageConatiner(),
-          new CalendarPageConatiner(),
-          new SermonPageConatiner(),
+          new FeedPageContainer(),
+          new CalendarPageContainer(),
+          new SermonPageContainer(),
         ],
       ),
       drawer: Drawer(

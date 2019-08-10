@@ -83,7 +83,7 @@ class _MainAppState extends State<MainApp> {
               ),
             );
           } else {
-            return new AppPageConatiner();
+            return new AppPageContainer();
           }
         },
       ),

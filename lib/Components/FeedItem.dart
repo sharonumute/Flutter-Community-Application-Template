@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:service_application/reusable_widgets/expandable_image.dart';
-import 'package:service_application/reusable_widgets/expandable_textBox.dart';
-import 'package:service_application/globals.dart' as global;
-import 'package:service_application/utils/stringUtils.dart';
-import 'package:service_application/utils/widgetUtils.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/store/state.dart';
-import 'package:service_application/store/actions.dart';
-import 'package:service_application/error_management/error_messages.dart'
-    as ErrorMessage;
+import 'package:service_application/Globals/Values.dart';
+import 'package:service_application/Components/ExpandableImage.dart';
+import 'package:service_application/Components/ExpandableTextBox.dart';
+import 'package:service_application/Utils/CommonUtils.dart';
+import 'package:service_application/Utils/DataUtils.dart';
+import 'package:service_application/Store/State.dart';
+import 'package:service_application/Store/Actions.dart';
+import 'package:service_application/Constants/ErrorMessages.dart';
 
-import '../utils/dateUtils.dart';
+import '../Utils/DateUtils.dart';
 
 class FeedItemContainer extends StatelessWidget {
   final Event event;
@@ -70,7 +69,7 @@ class _FeedItemState extends State<FeedItem> {
     try {
       widget.onEventSelected();
     } on NoSuchMethodError {
-      print(ErrorMessage.STORELESS_COMPONENT_WITH_UNDEFINED_VIEWMODEL_FUNCTION);
+      print(STORELESS_COMPONENT_WITH_UNDEFINED_VIEWMODEL_FUNCTION);
     }
   }
 
@@ -87,24 +86,24 @@ class _FeedItemState extends State<FeedItem> {
     Widget feedItem = new Card(
       margin: _expanded
           ? const EdgeInsets.only(
-              left: global.marginpaddingFromScreenHover,
-              right: global.marginpaddingFromScreenHover,
+              left: marginpaddingFromScreenHover,
+              right: marginpaddingFromScreenHover,
               top: 0.0,
               bottom: 15.0)
           : const EdgeInsets.only(
-              left: global.marginpaddingFromScreenFlat,
-              right: global.marginpaddingFromScreenFlat,
+              left: marginpaddingFromScreenFlat,
+              right: marginpaddingFromScreenFlat,
               top: 0.0,
               bottom: 20.0),
-      elevation: _expanded ? global.cardHover : global.cardResting,
+      elevation: _expanded ? cardHover : cardResting,
       clipBehavior: Clip.antiAlias,
       shape: new RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(global.boxborderRadius),
+        borderRadius: new BorderRadius.circular(boxborderRadius),
       ),
       child: InkWell(
         onTap: _onEventSelected,
         child: Container(
-          padding: const EdgeInsets.all(global.paddingFromWalls),
+          padding: const EdgeInsets.all(paddingFromWalls),
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +114,7 @@ class _FeedItemState extends State<FeedItem> {
                   Expanded(
                     child: widget.startDate == null
                         ? new Padding(
-                            padding: EdgeInsets.all(global.dividerPadding),
+                            padding: EdgeInsets.all(dividerPadding),
                           )
                         : new Text(
                             "Starts: ${presentationFullDayFormat(widget.startDate)}",
@@ -124,7 +123,7 @@ class _FeedItemState extends State<FeedItem> {
                   ),
                   new Icon(
                     _expanded ? Icons.expand_less : Icons.expand_more,
-                    size: global.iconSize,
+                    size: iconSize,
                   )
                 ],
               ),
@@ -147,14 +146,14 @@ class _FeedItemState extends State<FeedItem> {
                     ),
               // Blank spacing
               new Padding(
-                padding: EdgeInsets.all(global.dividerPadding),
+                padding: EdgeInsets.all(dividerPadding),
               ),
               // Event image
               ifEmptyOrNull(widget.imageUrl)
                   ? null
                   : new ExpandableImage(
                       imageUrl: widget.imageUrl,
-                      height: global.imageHeightStandard,
+                      height: imageHeightStandard,
                     ),
             ].where(notNull).toList(),
           ),

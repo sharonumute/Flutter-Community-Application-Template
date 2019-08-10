@@ -1,11 +1,12 @@
 import 'dart:async';
-import 'package:service_application/utils/widgetUtils.dart';
-import 'package:service_application/utils/dateUtils.dart';
+
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
-import 'package:service_application/imported_widgets/calendar_tile.dart';
+import 'package:service_application/Components/CalendarTile.dart';
+import 'package:service_application/Utils/DataUtils.dart';
+import 'package:service_application/Utils/DateUtils.dart';
 import 'package:date_utils/date_utils.dart';
-import 'package:service_application/globals.dart' as global;
+import 'package:service_application/Globals/Values.dart';
 
 typedef DayBuilder(BuildContext context, DateTime day);
 
@@ -206,7 +207,7 @@ class _CalendarState extends State<Calendar> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           new Container(
-            padding: new EdgeInsets.only(left: global.paddingFromWalls),
+            padding: new EdgeInsets.only(left: paddingFromWalls),
             child: new Text(
               Utils.fullDayFormat(selectedDate),
             ),
@@ -229,8 +230,8 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return new Card(
-      margin: const EdgeInsets.all(global.marginpaddingFromScreenHover),
-      elevation: global.cardResting,
+      margin: const EdgeInsets.all(marginpaddingFromScreenHover),
+      elevation: cardResting,
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

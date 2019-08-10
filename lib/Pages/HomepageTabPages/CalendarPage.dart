@@ -2,13 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/globals.dart' as global;
-import 'package:service_application/imported_widgets/flutter_calendar.dart';
-import 'package:service_application/store/selectors.dart';
-import 'package:service_application/store/state.dart';
-import 'package:service_application/utils/widgetUtils.dart';
-import 'package:service_application/reusable_widgets/feed_item.dart';
-import 'package:service_application/store/actions.dart';
+import 'package:service_application/Globals/Values.dart';
+import 'package:service_application/Components/Calendar.dart';
+import 'package:service_application/Store/Selectors.dart';
+import 'package:service_application/Store/State.dart';
+import 'package:service_application/Utils/DataUtils.dart';
+import 'package:service_application/Components/FeedItem.dart';
+import 'package:service_application/Store/Actions.dart';
 
 class CalendarPageContainer extends StatelessWidget {
   CalendarPageContainer({Key key}) : super(key: key);
@@ -86,7 +86,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 DateTime.parse(widget.userSelectedCalendarDate),
           ),
           new Padding(
-            padding: EdgeInsets.all(global.dividerPadding),
+            padding: EdgeInsets.all(dividerPadding),
           ),
           new Column(
             children: _currentDisplayedEvents,

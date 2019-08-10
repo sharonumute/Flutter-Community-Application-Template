@@ -1,9 +1,9 @@
-import "package:service_application/store/state.dart";
-import 'package:service_application/store/actions.dart';
-import 'package:service_application/utils/preferenceUtils.dart';
-import 'package:service_application/utils/widgetUtils.dart';
-import 'package:service_application/utils/stringUtils.dart';
-import 'package:service_application/utils/dateUtils.dart';
+import "package:service_application/Store/State.dart";
+import 'package:service_application/Store/Actions.dart';
+import 'package:service_application/Utils/PreferenceUtils.dart';
+import 'package:service_application/Utils/DataUtils.dart';
+import 'package:service_application/Utils/CommonUtils.dart';
+import 'package:service_application/Utils/DateUtils.dart';
 import 'package:redux/redux.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;

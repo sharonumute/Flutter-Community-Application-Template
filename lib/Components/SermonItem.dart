@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:service_application/reusable_widgets/expandable_textBox.dart';
-import 'package:service_application/reusable_widgets/persona.dart';
-import 'package:service_application/globals.dart' as global;
-import 'package:service_application/utils/stringUtils.dart';
-import 'package:service_application/utils/widgetUtils.dart';
+import 'package:service_application/Components/ExpandableTextBox.dart';
+import 'package:service_application/Components/PersonaCoin.dart';
+import 'package:service_application/Globals/Values.dart';
+import 'package:service_application/Utils/CommonUtils.dart';
+import 'package:service_application/Utils/DataUtils.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/store/state.dart';
-import 'package:service_application/store/actions.dart';
-import 'package:service_application/error_management/error_messages.dart'
-    as ErrorMessage;
+import 'package:service_application/Store/State.dart';
+import 'package:service_application/Store/Actions.dart';
+import 'package:service_application/Constants/ErrorMessages.dart';
 
-import '../utils/dateUtils.dart';
+import '../Utils/DateUtils.dart';
 
 class SermonItemContainer extends StatelessWidget {
   final SermonObject sermon;
@@ -71,14 +70,14 @@ class SermonItem extends StatelessWidget {
                   iconTheme: Theme.of(context).iconTheme,
                 ),
                 body: new ListView(
-                  padding: const EdgeInsets.all(global.paddingFromScreen),
+                  padding: const EdgeInsets.all(paddingFromScreen),
                   children: <Widget>[
                     new Text(
                       title,
                       style: Theme.of(context).textTheme.display1,
                     ),
                     new Padding(
-                      padding: EdgeInsets.all(global.dividerPadding),
+                      padding: EdgeInsets.all(dividerPadding),
                     ),
                     new Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,7 +101,7 @@ class SermonItem extends StatelessWidget {
                       ],
                     ),
                     new Padding(
-                      padding: EdgeInsets.all(global.dividerPadding * 2),
+                      padding: EdgeInsets.all(dividerPadding * 2),
                     ),
                     new ExpandableTextBox(
                       text: sermon,
@@ -121,26 +120,25 @@ class SermonItem extends StatelessWidget {
       try {
         onSermonSelected();
       } on NoSuchMethodError {
-        print(
-            ErrorMessage.STORELESS_COMPONENT_WITH_UNDEFINED_VIEWMODEL_FUNCTION);
+        print(STORELESS_COMPONENT_WITH_UNDEFINED_VIEWMODEL_FUNCTION);
       }
     }
 
     return new Card(
       margin: const EdgeInsets.only(
-          left: global.marginpaddingFromScreenHover,
-          right: global.marginpaddingFromScreenHover,
+          left: marginpaddingFromScreenHover,
+          right: marginpaddingFromScreenHover,
           top: 5.0,
           bottom: 5.0),
-      elevation: global.cardResting,
+      elevation: cardResting,
       clipBehavior: Clip.hardEdge,
       shape: new RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(global.boxborderRadius),
+        borderRadius: new BorderRadius.circular(boxborderRadius),
       ),
       child: InkWell(
         onTap: _onSermonSelected,
         child: Container(
-          padding: const EdgeInsets.all(global.paddingFromWalls),
+          padding: const EdgeInsets.all(paddingFromWalls),
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +150,7 @@ class SermonItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               new Padding(
-                padding: EdgeInsets.all(global.dividerPadding / 2),
+                padding: EdgeInsets.all(dividerPadding / 2),
               ),
               new Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -173,7 +171,7 @@ class SermonItem extends StatelessWidget {
                 ],
               ),
               new Padding(
-                padding: EdgeInsets.all(global.dividerPadding),
+                padding: EdgeInsets.all(dividerPadding),
               ),
               // sermon
               ifEmptyOrNull(sermon)

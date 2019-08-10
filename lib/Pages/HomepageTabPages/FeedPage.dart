@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/globals.dart' as global;
-import 'package:service_application/store/selectors.dart';
-import 'package:service_application/store/state.dart';
-import 'package:service_application/utils/widgetUtils.dart';
-import 'package:service_application/reusable_widgets/feed_item.dart';
+import 'package:service_application/Globals/Values.dart';
+import 'package:service_application/Store/Selectors.dart';
+import 'package:service_application/Store/State.dart';
+import 'package:service_application/Utils/DataUtils.dart';
+import 'package:service_application/Components/FeedItem.dart';
 
 class FeedPageContainer extends StatelessWidget {
   FeedPageContainer({Key key}) : super(key: key);
@@ -40,7 +40,7 @@ class _FeedPageState extends State<FeedPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       body: new ListView.builder(
-        padding: const EdgeInsets.only(top: global.paddingFromWalls),
+        padding: const EdgeInsets.only(top: paddingFromWalls),
         itemCount: widget.events.length,
         itemBuilder: (BuildContext context, int index) {
           return new FeedItemContainer(event: widget.events[index]);

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/pages/app_page.dart';
-import 'package:service_application/store/state.dart';
-import 'package:service_application/store/reducers.dart';
-import 'package:service_application/themes.dart';
-import 'package:service_application/store/actions.dart';
-import 'package:service_application/utils/preferenceUtils.dart';
+import 'package:service_application/App.dart';
+import 'package:service_application/Store/State.dart';
+import 'package:service_application/Store/Reducers.dart';
+import 'package:service_application/Store/Actions.dart';
+import 'package:service_application/Globals/Themes.dart';
+import 'package:service_application/Utils/PreferenceUtils.dart';
 
 void main() {
   final store = new Store<AppState>(appReducer, initialState: new AppState());

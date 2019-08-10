@@ -1,5 +1,5 @@
 import 'package:meta/meta.dart';
-import 'package:service_application/utils/widgetUtils.dart';
+import 'package:service_application/Utils/DataUtils.dart';
 
 @immutable
 class AppState {

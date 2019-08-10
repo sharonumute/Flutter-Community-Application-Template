@@ -1,5 +1,5 @@
-import 'package:service_application/utils/widgetUtils.dart';
-import 'package:service_application/store/state.dart';
+import 'package:service_application/Utils/DataUtils.dart';
+import 'package:service_application/Store/State.dart';
 import 'package:redux/redux.dart';
 
 /// Sermon Actions

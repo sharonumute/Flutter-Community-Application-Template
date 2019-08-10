@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/globals.dart' as global;
-import 'package:service_application/store/selectors.dart';
-import 'package:service_application/store/state.dart';
-import 'package:service_application/utils/widgetUtils.dart';
-import 'package:service_application/reusable_widgets/sermon_item.dart';
+import 'package:service_application/Globals/Values.dart';
+import 'package:service_application/Store/Selectors.dart';
+import 'package:service_application/Store/State.dart';
+import 'package:service_application/Utils/DataUtils.dart';
+import 'package:service_application/Components/SermonItem.dart';
 
 class SermonPageContainer extends StatelessWidget {
   SermonPageContainer({Key key}) : super(key: key);
@@ -40,7 +40,7 @@ class _SermonPageState extends State<SermonPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       body: new ListView.builder(
-        padding: const EdgeInsets.all(global.marginpaddingFromScreenHover),
+        padding: const EdgeInsets.all(marginpaddingFromScreenHover),
         itemCount: widget.sermons.length,
         itemBuilder: (BuildContext context, int index) {
           return new SermonItemContainer(sermon: widget.sermons[index]);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:service_application/globals.dart' as globals;
-import "package:service_application/utils/widgetUtils.dart";
+import 'package:service_application/Globals/Values.dart';
+import "package:service_application/Utils/DataUtils.dart";
 
 /// Create a circular persona object that expands to show
 /// Full persona information on click
@@ -17,7 +17,7 @@ class Persona extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Container(
-      margin: const EdgeInsets.only(right: globals.marginForAvatarImages),
+      margin: const EdgeInsets.only(right: marginForAvatarImages),
       child: new Material(
         shape: CircleBorder(),
         clipBehavior: Clip.hardEdge,

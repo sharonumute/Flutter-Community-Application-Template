@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/store/selectors.dart';
-import 'package:service_application/store/state.dart';
+import 'package:service_application/Store/Selectors.dart';
+import 'package:service_application/Store/State.dart';
 import 'package:service_application/pages/homepage_tabs/feed_page.dart';
 import 'package:service_application/pages/homepage_tabs/calendar_page.dart';
 import 'package:service_application/pages/homepage_tabs/sermon_page.dart';
-import 'package:service_application/store/actions.dart';
+import 'package:service_application/Store/Actions.dart';
 
 class AppPageContainer extends StatelessWidget {
   AppPageContainer({Key key}) : super(key: key);

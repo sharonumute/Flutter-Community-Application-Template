@@ -1,4 +1,4 @@
-library service_app.globals;
+library service_app.values;
 
 import 'package:flutter/material.dart';
 

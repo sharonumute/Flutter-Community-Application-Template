@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 import 'package:service_application/Components/ExpandableTextBox.dart';
 import 'package:service_application/Components/PersonaCoin.dart';
 import 'package:service_application/Globals/Values.dart';
 import 'package:service_application/Utils/CommonUtils.dart';
 import 'package:service_application/Utils/DataUtils.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
+import 'package:service_application/Utils/DateUtils.dart';
 import 'package:service_application/Store/State.dart';
 import 'package:service_application/Store/Actions.dart';
 import 'package:service_application/Constants/ErrorMessages.dart';
-
-import '../Utils/DateUtils.dart';
 
 class SermonItemContainer extends StatelessWidget {
   final SermonObject sermon;
@@ -182,7 +181,7 @@ class SermonItem extends StatelessWidget {
                       expanded: false,
                       textStyle: Theme.of(context).textTheme.body2,
                     ),
-            ].where(notNull).toList(),
+            ].where(objectIsNotNull).toList(),
           ),
         ),
       ),

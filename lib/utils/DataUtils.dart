@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-bool notNull(Object o) => o != null;
-
 class Event {
   DateTime startDate;
   DateTime endDate;

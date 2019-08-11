@@ -6,11 +6,10 @@ import 'package:service_application/Components/ExpandableImage.dart';
 import 'package:service_application/Components/ExpandableTextBox.dart';
 import 'package:service_application/Utils/CommonUtils.dart';
 import 'package:service_application/Utils/DataUtils.dart';
+import 'package:service_application/Utils/DateUtils.dart';
 import 'package:service_application/Store/State.dart';
 import 'package:service_application/Store/Actions.dart';
 import 'package:service_application/Constants/ErrorMessages.dart';
-
-import '../Utils/DateUtils.dart';
 
 class FeedItemContainer extends StatelessWidget {
   final Event event;
@@ -155,7 +154,7 @@ class _FeedItemState extends State<FeedItem> {
                       imageUrl: widget.imageUrl,
                       height: imageHeightStandard,
                     ),
-            ].where(notNull).toList(),
+            ].where(objectIsNotNull).toList(),
           ),
         ),
       ),

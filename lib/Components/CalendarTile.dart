@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:date_utils/date_utils.dart';
+import 'package:service_application/Utils/CommonUtils.dart';
 import 'package:service_application/Utils/DataUtils.dart';
-
-bool notNull(Object o) => o != null;
 
 /// Modification of `https://pub.dartlang.org/packages/flutter_calendar#-readme-tab-` to include events
 class CalendarTile extends StatelessWidget {
@@ -55,7 +54,7 @@ class CalendarTile extends StatelessWidget {
                         size: 6.0,
                       )
                     : null,
-              ].where(notNull).toList(),
+              ].where(objectIsNotNull).toList(),
             )),
       );
     } else {
@@ -102,7 +101,7 @@ class CalendarTile extends StatelessWidget {
                         size: 6.0,
                       )
                     : null,
-              ].where(notNull).toList(),
+              ].where(objectIsNotNull).toList(),
             )),
       );
     }

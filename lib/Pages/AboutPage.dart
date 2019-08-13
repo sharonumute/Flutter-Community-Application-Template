@@ -5,8 +5,8 @@ import 'package:redux/redux.dart';
 import 'package:service_application/Store/Selectors.dart';
 import 'package:service_application/Store/State.dart';
 
-class SettingsPageContainer extends StatelessWidget {
-  SettingsPageContainer({Key key}) : super(key: key);
+class AboutPageContainer extends StatelessWidget {
+  AboutPageContainer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class SettingsPageContainer extends StatelessWidget {
         return _ViewModel.from(store);
       },
       builder: (context, vm) {
-        return SettingsPage(
+        return AboutPage(
           currentIsOnDarkMode: vm.currentIsOnDarkMode,
         );
       },
@@ -23,29 +23,24 @@ class SettingsPageContainer extends StatelessWidget {
   }
 }
 
-class SettingsPage extends StatefulWidget {
+class AboutPage extends StatefulWidget {
   final bool currentIsOnDarkMode;
 
-  SettingsPage({
+  AboutPage({
     Key key,
     @required this.currentIsOnDarkMode,
   }) : super(key: key);
 
   @override
-  _SettingsPageState createState() => new _SettingsPageState();
+  _AboutPageState createState() => new _AboutPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(),
-      body: new ListView.builder(
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int index) {
-          return new Text("${widget.currentIsOnDarkMode}");
-        },
-      ),
+      body: new Text("${widget.currentIsOnDarkMode}"),
     );
   }
 }

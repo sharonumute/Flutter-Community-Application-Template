@@ -7,6 +7,7 @@ import 'package:service_application/Store/State.dart';
 import 'package:service_application/Pages/HomepageTabPages/FeedPage.dart';
 import 'package:service_application/Pages/HomepageTabPages/CalendarPage.dart';
 import 'package:service_application/Pages/HomepageTabPages/SermonPage.dart';
+import 'package:service_application/Pages/Routes.dart';
 import 'package:service_application/Store/Actions.dart';
 import 'package:service_application/Globals/Themes.dart';
 import 'package:service_application/Utils/PreferenceUtils.dart';
@@ -74,89 +75,91 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       currentThemeIcon = Icon(Icons.brightness_5);
     }
 
-    Widget appContent = new Scaffold(
-      body: new Center(
-        child: new CircularProgressIndicator(),
-      ),
-    );
-    if (!widget.isLoading) {
-      appContent = new Scaffold(
-        appBar: new AppBar(
-          centerTitle: true,
-          title: new Text(
-            APP_TITLE_BAR,
-          ),
-          bottom: new TabBar(
-            controller: _tabController,
-            labelStyle: Theme.of(context).textTheme.subhead,
-            unselectedLabelStyle: Theme.of(context).textTheme.subhead,
-            tabs: <Widget>[
-              new Tab(icon: Icon(Icons.rss_feed), text: "Feed"),
-              new Tab(icon: Icon(Icons.event), text: "Calendar"),
-              new Tab(icon: Icon(Icons.local_library), text: "Sermons"),
-            ],
-          ),
-        ),
-        body: new TabBarView(
-          controller: _tabController,
-          children: <Widget>[
-            new FeedPageContainer(),
-            new CalendarPageContainer(),
-            new SermonPageContainer(),
-          ],
-        ),
-        drawer: Drawer(
-          child: new Column(
-            children: <Widget>[
-              /** Header */
-              UserAccountsDrawerHeader(
-                accountName: Text(""),
-                accountEmail: Text(APP_NAME),
+    return new MaterialApp(
+      title: 'Victory Chapel Mobile',
+      theme: widget.isOnDarkTheme ? darkTheme : lightTheme,
+      routes: routes,
+      home: Builder(
+        builder: (context) {
+          if (widget.isLoading) {
+            return new Scaffold(
+              body: new Center(
+                child: new CircularProgressIndicator(),
               ),
-              /** Menu Items */
-              new Expanded(
-                child: ListView(
+            );
+          } else {
+            return new Scaffold(
+              appBar: new AppBar(
+                centerTitle: true,
+                title: new Text(
+                  APP_TITLE_BAR,
+                ),
+                bottom: new TabBar(
+                  controller: _tabController,
+                  labelStyle: Theme.of(context).textTheme.subhead,
+                  unselectedLabelStyle: Theme.of(context).textTheme.subhead,
+                  tabs: <Widget>[
+                    new Tab(icon: Icon(Icons.rss_feed), text: "Feed"),
+                    new Tab(icon: Icon(Icons.event), text: "Calendar"),
+                    new Tab(icon: Icon(Icons.local_library), text: "Sermons"),
+                  ],
+                ),
+              ),
+              body: new TabBarView(
+                controller: _tabController,
+                children: <Widget>[
+                  new FeedPageContainer(),
+                  new CalendarPageContainer(),
+                  new SermonPageContainer(),
+                ],
+              ),
+              drawer: Drawer(
+                child: new Column(
                   children: <Widget>[
-                    ListTile(
-                      title: Text("Home"),
-                      leading: Icon(Icons.home),
+                    /** Header */
+                    UserAccountsDrawerHeader(
+                      accountName: Text(""),
+                      accountEmail: Text(APP_NAME),
                     ),
-                    ListTile(
-                      title: Text("About"),
-                      leading: Icon(Icons.info),
+                    /** Menu Items */
+                    new Expanded(
+                      child: ListView(
+                        children: <Widget>[
+                          ListTile(
+                            title: Text("About"),
+                            leading: Icon(Icons.info),
+                            onTap: () =>
+                                Navigator.of(context).pushNamed(ABOUT_PAGE),
+                          ),
+                        ],
+                      ),
+                    ),
+                    /** Bottom Row */
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        /** Settings Button */
+                        new FlatButton.icon(
+                            onPressed: () =>
+                                Navigator.of(context).pushNamed(SETTINGS_PAGE),
+                            icon: Icon(Icons.settings),
+                            label: Text("Settings")),
+                        /** Theme Switch Button */
+                        new IconButton(
+                          icon: currentThemeIcon,
+                          tooltip: 'Switch Themes',
+                          onPressed: () =>
+                              widget.setNewIsOnDarkTheme(!widget.isOnDarkTheme),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-              /** Bottom Row */
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  /** Settings Button */
-                  new FlatButton.icon(
-                      onPressed: null,
-                      icon: Icon(Icons.settings),
-                      label: Text("Settings")),
-                  /** Theme Switch Button */
-                  new IconButton(
-                    icon: currentThemeIcon,
-                    tooltip: 'Switch Themes',
-                    onPressed: () {
-                      widget.setNewIsOnDarkTheme(!widget.isOnDarkTheme);
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    return new MaterialApp(
-      title: 'Victory Chapel Mobile',
-      theme: widget.isOnDarkTheme ? darkTheme : lightTheme,
-      home: appContent,
+            );
+          }
+        },
+      ),
     );
   }
 }

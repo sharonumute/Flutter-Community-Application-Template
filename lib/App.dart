@@ -8,6 +8,9 @@ import 'package:service_application/Pages/HomepageTabPages/FeedPage.dart';
 import 'package:service_application/Pages/HomepageTabPages/CalendarPage.dart';
 import 'package:service_application/Pages/HomepageTabPages/SermonPage.dart';
 import 'package:service_application/Store/Actions.dart';
+import 'package:service_application/Globals/Themes.dart';
+import 'package:service_application/Utils/PreferenceUtils.dart';
+import 'package:service_application/Constants/AppDetails.dart';
 
 class AppContainer extends StatelessWidget {
   AppContainer({Key key}) : super(key: key);
@@ -20,8 +23,10 @@ class AppContainer extends StatelessWidget {
       },
       builder: (context, vm) {
         return App(
-          isAppOnDarkTheme: vm.currentIsOnDarkMode,
-          switchThemes: vm.setNewIsOnDarkMode,
+          isOnDarkTheme: vm.isOnDarkTheme,
+          setNewIsOnDarkTheme: vm.setNewIsOnDarkMode,
+          isLoading: vm.isLoading,
+          onAppStarted: vm.onAppStarted,
         );
       },
     );
@@ -29,10 +34,17 @@ class AppContainer extends StatelessWidget {
 }
 
 class App extends StatefulWidget {
-  final bool isAppOnDarkTheme;
-  final Function switchThemes;
+  final bool isOnDarkTheme;
+  final Function setNewIsOnDarkTheme;
+  final bool isLoading;
+  final Function onAppStarted;
 
-  App({Key key, @required this.isAppOnDarkTheme, @required this.switchThemes})
+  App(
+      {Key key,
+      @required this.isOnDarkTheme,
+      @required this.setNewIsOnDarkTheme,
+      @required this.isLoading,
+      @required this.onAppStarted})
       : super(key: key);
 
   @override
@@ -45,6 +57,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    widget.onAppStarted();
     _tabController = new TabController(length: 3, vsync: this, initialIndex: 0);
   }
 
@@ -57,93 +70,125 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     Icon currentThemeIcon = Icon(Icons.brightness_2);
-    if (widget.isAppOnDarkTheme) {
+    if (widget.isOnDarkTheme) {
       currentThemeIcon = Icon(Icons.brightness_5);
     }
 
-    return new Scaffold(
-      appBar: new AppBar(
-        centerTitle: true,
-        title: new Text(
-          "Victory Chapel",
+    Widget appContent = new Scaffold(
+      body: new Center(
+        child: new CircularProgressIndicator(),
+      ),
+    );
+    if (!widget.isLoading) {
+      appContent = new Scaffold(
+        appBar: new AppBar(
+          centerTitle: true,
+          title: new Text(
+            APP_TITLE_BAR,
+          ),
+          bottom: new TabBar(
+            controller: _tabController,
+            labelStyle: Theme.of(context).textTheme.subhead,
+            unselectedLabelStyle: Theme.of(context).textTheme.subhead,
+            tabs: <Widget>[
+              new Tab(icon: Icon(Icons.rss_feed), text: "Feed"),
+              new Tab(icon: Icon(Icons.event), text: "Calendar"),
+              new Tab(icon: Icon(Icons.local_library), text: "Sermons"),
+            ],
+          ),
         ),
-        bottom: new TabBar(
+        body: new TabBarView(
           controller: _tabController,
-          labelStyle: Theme.of(context).textTheme.subhead,
-          unselectedLabelStyle: Theme.of(context).textTheme.subhead,
-          tabs: <Widget>[
-            new Tab(icon: Icon(Icons.rss_feed), text: "Feed"),
-            new Tab(icon: Icon(Icons.event), text: "Calendar"),
-            new Tab(icon: Icon(Icons.local_library), text: "Sermons"),
+          children: <Widget>[
+            new FeedPageContainer(),
+            new CalendarPageContainer(),
+            new SermonPageContainer(),
           ],
         ),
-      ),
-      body: new TabBarView(
-        controller: _tabController,
-        children: <Widget>[
-          new FeedPageContainer(),
-          new CalendarPageContainer(),
-          new SermonPageContainer(),
-        ],
-      ),
-      drawer: Drawer(
-        child: new Column(
-          children: <Widget>[
-            /** Header */
-            UserAccountsDrawerHeader(
-              accountName: Text(""),
-              accountEmail: Text("Victory Chapel Mobile"),
-            ),
-            /** Menu Items */
-            new Expanded(
-              child: ListView(
+        drawer: Drawer(
+          child: new Column(
+            children: <Widget>[
+              /** Header */
+              UserAccountsDrawerHeader(
+                accountName: Text(""),
+                accountEmail: Text(APP_NAME),
+              ),
+              /** Menu Items */
+              new Expanded(
+                child: ListView(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text("Home"),
+                      leading: Icon(Icons.home),
+                    ),
+                    ListTile(
+                      title: Text("About"),
+                      leading: Icon(Icons.info),
+                    ),
+                  ],
+                ),
+              ),
+              /** Bottom Row */
+              new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  ListTile(
-                    title: Text("About"),
-                    leading: Icon(Icons.home),
+                  /** Settings Button */
+                  new FlatButton.icon(
+                      onPressed: null,
+                      icon: Icon(Icons.settings),
+                      label: Text("Settings")),
+                  /** Theme Switch Button */
+                  new IconButton(
+                    icon: currentThemeIcon,
+                    tooltip: 'Switch Themes',
+                    onPressed: () {
+                      widget.setNewIsOnDarkTheme(!widget.isOnDarkTheme);
+                    },
                   ),
                 ],
               ),
-            ),
-            /** Bottom Row */
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                /** Settings Button */
-                new FlatButton.icon(
-                    onPressed: null,
-                    icon: Icon(Icons.settings),
-                    label: Text("Settings")),
-                /** Theme Switch Button */
-                new IconButton(
-                  icon: currentThemeIcon,
-                  tooltip: 'Switch Themes',
-                  onPressed: () {
-                    widget.switchThemes(!widget.isAppOnDarkTheme);
-                  },
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+      );
+    }
+
+    return new MaterialApp(
+      title: 'Victory Chapel Mobile',
+      theme: widget.isOnDarkTheme ? darkTheme : lightTheme,
+      home: appContent,
     );
   }
 }
 
 class _ViewModel {
-  final bool currentIsOnDarkMode;
+  final bool isOnDarkTheme;
   final Function setNewIsOnDarkMode;
+  final bool isLoading;
+  final Function onAppStarted;
 
   _ViewModel({
-    @required this.currentIsOnDarkMode,
+    @required this.isOnDarkTheme,
     @required this.setNewIsOnDarkMode,
+    @required this.isLoading,
+    @required this.onAppStarted,
   });
 
   factory _ViewModel.from(Store<AppState> store) {
     return _ViewModel(
-        currentIsOnDarkMode: isOnDarkThemeSelector(store.state),
+        isOnDarkTheme: isOnDarkThemeSelector(store.state),
         setNewIsOnDarkMode: (bool newIsOnDarkTheme) =>
-            store.dispatch(new SwitchThemesAction(newIsOnDarkTheme)));
+            store.dispatch(new SwitchThemesAction(newIsOnDarkTheme)),
+        isLoading: store.state.isLoading,
+        onAppStarted: () {
+          store.dispatch(new FetchEventsAction(store));
+          store.dispatch(new FetchCalendarEventsAction(store));
+          store.dispatch(new FetchSermonsAction(store));
+          store.dispatch(new SetCurrentSelectedCalendarAction(
+              (new DateTime.now()).toString()));
+          getIsOnDarkTheme().then((isOnDarkTheme) {
+            store.dispatch(new SwitchThemesAction(isOnDarkTheme));
+          });
+        });
   }
 }

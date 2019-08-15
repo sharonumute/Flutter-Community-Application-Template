@@ -6,11 +6,15 @@ import 'package:service_application/Globals/Values.dart';
 /// `image`: The content image url
 ///
 /// `height`: Height of object when minimized, parent control width
+///
+/// `width`: Width of object when minimized, if undefined, parent control width
 class ExpandableImage extends StatelessWidget {
-  ExpandableImage({Key key, this.imageUrl, this.height}) : super(key: key);
-
   final String imageUrl;
   final double height;
+  final double width;
+
+  ExpandableImage({Key key, this.imageUrl, this.height, this.width})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +36,19 @@ class ExpandableImage extends StatelessWidget {
       );
     }
 
-    return new Material(
-      borderRadius: new BorderRadius.circular(boxborderRadius),
-      clipBehavior: Clip.hardEdge,
-      child: Ink.image(
-        image: new NetworkImage(imageUrl),
-        fit: BoxFit.fitWidth,
-        height: height,
-        child: InkWell(
-          onTap: _previewImage,
+    return new SizedBox(
+      height: height,
+      width: width,
+      child: new Material(
+        borderRadius: new BorderRadius.circular(boxborderRadius),
+        clipBehavior: Clip.hardEdge,
+        child: Ink.image(
+          image: new NetworkImage(imageUrl),
+          fit: BoxFit.fitWidth,
+          height: height,
+          child: InkWell(
+            onTap: _previewImage,
+          ),
         ),
       ),
     );

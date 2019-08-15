@@ -12,10 +12,10 @@ const double marginpaddingFromScreenFlat = 8.0;
 const double marginForAvatarImages = 8.0;
 const double dividerPadding = 6.0;
 
-//elevation
+// Elevation
 const double cardResting = 1.0;
 const double cardHover = 6.0;
-const double dialog = 24.0;
+const double dialog = 16.0;
 const double navigationDrawer = 16.0;
 const double menus = 8;
 const double switchWidget = 1;

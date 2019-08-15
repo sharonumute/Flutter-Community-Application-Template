@@ -83,7 +83,7 @@ class SermonItem extends StatelessWidget {
                       children: <Widget>[
                         new Row(
                           children: <Widget>[
-                            new Persona(
+                            new PersonaCoin(
                               person: preacher,
                               diameter: 20.0,
                             ),
@@ -156,7 +156,7 @@ class SermonItem extends StatelessWidget {
                 children: <Widget>[
                   new Row(
                     children: <Widget>[
-                      new Persona(person: preacher, diameter: 20.0),
+                      new PersonaCoin(person: preacher, diameter: 20.0),
                       new Text(
                         preacher.name,
                         style: Theme.of(context).textTheme.body2,

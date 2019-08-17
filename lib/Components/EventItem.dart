@@ -11,11 +11,11 @@ import 'package:service_application/Store/State.dart';
 import 'package:service_application/Store/Actions.dart';
 import 'package:service_application/Constants/ErrorMessages.dart';
 
-class FeedItemContainer extends StatelessWidget {
+class EventItemContainer extends StatelessWidget {
   final Event event;
   final int numberOfLinesOnMinimized;
 
-  FeedItemContainer({Key key, this.event, this.numberOfLinesOnMinimized})
+  EventItemContainer({Key key, this.event, this.numberOfLinesOnMinimized})
       : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class FeedItemContainer extends StatelessWidget {
         return _ViewModel.from(store, event);
       },
       builder: (context, vm) {
-        return FeedItem(
+        return EventItem(
           startDate: event.startDate,
           title: event.title,
           details: event.details,
@@ -38,8 +38,8 @@ class FeedItemContainer extends StatelessWidget {
   }
 }
 
-class FeedItem extends StatefulWidget {
-  FeedItem({
+class EventItem extends StatefulWidget {
+  EventItem({
     Key key,
     this.title,
     this.startDate,
@@ -57,10 +57,10 @@ class FeedItem extends StatefulWidget {
   final Function onEventSelected;
 
   @override
-  _FeedItemState createState() => new _FeedItemState();
+  _EventItemState createState() => new _EventItemState();
 }
 
-class _FeedItemState extends State<FeedItem> {
+class _EventItemState extends State<EventItem> {
   bool _expanded = false;
 
   void _onEventSelected() {
@@ -80,9 +80,9 @@ class _FeedItemState extends State<FeedItem> {
 
   @override
   Widget build(BuildContext context) {
-    print("Feed Item Expanded: " + '$_expanded');
+    print("Event Item Expanded: " + '$_expanded');
 
-    Widget feedItem = new Card(
+    Widget eventItem = new Card(
       margin: _expanded
           ? const EdgeInsets.only(
               left: marginpaddingFromScreenHover,
@@ -116,7 +116,7 @@ class _FeedItemState extends State<FeedItem> {
                             padding: EdgeInsets.all(dividerPadding),
                           )
                         : new Text(
-                            "Starts: ${presentationFullDayFormat(widget.startDate)}",
+                            "${presentationFullDayFormat(widget.startDate)}",
                             style: Theme.of(context).textTheme.body1,
                           ), // if there's no date, replace with blank spacing
                   ),
@@ -161,7 +161,7 @@ class _FeedItemState extends State<FeedItem> {
     );
 
     return new ExpansionCrossFade(
-        collapsed: feedItem, expanded: feedItem, isExpanded: _expanded);
+        collapsed: eventItem, expanded: eventItem, isExpanded: _expanded);
   }
 }
 

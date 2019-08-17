@@ -6,7 +6,7 @@ import 'package:service_application/Globals/Values.dart';
 import 'package:service_application/Store/Selectors.dart';
 import 'package:service_application/Store/State.dart';
 import 'package:service_application/Utils/DataUtils.dart';
-import 'package:service_application/Components/FeedItem.dart';
+import 'package:service_application/Components/EventItem.dart';
 
 class FeedPageContainer extends StatelessWidget {
   FeedPageContainer({Key key}) : super(key: key);
@@ -43,7 +43,7 @@ class _FeedPageState extends State<FeedPage> {
         padding: const EdgeInsets.only(top: paddingFromWalls),
         itemCount: widget.events.length,
         itemBuilder: (BuildContext context, int index) {
-          return new FeedItemContainer(event: widget.events[index]);
+          return new EventItemContainer(event: widget.events[index]);
         },
       ),
     );

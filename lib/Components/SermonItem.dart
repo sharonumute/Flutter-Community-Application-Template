@@ -80,6 +80,7 @@ class SermonItem extends StatelessWidget {
     }
 
     return new Card(
+      color: Theme.of(context).backgroundColor,
       margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
       elevation: 0,
       shape: new RoundedRectangleBorder(
@@ -112,16 +113,14 @@ class SermonItem extends StatelessWidget {
                 ],
               ),
               new Padding(
-                padding: EdgeInsets.all(dividerPadding / 2),
+                padding: EdgeInsets.all(dividerPadding),
               ),
               new Text(
                 title,
                 style: Theme.of(context).textTheme.headline,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
               ),
               new Padding(
-                padding: EdgeInsets.all(dividerPadding / 2),
+                padding: EdgeInsets.all(dividerPadding / 3),
               ),
               // sermon
               ifEmptyOrNull(sermon)

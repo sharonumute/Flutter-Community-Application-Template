@@ -111,6 +111,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                   unselectedLabelStyle: Theme.of(context).textTheme.subhead,
                   tabs: homepageTabs.keys.toList(),
                 ),
+                elevation: 0,
               ),
               body: new TabBarView(
                 controller: _tabController,

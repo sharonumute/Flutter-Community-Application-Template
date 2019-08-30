@@ -45,6 +45,30 @@ class CustomImage extends StatefulWidget {
 
 class _CustomImageState extends State<CustomImage> {
   bool imageLoaded = false;
+  Image networkImage;
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      networkImage = Image.network(widget.imageUrl);
+    });
+
+    ImageStreamListener imageLoading = ImageStreamListener((i, b) {
+      if (mounted) {
+        setState(() {
+          imageLoaded = true;
+        });
+      }
+    }, onError: (d, s) {
+      debugPrint("Image ${widget.imageUrl} failed to load");
+      setState(() {
+        imageLoaded = false;
+      });
+    });
+    networkImage.image.resolve(ImageConfiguration()).addListener(imageLoading);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,36 +84,18 @@ class _CustomImageState extends State<CustomImage> {
 
     bool showTint = ifObjectIsNotNull(widget.tint) ? widget.tint : false;
 
-    Image networkImage = Image.network(widget.imageUrl);
-    ImageStreamListener imageLoading = ImageStreamListener((i, b) {
-      if (mounted) {
-        setState(() {
-          imageLoaded = true;
-        });
-      }
-    }, onError: (d, s) {
-      debugPrint("Image ${widget.imageUrl} failed to load");
-      setState(() {
-        imageLoaded = false;
-      });
-    });
-    networkImage.image.resolve(ImageConfiguration()).addListener(imageLoading);
-
     Container tintObject = showTint
         ? Container(
             height: widget.height,
             width: widget.width,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  const Color(0xCC000000),
-                  const Color(0x00000000),
-                  const Color(0x00000000),
-                  const Color(0x00000000),
-                ],
-              ),
+                  begin: FractionalOffset.topCenter,
+                  end: FractionalOffset.bottomCenter,
+                  colors: [
+                    const Color(0xdd000000),
+                    const Color(0x00000000),
+                  ]),
             ),
           )
         : null;

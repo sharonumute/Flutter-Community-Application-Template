@@ -241,7 +241,8 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return new Card(
-      margin: const EdgeInsets.all(marginpaddingFromScreenHover),
+      color: Theme.of(context).primaryColor,
+      margin: const EdgeInsets.all(0),
       elevation: cardResting,
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.start,

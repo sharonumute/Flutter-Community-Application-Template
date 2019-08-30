@@ -156,7 +156,7 @@ ThemeData lightBlueTheme = ThemeData(
 );
 
 ThemeData darkThemeBlackHue = ThemeData(
-  accentColor: themeLightBluePrimary,
+  accentColor: themeDarkBlackAccent,
   accentIconTheme: IconThemeData(
     color: normalWhiteText,
     size: iconSize,
@@ -169,12 +169,12 @@ ThemeData darkThemeBlackHue = ThemeData(
       color: normalWhiteText,
     ),
   ),
-  backgroundColor: themeDarkBlueBackground,
-  cardColor: themeDarkBluePrimary,
+  backgroundColor: themeDarkBlackBackground,
+  cardColor: themeDarkBlackPrimary,
   colorScheme: ColorScheme(
-      primary: themeDarkBluePrimary,
-      surface: themeDarkBlueBackground,
-      background: themeDarkBlueBackground,
+      primary: themeDarkBlackPrimary,
+      surface: themeDarkBlackBackground,
+      background: themeDarkBlackBackground,
       brightness: Brightness.dark,
       error: errorRedText,
       onBackground: normalWhiteText,
@@ -182,9 +182,9 @@ ThemeData darkThemeBlackHue = ThemeData(
       onPrimary: normalWhiteText,
       onSecondary: normalWhiteText,
       onSurface: normalWhiteText,
-      primaryVariant: themeDarkBluePrimaryDark,
-      secondary: themeDarkBluePrimary,
-      secondaryVariant: themeDarkBluePrimaryDark),
+      primaryVariant: themeDarkBlackPrimaryDark,
+      secondary: themeDarkBlackPrimary,
+      secondaryVariant: themeDarkBlackPrimaryDark),
   cursorColor: normalWhiteText,
   disabledColor: disabledWhiteText,
   dividerColor: mediumWhiteText,
@@ -193,7 +193,7 @@ ThemeData darkThemeBlackHue = ThemeData(
     color: normalWhiteText,
     size: iconSize,
   ),
-  primaryColor: themeDarkBluePrimary,
+  primaryColor: themeDarkBlackPrimary,
   primaryIconTheme: IconThemeData(
     color: normalWhiteText,
     size: iconSize,
@@ -236,7 +236,7 @@ ThemeData darkThemeBlackHue = ThemeData(
       foreground: Paint()..color = normalWhiteText,
     ),
   ),
-  scaffoldBackgroundColor: themeDarkBlueBackground,
+  scaffoldBackgroundColor: themeDarkBlackBackground,
   textTheme: TextTheme(
     display1: TextStyle(
       fontSize: 60.0,
@@ -275,13 +275,13 @@ ThemeData darkThemeBlackHue = ThemeData(
       color: helperWhiteText,
     ),
   ),
-  primaryColorDark: themeDarkBluePrimaryDark,
-  primaryColorLight: themeDarkBluePrimaryLight,
+  primaryColorDark: themeDarkBlackPrimaryDark,
+  primaryColorLight: themeDarkBlackPrimaryLight,
   primaryColorBrightness: Brightness.dark,
   brightness: Brightness.dark,
   buttonTheme: ButtonThemeData(
     textTheme: ButtonTextTheme.normal,
-    buttonColor: themeLightBluePrimary,
+    buttonColor: themeDarkBlackAccent,
   ),
   tabBarTheme: TabBarTheme(
     labelColor: Color.fromRGBO(255, 255, 255, 1.0),
@@ -290,7 +290,7 @@ ThemeData darkThemeBlackHue = ThemeData(
 );
 
 ThemeData darkThemeBlueHue = ThemeData(
-  accentColor: themeLightBluePrimary,
+  accentColor: themeDarkBlueAccent,
   accentIconTheme: IconThemeData(
     color: normalWhiteText,
     size: iconSize,
@@ -415,7 +415,7 @@ ThemeData darkThemeBlueHue = ThemeData(
   brightness: Brightness.dark,
   buttonTheme: ButtonThemeData(
     textTheme: ButtonTextTheme.normal,
-    buttonColor: themeLightBluePrimary,
+    buttonColor: themeDarkBlueAccent,
   ),
   tabBarTheme: TabBarTheme(
     labelColor: Color.fromRGBO(255, 255, 255, 1.0),

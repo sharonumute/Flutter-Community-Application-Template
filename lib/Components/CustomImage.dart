@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:service_application/Globals/Values.dart';
 import 'package:service_application/Utils/CommonUtils.dart';
 import 'package:service_application/Pages/ComponentPages/CustomImagePage.dart';
@@ -43,7 +44,7 @@ class CustomImage extends StatefulWidget {
 }
 
 class _CustomImageState extends State<CustomImage> {
-  bool imageFailedToLoad = false;
+  bool imageLoaded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,14 +60,20 @@ class _CustomImageState extends State<CustomImage> {
 
     bool showTint = ifObjectIsNotNull(widget.tint) ? widget.tint : false;
 
-    NetworkImage networkImage = NetworkImage(widget.imageUrl);
-
-    precacheImage(networkImage, context, onError: (e, stackTrace) {
-      print("Image ${widget.imageUrl} failed to load with error $e.");
+    Image networkImage = Image.network(widget.imageUrl);
+    ImageStreamListener imageLoading = ImageStreamListener((i, b) {
+      if (mounted) {
+        setState(() {
+          imageLoaded = true;
+        });
+      }
+    }, onError: (d, s) {
+      debugPrint("Image ${widget.imageUrl} failed to load");
       setState(() {
-        imageFailedToLoad = true;
+        imageLoaded = false;
       });
     });
+    networkImage.image.resolve(ImageConfiguration()).addListener(imageLoading);
 
     Container tintObject = showTint
         ? Container(
@@ -97,16 +104,23 @@ class _CustomImageState extends State<CustomImage> {
             height: widget.height,
             width: widget.width,
             child: InkWell(
-              onTap: widget.onClick ?? _previewImage,
+              onTap: widget.onClick,
             ),
           );
         case FallbackType.image:
           return new Container(
-            color: imageFallbackColor,
+            decoration: new BoxDecoration(
+              image: new DecorationImage(
+                colorFilter: new ColorFilter.mode(
+                    Colors.black.withOpacity(0.6), BlendMode.dstATop),
+                image: new AssetImage(widget.imageFallbackFilename),
+                fit: BoxFit.cover,
+              ),
+            ),
             height: widget.height,
             width: widget.width,
             child: InkWell(
-              onTap: widget.onClick ?? _previewImage,
+              onTap: widget.onClick,
             ),
           );
         case FallbackType.textboy:
@@ -124,7 +138,7 @@ class _CustomImageState extends State<CustomImage> {
                   ),
                 ),
               ),
-              onTap: widget.onClick ?? _previewImage,
+              onTap: widget.onClick,
             ),
           );
         default:
@@ -132,15 +146,14 @@ class _CustomImageState extends State<CustomImage> {
       }
     }
 
-    Widget imageObject = imageFailedToLoad
-        ? getImageFallback(widget.imageFallbackType)
-        : new SizedBox(
+    Widget imageObject = imageLoaded
+        ? new SizedBox(
             height: widget.height,
             width: widget.width,
             child: new Material(
               clipBehavior: Clip.hardEdge,
               child: Ink.image(
-                image: networkImage,
+                image: networkImage.image,
                 fit: BoxFit.cover,
                 height: widget.height,
                 width: widget.width,
@@ -149,7 +162,8 @@ class _CustomImageState extends State<CustomImage> {
                 ),
               ),
             ),
-          );
+          )
+        : getImageFallback(widget.imageFallbackType);
 
     return new Stack(
       fit: StackFit.passthrough,

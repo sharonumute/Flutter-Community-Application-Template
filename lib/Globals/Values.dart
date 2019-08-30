@@ -31,14 +31,16 @@ FontWeight normalTextWeight = FontWeight.w400;
 // Dark Theme Colors - Blue Hue
 Color themeDarkBlueBackground = Color.fromRGBO(33, 33, 33, 1);
 Color themeDarkBluePrimary = Color.fromRGBO(38, 50, 56, 1);
+Color themeDarkBlueAccent = Color.fromRGBO(97, 170, 225, 1);
 Color themeDarkBluePrimaryDark = Color.fromRGBO(23, 29, 33, 1);
 Color themeDarkBluePrimaryLight = Color.fromRGBO(55, 71, 79, 1);
 
 // Dark Theme Colors - Black Hue
-Color themeDarkBlackBackground = Color.fromRGBO(33, 33, 33, 1);
-Color themeDarkBlackPrimary = Color.fromRGBO(38, 50, 56, 1);
-Color themeDarkBlackPrimaryDark = Color.fromRGBO(23, 29, 33, 1);
-Color themeDarkBlackPrimaryLight = Color.fromRGBO(55, 71, 79, 1);
+Color themeDarkBlackBackground = Color.fromRGBO(34, 35, 39, 1);
+Color themeDarkBlackPrimary = Color.fromRGBO(48, 49, 54, 1);
+Color themeDarkBlackAccent = Color.fromRGBO(121, 155, 193, 1);
+Color themeDarkBlackPrimaryDark = Color.fromRGBO(33, 33, 33, 1);
+Color themeDarkBlackPrimaryLight = Color.fromRGBO(53, 61, 68, 1);
 
 // Light Theme Colors - Blue
 Color themeLightBlueAppBackground = Color.fromRGBO(238, 238, 238, 1);

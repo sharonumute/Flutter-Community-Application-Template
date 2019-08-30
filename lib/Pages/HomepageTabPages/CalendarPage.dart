@@ -53,8 +53,8 @@ class _CalendarPageState extends State<CalendarPage> {
     List<Widget> eventsToDisplay = [];
     List<Event> eventsThisDay = widget.events
         .where((event) => event.isInRange(
-            new DateTime(day.year, day.month, day.day, 0, 0, 0),
-            new DateTime(day.year, day.month, day.day, 23, 59, 59)))
+            new DateTime.utc(day.year, day.month, day.day, 0, 0, 0),
+            new DateTime.utc(day.year, day.month, day.day, 23, 59, 59)))
         .toList();
 
     if (eventsThisDay != null && eventsThisDay.isNotEmpty) {
@@ -73,7 +73,7 @@ class _CalendarPageState extends State<CalendarPage> {
   void initState() {
     super.initState();
     changeCurrentDisplayedDates(
-        DateTime.parse(widget.userSelectedCalendarDate));
+        DateTime.parse(widget.userSelectedCalendarDate).toUtc());
   }
 
   @override
@@ -86,7 +86,7 @@ class _CalendarPageState extends State<CalendarPage> {
             onDateSelected: (date) => changeCurrentDisplayedDates(date),
             events: widget.events,
             initialCalendarDateOverride:
-                DateTime.parse(widget.userSelectedCalendarDate),
+                DateTime.parse(widget.userSelectedCalendarDate).toUtc(),
           ),
           new Padding(
             padding: EdgeInsets.all(dividerPadding),

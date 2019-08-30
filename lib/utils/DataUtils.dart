@@ -41,12 +41,15 @@ class Event extends DatetimeObject {
   factory Event.fromJson(Map<String, dynamic> parsedJson,
       {DateTime preferredStartDate, DateTime preferredEndDate}) {
     return new Event(
-      startDate: preferredStartDate ?? DateTime.parse(parsedJson['start']),
-      endDate: preferredEndDate ?? DateTime.parse(parsedJson['end']),
+      startDate: preferredStartDate.toUtc() ??
+          DateTime.parse(parsedJson['start']).toUtc(),
+      endDate:
+          preferredEndDate.toUtc() ?? DateTime.parse(parsedJson['end']).toUtc(),
       title: parsedJson['title'],
       details: parsedJson['details'],
       imageUrl: parsedJson['image_url'],
-      color: Color(int.parse(parsedJson['color'], radix: 16) + 0xFF000000) ??
+      color: Color(int.parse(parsedJson['color'], radix: 16) + 0xFF000000)
+              .withOpacity(0.8) ??
           getRandomColor(),
     );
   }
@@ -57,7 +60,10 @@ class Event extends DatetimeObject {
   }
 
   @override
-  bool isInRange(DateTime start, DateTime end) {
+  bool isInRange(DateTime startDate, DateTime endDate) {
+    DateTime start = startDate.toUtc();
+    DateTime end = endDate.toUtc();
+
     if (end == null) {
       if (isOnOrAfter(this.startDate, start)) {
         return true;
@@ -96,21 +102,22 @@ class Event extends DatetimeObject {
 }
 
 List<Event> createEventsFrom(Map<String, dynamic> parsedJson) {
-  bool isMultipleEvents = parsedJson['recurrence']['status'];
+  bool isRecurringEvent = parsedJson['recurrence']['status'];
   String reocurrenceFrequency = parsedJson['recurrence']['frequency'];
 
-  DateTime eventStartDate = DateTime.parse(parsedJson['start']);
-  DateTime eventEndDate = DateTime.parse(parsedJson['end']);
+  DateTime eventStartDate = DateTime.parse(parsedJson['start']).toUtc();
+  DateTime eventEndDate = DateTime.parse(parsedJson['end']).toUtc();
 
   DateTime reocurrenceEndDate;
   String reocurrenceEndDateString = parsedJson['recurrence']['end'];
   if (reocurrenceEndDateString == null) {
     reocurrenceEndDate = maxDate;
   } else {
-    reocurrenceEndDate = DateTime.parse(parsedJson['recurrence']['end']);
+    reocurrenceEndDate =
+        DateTime.parse(parsedJson['recurrence']['end']).toUtc();
   }
 
-  if (isMultipleEvents) {
+  if (isRecurringEvent) {
     int nthDay = 0;
     switch (reocurrenceFrequency) {
       case "DAILY":
@@ -133,14 +140,60 @@ List<Event> createEventsFrom(Map<String, dynamic> parsedJson) {
     DateTime newEndDate = eventEndDate;
     for (DateTime newStartDate in everyNthDayWithin(
         eventStartDate, reocurrenceEndDate.add(Duration(days: 1)), nthDay)) {
-      events.add(Event.fromJson(parsedJson,
-          preferredStartDate: newStartDate, preferredEndDate: newEndDate));
+      List<Event> eventsWithOnGoingHandler =
+          onGoingEventHandler(newStartDate, newEndDate, parsedJson);
+
+      events.addAll(eventsWithOnGoingHandler);
       newEndDate = newEndDate.add(Duration(days: nthDay));
     }
     return events;
   } else {
+    List<Event> eventsWithOnGoingHandler =
+        onGoingEventHandler(eventStartDate, eventEndDate, parsedJson);
+    return eventsWithOnGoingHandler;
+  }
+}
+
+List<Event> onGoingEventHandler(
+    DateTime startDate, DateTime endDate, Map<String, dynamic> parsedJson) {
+  bool isOnGoingEvent = !isAtSameDayAs(startDate, endDate);
+
+  if (isOnGoingEvent) {
     List<Event> events = [];
-    events.add(Event.fromJson(parsedJson));
+    Event newStartDayTillEndOfDay = Event.fromJson(parsedJson,
+        preferredStartDate: startDate,
+        preferredEndDate: new DateTime.utc(
+            startDate.year, startDate.month, startDate.day, 23, 59, 59));
+    events.add(newStartDayTillEndOfDay);
+
+    for (DateTime inBetweenDate in everyNthDayWithin(
+        startDate.add(Duration(days: 1)),
+        endDate.subtract(Duration(days: 1)),
+        1)) {
+      Event inbetweenDay = Event.fromJson(parsedJson,
+          preferredStartDate: new DateTime.utc(
+            inBetweenDate.year,
+            inBetweenDate.month,
+            inBetweenDate.day,
+            0,
+            0,
+            0,
+          ),
+          preferredEndDate: new DateTime.utc(inBetweenDate.year,
+              inBetweenDate.month, inBetweenDate.day, 23, 59, 59));
+
+      events.add(inbetweenDay);
+    }
+    Event newEndDayFromStartOfDay = Event.fromJson(parsedJson,
+        preferredStartDate:
+            new DateTime.utc(endDate.year, endDate.month, endDate.day, 0, 0, 0),
+        preferredEndDate: endDate);
+    events.add(newEndDayFromStartOfDay);
+    return events;
+  } else {
+    List<Event> events = [];
+    events.add(Event.fromJson(parsedJson,
+        preferredStartDate: startDate, preferredEndDate: endDate));
     return events;
   }
 }
@@ -162,7 +215,7 @@ class Sermon extends DatetimeObject {
 
   factory Sermon.fromJson(Map<String, dynamic> parsedJson) {
     return Sermon(
-      date: DateTime.parse(parsedJson['date']),
+      date: DateTime.parse(parsedJson['date']).toUtc(),
       title: parsedJson['title'],
       content: parsedJson['sermon'],
       imageUrl: parsedJson['image_url'],
@@ -172,11 +225,14 @@ class Sermon extends DatetimeObject {
 
   @override
   DateTime getComparisonDate() {
-    return this.date;
+    return this.date.toUtc();
   }
 
   @override
-  bool isInRange(DateTime start, DateTime end) {
+  bool isInRange(DateTime startDate, DateTime endDate) {
+    DateTime start = startDate.toUtc();
+    DateTime end = endDate.toUtc();
+
     if (end == null) {
       if (isOnOrAfter(this.date, start)) {
         return true;

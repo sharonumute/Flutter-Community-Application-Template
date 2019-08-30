@@ -64,12 +64,7 @@ class _EventItemState extends State<EventItem> {
 
   void _onEventSelected() {
     this._openEvent();
-
-    try {
-      widget.onEventSelected();
-    } on NoSuchMethodError {
-      print(STORELESS_COMPONENT_WITH_UNDEFINED_VIEWMODEL_FUNCTION);
-    }
+    widget.onEventSelected();
   }
 
   @override

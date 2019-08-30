@@ -55,10 +55,10 @@ class _CalendarState extends State<Calendar> {
     var firstDayOfCurrentWeek = Utils.firstDayOfWeek(_selectedDate);
     var lastDayOfCurrentWeek = Utils.lastDayOfWeek(_selectedDate);
     selectedWeeksDays = everyNthDayWithin(
-            new DateTime(firstDayOfCurrentWeek.year,
+            new DateTime.utc(firstDayOfCurrentWeek.year,
                 firstDayOfCurrentWeek.month, firstDayOfCurrentWeek.day),
-            new DateTime(lastDayOfCurrentWeek.year, lastDayOfCurrentWeek.month,
-                lastDayOfCurrentWeek.day),
+            new DateTime.utc(lastDayOfCurrentWeek.year,
+                lastDayOfCurrentWeek.month, lastDayOfCurrentWeek.day),
             1)
         .toList()
         .sublist(0, 7);
@@ -174,8 +174,9 @@ class _CalendarState extends State<Calendar> {
                 onDateSelected: () => handleSelectedDateAndUserCallback(day),
                 validEventTest: widget.events
                     .where((event) => event.isInRange(
-                        new DateTime(day.year, day.month, day.day, 0, 0, 0),
-                        new DateTime(day.year, day.month, day.day, 23, 59, 59)))
+                        new DateTime.utc(day.year, day.month, day.day, 0, 0, 0),
+                        new DateTime.utc(
+                            day.year, day.month, day.day, 23, 59, 59)))
                     .toList()),
           );
         } else {
@@ -187,8 +188,9 @@ class _CalendarState extends State<Calendar> {
                 isSelected: Utils.isSameDay(selectedDate, day),
                 validEventTest: widget.events
                     .where((event) => event.isInRange(
-                        new DateTime(day.year, day.month, day.day, 0, 0, 0),
-                        new DateTime(day.year, day.month, day.day, 23, 59, 59)))
+                        new DateTime.utc(day.year, day.month, day.day, 0, 0, 0),
+                        new DateTime.utc(
+                            day.year, day.month, day.day, 23, 59, 59)))
                     .toList()),
           );
         }
@@ -264,9 +266,9 @@ class _CalendarState extends State<Calendar> {
 
     setState(() {
       selectedWeeksDays = everyNthDayWithin(
-              new DateTime(firstDayOfCurrentWeek.year,
+              new DateTime.utc(firstDayOfCurrentWeek.year,
                   firstDayOfCurrentWeek.month, firstDayOfCurrentWeek.day),
-              new DateTime(lastDayOfCurrentWeek.year,
+              new DateTime.utc(lastDayOfCurrentWeek.year,
                   lastDayOfCurrentWeek.month, lastDayOfCurrentWeek.day),
               1)
           .toList();
@@ -307,9 +309,9 @@ class _CalendarState extends State<Calendar> {
       var lastDayOfCurrentWeek = Utils.lastDayOfWeek(_selectedDate);
       updateSelectedRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek);
       selectedWeeksDays = everyNthDayWithin(
-              new DateTime(firstDayOfCurrentWeek.year,
+              new DateTime.utc(firstDayOfCurrentWeek.year,
                   firstDayOfCurrentWeek.month, firstDayOfCurrentWeek.day),
-              new DateTime(lastDayOfCurrentWeek.year,
+              new DateTime.utc(lastDayOfCurrentWeek.year,
                   lastDayOfCurrentWeek.month, lastDayOfCurrentWeek.day),
               1)
           .toList()
@@ -326,9 +328,9 @@ class _CalendarState extends State<Calendar> {
       var lastDayOfCurrentWeek = Utils.lastDayOfWeek(_selectedDate);
       updateSelectedRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek);
       selectedWeeksDays = everyNthDayWithin(
-              new DateTime(firstDayOfCurrentWeek.year,
+              new DateTime.utc(firstDayOfCurrentWeek.year,
                   firstDayOfCurrentWeek.month, firstDayOfCurrentWeek.day),
-              new DateTime(lastDayOfCurrentWeek.year,
+              new DateTime.utc(lastDayOfCurrentWeek.year,
                   lastDayOfCurrentWeek.month, lastDayOfCurrentWeek.day),
               1)
           .toList()
@@ -349,8 +351,8 @@ class _CalendarState extends State<Calendar> {
     DateTime selected = await showDatePicker(
       context: context,
       initialDate: _selectedDate ?? new DateTime.now(),
-      firstDate: new DateTime(1960),
-      lastDate: new DateTime(2050),
+      firstDate: new DateTime.utc(1960),
+      lastDate: new DateTime.utc(2050),
     );
 
     if (selected != null) {
@@ -360,9 +362,9 @@ class _CalendarState extends State<Calendar> {
       setState(() {
         _selectedDate = selected;
         selectedWeeksDays = everyNthDayWithin(
-                new DateTime(firstDayOfCurrentWeek.year,
+                new DateTime.utc(firstDayOfCurrentWeek.year,
                     firstDayOfCurrentWeek.month, firstDayOfCurrentWeek.day),
-                new DateTime(lastDayOfCurrentWeek.year,
+                new DateTime.utc(lastDayOfCurrentWeek.year,
                     lastDayOfCurrentWeek.month, lastDayOfCurrentWeek.day),
                 1)
             .toList()
@@ -419,9 +421,9 @@ class _CalendarState extends State<Calendar> {
     setState(() {
       _selectedDate = day;
       selectedWeeksDays = everyNthDayWithin(
-              new DateTime(firstDayOfCurrentWeek.year,
+              new DateTime.utc(firstDayOfCurrentWeek.year,
                   firstDayOfCurrentWeek.month, firstDayOfCurrentWeek.day),
-              new DateTime(lastDayOfCurrentWeek.year,
+              new DateTime.utc(lastDayOfCurrentWeek.year,
                   lastDayOfCurrentWeek.month, lastDayOfCurrentWeek.day),
               1)
           .toList();

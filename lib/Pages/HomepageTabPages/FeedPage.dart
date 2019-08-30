@@ -51,7 +51,7 @@ class _FeedPageState extends State<FeedPage> {
     List<DateTime> checkedMonthYearPairs = [];
     for (DatetimeObject item in reversedSortedDateTimeObject) {
       DateTime itemDate = item.getComparisonDate();
-      DateTime monthYear = new DateTime(itemDate.year, itemDate.month);
+      DateTime monthYear = new DateTime.utc(itemDate.year, itemDate.month);
       if (!checkedMonthYearPairs.contains(monthYear)) {
         if (monthYearDateTimeObject[monthYear] == null) {
           monthYearDateTimeObject[monthYear] = new List<DatetimeObject>();
@@ -59,7 +59,7 @@ class _FeedPageState extends State<FeedPage> {
 
         List<DatetimeObject> itemsThisMonthYear = reversedSortedDateTimeObject
             .where((item) => item.isInRange(
-                new DateTime(monthYear.year, monthYear.month, 1),
+                new DateTime.utc(monthYear.year, monthYear.month, 1),
                 getMonthEnd(monthYear.year, monthYear.month)))
             .toList();
 
@@ -84,7 +84,7 @@ class _FeedPageState extends State<FeedPage> {
       for (DatetimeObject monthYearObject in monthYearObjects) {
         DateTime currentMonthYearObjectDate =
             monthYearObject.getComparisonDate();
-        DateTime currentMonthYearObjectDay = new DateTime(
+        DateTime currentMonthYearObjectDay = new DateTime.utc(
             currentMonthYearObjectDate.year,
             currentMonthYearObjectDate.month,
             currentMonthYearObjectDate.day);
@@ -93,14 +93,14 @@ class _FeedPageState extends State<FeedPage> {
             .contains(currentMonthYearObjectDay)) {
           List<DatetimeObject> dateTimeObjectThisDay = monthYearObjects
               .where((item) => item.isInRange(
-                  new DateTime(
+                  new DateTime.utc(
                       currentMonthYearObjectDay.year,
                       currentMonthYearObjectDay.month,
                       currentMonthYearObjectDay.day,
                       0,
                       0,
                       0),
-                  new DateTime(
+                  new DateTime.utc(
                       currentMonthYearObjectDay.year,
                       currentMonthYearObjectDay.month,
                       currentMonthYearObjectDay.day,

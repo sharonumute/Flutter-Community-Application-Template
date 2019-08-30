@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import "package:intl/intl.dart";
 
-final DateTime maxDate = new DateTime(2020, 12, 30);
+/// Set application max date to a year from now
+final DateTime maxDate = new DateTime.now().toUtc().add(Duration(days: 365));
+
 const List<String> weekdays = const [
   "Mon",
   "Tue",
@@ -56,12 +57,6 @@ Iterable<DateTime> everyNthDayWithin(
   }
 }
 
-bool isAtSameDayAs(DateTime date1, DateTime date2) {
-  DateTime day1 = new DateTime(date1.year, date1.month, date1.day);
-  DateTime day2 = new DateTime(date2.year, date2.month, date2.day);
-  return day1.isAtSameMomentAs(day2);
-}
-
 String timeParseToString(DateTime time) {
   return "${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}";
 }
@@ -77,7 +72,21 @@ String startToEndTime(DateTime startTime, DateTime endTime) {
   if (startTime.hour == endTime.hour && startTime.minute == endTime.minute) {
     return "${timeParseToString(startTime)}";
   }
+
+  if ((startTime.hour == 0 &&
+      startTime.minute == 0 &&
+      endTime.hour == 23 &&
+      endTime.minute == 59)) {
+    return "All day";
+  }
+
   return "${timeParseToString(startTime)} - ${timeParseToString(endTime)}";
+}
+
+bool isAtSameDayAs(DateTime date1, DateTime date2) {
+  DateTime day1 = new DateTime.utc(date1.year, date1.month, date1.day);
+  DateTime day2 = new DateTime.utc(date2.year, date2.month, date2.day);
+  return day1.isAtSameMomentAs(day2);
 }
 
 bool isOnOrAfter(DateTime first, DateTime second) {
@@ -90,5 +99,5 @@ bool isOnOrBefore(DateTime first, DateTime second) {
 
 DateTime getMonthEnd(int year, int month) {
   int nextMonth = month == 12 ? 1 : month + 1;
-  return new DateTime(year, nextMonth, 0);
+  return new DateTime.utc(year, nextMonth, 0);
 }

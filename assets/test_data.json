@@ -23,7 +23,7 @@
       },
       "title": "Prayer Service",
       "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus posuere urna ut nibh tempor aliquet. Etiam enim ante, maximus ac placerat ac, vehicula vel nulla. Aliquam risus dolor, mollis ut nisi sit amet, sodales dapibus eros. Etiam a velit diam. Fusce imperdiet quam sit amet congue ornare. Proin mollis tempus consequat. Morbi ut tristique felis, ullamcorper auctor dolor. Phasellus mattis odio sed lorem aliquet tincidunt. Donec elementum commodo vehicula. Aenean nec placerat urna. Curabitur accumsan nulla nec tempor aliquam. Maecenas ultrices urna urna.",
-      "image_url": "",
+      "image_url": "https://www.bublemadeupicus.gsgs/wakywoowowoo.jpg",
       "color": "19BC10"
     },
     {
@@ -53,8 +53,8 @@
       "color": "104ABC"
     },
     {
-      "start": "2019-08-25 09:00:00Z",
-      "end": "2019-08-25 12:00:00Z",
+      "start": "2019-08-30 09:00:00Z",
+      "end": "2019-08-30 12:00:00Z",
       "recurrence": {
         "status": false,
         "frequency": null,
@@ -77,6 +77,19 @@
       "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus posuere urna ut nibh tempor aliquet. Etiam enim ante, maximus ac placerat ac, vehicula vel nulla. Aliquam risus dolor, mollis ut nisi sit amet, sodales dapibus eros. Etiam a velit diam. Fusce imperdiet quam sit amet congue ornare. Proin mollis tempus consequat. Morbi ut tristique felis, ullamcorper auctor dolor. Phasellus mattis odio sed lorem aliquet tincidunt. Donec elementum commodo vehicula. Aenean nec placerat urna. Curabitur accumsan nulla nec tempor aliquam. Maecenas ultrices urna urna.",
       "image_url": "https://www.fransat.fr/wp-content/uploads/2016/01/tnt-hd-fransat-satellite.jpg",
       "color": "DB5229"
+    },
+    {
+      "start": "2019-10-01 09:00:00Z",
+      "end": "2019-10-03 12:00:00Z",
+      "recurrence": {
+        "status": true,
+        "frequency": "DAILY",
+        "end": "2019-10-07 14:00:00Z"
+      },
+      "title": "3 day retreat per start date",
+      "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus posuere urna ut nibh tempor aliquet. Etiam enim ante, maximus ac placerat ac, vehicula vel nulla. Aliquam risus dolor, mollis ut nisi sit amet, sodales dapibus eros. Etiam a velit diam. Fusce imperdiet quam sit amet congue ornare. Proin mollis tempus consequat. Morbi ut tristique felis, ullamcorper auctor dolor. Phasellus mattis odio sed lorem aliquet tincidunt. Donec elementum commodo vehicula. Aenean nec placerat urna. Curabitur accumsan nulla nec tempor aliquam. Maecenas ultrices urna urna.",
+      "image_url": "https://www.fransat.fr/wp-content/uploads/2016/01/tnt-hd-fransat-satellite.jpg",
+      "color": "DB2109"
     }
   ],
   "Sermons": [

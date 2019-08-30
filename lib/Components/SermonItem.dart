@@ -76,24 +76,14 @@ class SermonItem extends StatelessWidget {
 
     void _onSermonSelected() {
       _openSermon();
-
-      try {
-        onSermonSelected();
-      } on NoSuchMethodError {
-        print(STORELESS_COMPONENT_WITH_UNDEFINED_VIEWMODEL_FUNCTION);
-      }
+      onSermonSelected();
     }
 
     return new Card(
-      margin: const EdgeInsets.only(
-          left: marginpaddingFromScreenHover,
-          right: marginpaddingFromScreenHover,
-          top: 5.0,
-          bottom: 5.0),
-      elevation: cardResting,
-      clipBehavior: Clip.hardEdge,
+      margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+      elevation: 0,
       shape: new RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(boxborderRadius),
+        borderRadius: new BorderRadius.circular(0),
       ),
       child: InkWell(
         onTap: _onSermonSelected,
@@ -103,18 +93,13 @@ class SermonItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              new Text(
-                title,
-                style: Theme.of(context).textTheme.headline,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              new Padding(
-                padding: EdgeInsets.all(dividerPadding / 2),
-              ),
               new Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
+                  new Text(
+                    "${presentationFullDayFormat(date)}",
+                    style: Theme.of(context).textTheme.caption,
+                  ),
                   new Row(
                     children: <Widget>[
                       new PersonaCoin(person: preacher, diameter: 20.0),
@@ -124,14 +109,19 @@ class SermonItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                  new Text(
-                    "${presentationFullDayFormat(date)}",
-                    style: Theme.of(context).textTheme.caption,
-                  ),
                 ],
               ),
               new Padding(
-                padding: EdgeInsets.all(dividerPadding),
+                padding: EdgeInsets.all(dividerPadding / 2),
+              ),
+              new Text(
+                title,
+                style: Theme.of(context).textTheme.headline,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              new Padding(
+                padding: EdgeInsets.all(dividerPadding / 2),
               ),
               // sermon
               ifEmptyOrNull(sermon)

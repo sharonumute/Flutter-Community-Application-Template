@@ -8,7 +8,6 @@ import 'package:service_application/Components/Calendar.dart';
 import 'package:service_application/Store/Selectors.dart';
 import 'package:service_application/Store/State.dart';
 import 'package:service_application/Utils/DataUtils.dart';
-import 'package:service_application/Components/EventItem.dart';
 import 'package:service_application/Store/Actions.dart';
 
 class CalendarPageContainer extends StatelessWidget {

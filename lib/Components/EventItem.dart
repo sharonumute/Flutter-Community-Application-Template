@@ -8,8 +8,6 @@ import 'package:service_application/Utils/DataUtils.dart';
 import 'package:service_application/Utils/DateUtils.dart';
 import 'package:service_application/Store/State.dart';
 import 'package:service_application/Store/Actions.dart';
-import 'package:service_application/Strings/ErrorMessages.dart';
-import 'package:service_application/Utils/WidgetUtils.dart';
 
 class EventItemContainer extends StatelessWidget {
   final Event event;

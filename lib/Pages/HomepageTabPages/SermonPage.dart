@@ -2,11 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:service_application/Components/WidgetMonthYearBucket.dart';
 import 'package:service_application/Globals/Values.dart';
 import 'package:service_application/Store/Selectors.dart';
 import 'package:service_application/Store/State.dart';
 import 'package:service_application/Utils/DataUtils.dart';
-import 'package:service_application/Components/SermonItem.dart';
+import 'package:service_application/Utils/WidgetUtils.dart';
 
 class SermonPageContainer extends StatelessWidget {
   SermonPageContainer({Key key}) : super(key: key);
@@ -38,12 +39,21 @@ class SermonPage extends StatefulWidget {
 class _SermonPageState extends State<SermonPage> {
   @override
   Widget build(BuildContext context) {
+    // Get Widgets of Sermons in monthYear buckets
+    Map<DateTime, List<Widget>> monthYearWidgets =
+        getMonthYearBucketOrder(widget.sermons);
+
+    // Get iterable list of month year pairs
+    List<DateTime> monthYears = monthYearWidgets.keys.toList();
+
     return new Scaffold(
       body: new ListView.builder(
-        padding: const EdgeInsets.all(marginpaddingFromScreenHover),
-        itemCount: widget.sermons.length,
+        padding: const EdgeInsets.only(top: paddingFromWalls),
+        itemCount: monthYearWidgets.length,
         itemBuilder: (BuildContext context, int index) {
-          return new SermonItemContainer(sermon: widget.sermons[index]);
+          DateTime monthYear = monthYears[index];
+          return new WidgetMonthYearBucket(
+              date: monthYear, items: monthYearWidgets[monthYear]);
         },
       ),
     );

@@ -1,15 +1,15 @@
 import 'dart:async';
+import "package:service_application/Globals/Themes.dart";
 import 'package:shared_preferences/shared_preferences.dart';
 
-const isDarkTheme_key = "SERVICE_APP_USER_THEME";
-const tab_key = "SERVICE_APP_USER_CURRENT_TAB";
+const THEME_KEY = "SERVICE_APP_USER_THEME";
 
-Future<bool> getIsOnDarkTheme() async {
+Future<String> getCurrentTheme() async {
   final prefs = await SharedPreferences.getInstance();
-  return prefs.getBool(isDarkTheme_key) ?? false;
+  return prefs.getString(THEME_KEY) ?? LIGHT_BLUE;
 }
 
-setStoreSelectedTheme(bool newValue) async {
+setSelectedTheme(String newValue) async {
   final prefs = await SharedPreferences.getInstance();
-  prefs.setBool(isDarkTheme_key, newValue);
+  prefs.setString(THEME_KEY, newValue);
 }

@@ -5,4 +5,4 @@ bool ifEmptyOrNull(String text) {
   return false;
 }
 
-bool objectIsNotNull(Object o) => o != null;
+bool ifObjectIsNotNull(Object o) => o != null;

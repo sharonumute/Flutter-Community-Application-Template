@@ -3,8 +3,21 @@ library service_app.themes;
 import 'package:flutter/material.dart';
 import 'package:service_application/Globals/Values.dart';
 
-ThemeData lightTheme = ThemeData(
-  accentColor: themeLightPrimary,
+const LIGHT_BLUE = "LIGHTBLUE";
+const DARK_BLUE = "DARKBLUE";
+const DARK_BLACK = "DARKBLACK";
+
+const LIGHT_THEMES = const [LIGHT_BLUE];
+const DARK_THEMES = const [DARK_BLUE, DARK_BLACK];
+
+Map<String, ThemeData> allThemes = {
+  DARK_BLACK: darkThemeBlackHue,
+  DARK_BLUE: darkThemeBlueHue,
+  LIGHT_BLUE: lightBlueTheme
+};
+
+ThemeData lightBlueTheme = ThemeData(
+  accentColor: themeLightBluePrimary,
   accentIconTheme: IconThemeData(
     color: normalWhiteText,
     size: iconSize,
@@ -17,12 +30,12 @@ ThemeData lightTheme = ThemeData(
       color: normalWhiteText,
     ),
   ),
-  backgroundColor: themeLightAppBackground,
-  cardColor: themeLightBackground,
+  backgroundColor: themeLightBlueAppBackground,
+  cardColor: themeLightBlueBackground,
   colorScheme: ColorScheme(
-      primary: themeLightPrimary,
-      surface: themeLightBackground,
-      background: themeLightAppBackground,
+      primary: themeLightBluePrimary,
+      surface: themeLightBlueBackground,
+      background: themeLightBlueAppBackground,
       brightness: Brightness.light,
       error: errorRedText,
       onBackground: mediumBlackText,
@@ -30,9 +43,9 @@ ThemeData lightTheme = ThemeData(
       onPrimary: normalWhiteText,
       onSecondary: normalWhiteText,
       onSurface: mediumBlackText,
-      primaryVariant: themeLightPrimaryDark,
-      secondary: themeLightPrimary,
-      secondaryVariant: themeLightPrimaryDark),
+      primaryVariant: themeLightBluePrimaryDark,
+      secondary: themeLightBluePrimary,
+      secondaryVariant: themeLightBluePrimaryDark),
   cursorColor: normalBlackText,
   disabledColor: disabledBlackText,
   dividerColor: mediumBlackText,
@@ -41,7 +54,7 @@ ThemeData lightTheme = ThemeData(
     color: mediumBlackText,
     size: iconSize,
   ),
-  primaryColor: themeLightPrimary,
+  primaryColor: themeLightBluePrimary,
   primaryIconTheme: IconThemeData(
     color: normalWhiteText,
     size: iconSize,
@@ -90,7 +103,7 @@ ThemeData lightTheme = ThemeData(
       foreground: Paint()..color = normalWhiteText,
     ),
   ),
-  scaffoldBackgroundColor: themeLightAppBackground,
+  scaffoldBackgroundColor: themeLightBlueAppBackground,
   textTheme: TextTheme(
     display1: TextStyle(
       fontSize: 60.0,
@@ -108,7 +121,7 @@ ThemeData lightTheme = ThemeData(
       fontSize: 14.0,
       fontFamily: 'Roboto',
       fontWeight: boldTextWeight,
-      foreground: Paint()..color = themeLightPrimary,
+      foreground: Paint()..color = themeLightBluePrimary,
     ),
     body1: TextStyle(
       fontSize: 16.0,
@@ -129,8 +142,8 @@ ThemeData lightTheme = ThemeData(
       color: helperBlackText,
     ),
   ),
-  primaryColorDark: themeLightPrimaryDark,
-  primaryColorLight: themeLightPrimaryLight,
+  primaryColorDark: themeLightBluePrimaryDark,
+  primaryColorLight: themeLightBluePrimaryLight,
   primaryColorBrightness: Brightness.light,
   brightness: Brightness.light,
   buttonTheme: ButtonThemeData(
@@ -142,8 +155,8 @@ ThemeData lightTheme = ThemeData(
   ),
 );
 
-ThemeData darkTheme = ThemeData(
-  accentColor: themeLightPrimary,
+ThemeData darkThemeBlackHue = ThemeData(
+  accentColor: themeLightBluePrimary,
   accentIconTheme: IconThemeData(
     color: normalWhiteText,
     size: iconSize,
@@ -156,12 +169,12 @@ ThemeData darkTheme = ThemeData(
       color: normalWhiteText,
     ),
   ),
-  backgroundColor: themeBlackBackground,
-  cardColor: themeBlackPrimary,
+  backgroundColor: themeDarkBlueBackground,
+  cardColor: themeDarkBluePrimary,
   colorScheme: ColorScheme(
-      primary: themeBlackPrimary,
-      surface: themeBlackBackground,
-      background: themeBlackBackground,
+      primary: themeDarkBluePrimary,
+      surface: themeDarkBlueBackground,
+      background: themeDarkBlueBackground,
       brightness: Brightness.dark,
       error: errorRedText,
       onBackground: normalWhiteText,
@@ -169,9 +182,9 @@ ThemeData darkTheme = ThemeData(
       onPrimary: normalWhiteText,
       onSecondary: normalWhiteText,
       onSurface: normalWhiteText,
-      primaryVariant: themeBlackPrimaryDark,
-      secondary: themeBlackPrimary,
-      secondaryVariant: themeBlackPrimaryDark),
+      primaryVariant: themeDarkBluePrimaryDark,
+      secondary: themeDarkBluePrimary,
+      secondaryVariant: themeDarkBluePrimaryDark),
   cursorColor: normalWhiteText,
   disabledColor: disabledWhiteText,
   dividerColor: mediumWhiteText,
@@ -180,7 +193,7 @@ ThemeData darkTheme = ThemeData(
     color: normalWhiteText,
     size: iconSize,
   ),
-  primaryColor: themeBlackPrimary,
+  primaryColor: themeDarkBluePrimary,
   primaryIconTheme: IconThemeData(
     color: normalWhiteText,
     size: iconSize,
@@ -223,7 +236,7 @@ ThemeData darkTheme = ThemeData(
       foreground: Paint()..color = normalWhiteText,
     ),
   ),
-  scaffoldBackgroundColor: themeBlackBackground,
+  scaffoldBackgroundColor: themeDarkBlueBackground,
   textTheme: TextTheme(
     display1: TextStyle(
       fontSize: 60.0,
@@ -262,13 +275,147 @@ ThemeData darkTheme = ThemeData(
       color: helperWhiteText,
     ),
   ),
-  primaryColorDark: themeBlackPrimaryDark,
-  primaryColorLight: themeBlackPrimaryLight,
+  primaryColorDark: themeDarkBluePrimaryDark,
+  primaryColorLight: themeDarkBluePrimaryLight,
   primaryColorBrightness: Brightness.dark,
   brightness: Brightness.dark,
   buttonTheme: ButtonThemeData(
     textTheme: ButtonTextTheme.normal,
-    buttonColor: themeLightPrimary,
+    buttonColor: themeLightBluePrimary,
+  ),
+  tabBarTheme: TabBarTheme(
+    labelColor: Color.fromRGBO(255, 255, 255, 1.0),
+    unselectedLabelColor: Color.fromRGBO(255, 255, 255, 0.7),
+  ),
+);
+
+ThemeData darkThemeBlueHue = ThemeData(
+  accentColor: themeLightBluePrimary,
+  accentIconTheme: IconThemeData(
+    color: normalWhiteText,
+    size: iconSize,
+  ),
+  accentTextTheme: TextTheme(
+    button: TextStyle(
+      fontSize: 14.0,
+      fontFamily: 'Roboto',
+      fontWeight: boldTextWeight,
+      color: normalWhiteText,
+    ),
+  ),
+  backgroundColor: themeDarkBlueBackground,
+  cardColor: themeDarkBluePrimary,
+  colorScheme: ColorScheme(
+      primary: themeDarkBluePrimary,
+      surface: themeDarkBlueBackground,
+      background: themeDarkBlueBackground,
+      brightness: Brightness.dark,
+      error: errorRedText,
+      onBackground: normalWhiteText,
+      onError: normalWhiteText,
+      onPrimary: normalWhiteText,
+      onSecondary: normalWhiteText,
+      onSurface: normalWhiteText,
+      primaryVariant: themeDarkBluePrimaryDark,
+      secondary: themeDarkBluePrimary,
+      secondaryVariant: themeDarkBluePrimaryDark),
+  cursorColor: normalWhiteText,
+  disabledColor: disabledWhiteText,
+  dividerColor: mediumWhiteText,
+  errorColor: errorRedText,
+  iconTheme: IconThemeData(
+    color: normalWhiteText,
+    size: iconSize,
+  ),
+  primaryColor: themeDarkBluePrimary,
+  primaryIconTheme: IconThemeData(
+    color: normalWhiteText,
+    size: iconSize,
+  ),
+  primaryTextTheme: TextTheme(
+    headline: TextStyle(
+      fontSize: 24.0,
+      fontFamily: 'Roboto',
+      fontWeight: boldTextWeight,
+      color: normalWhiteText,
+    ),
+    button: TextStyle(
+      fontSize: 14.0,
+      fontFamily: 'Roboto',
+      fontWeight: boldTextWeight,
+      color: normalWhiteText,
+    ),
+    body1: TextStyle(
+      fontSize: 16.0,
+      fontFamily: 'Roboto',
+      fontWeight: normalTextWeight,
+      color: normalWhiteText,
+    ),
+    body2: TextStyle(
+      fontSize: 14.0,
+      fontFamily: 'Roboto',
+      fontWeight: normalTextWeight,
+      color: normalWhiteText,
+    ),
+    display1: TextStyle(
+      fontSize: 34.0,
+      fontFamily: 'Roboto',
+      fontWeight: normalTextWeight,
+      foreground: Paint()..color = normalWhiteText,
+    ),
+    subhead: TextStyle(
+      fontSize: 16.0,
+      fontFamily: 'Roboto',
+      fontWeight: normalTextWeight,
+      foreground: Paint()..color = normalWhiteText,
+    ),
+  ),
+  scaffoldBackgroundColor: themeDarkBlueBackground,
+  textTheme: TextTheme(
+    display1: TextStyle(
+      fontSize: 60.0,
+      fontFamily: 'Roboto',
+      fontWeight: boldTextWeight,
+      color: normalWhiteText,
+    ),
+    headline: TextStyle(
+      fontSize: 24.0,
+      fontFamily: 'Roboto',
+      fontWeight: boldTextWeight,
+      color: normalWhiteText,
+    ),
+    button: TextStyle(
+      fontSize: 14.0,
+      fontFamily: 'Roboto',
+      fontWeight: boldTextWeight,
+      foreground: Paint()..color = normalWhiteText,
+    ),
+    body1: TextStyle(
+      fontSize: 16.0,
+      fontFamily: 'Roboto',
+      fontWeight: normalTextWeight,
+      color: normalWhiteText,
+    ),
+    body2: TextStyle(
+      fontSize: 14.0,
+      fontFamily: 'Roboto',
+      fontWeight: normalTextWeight,
+      color: mediumWhiteText,
+    ),
+    caption: TextStyle(
+      fontSize: 12.0,
+      fontFamily: 'Roboto',
+      fontWeight: normalTextWeight,
+      color: helperWhiteText,
+    ),
+  ),
+  primaryColorDark: themeDarkBluePrimaryDark,
+  primaryColorLight: themeDarkBluePrimaryLight,
+  primaryColorBrightness: Brightness.dark,
+  brightness: Brightness.dark,
+  buttonTheme: ButtonThemeData(
+    textTheme: ButtonTextTheme.normal,
+    buttonColor: themeLightBluePrimary,
   ),
   tabBarTheme: TabBarTheme(
     labelColor: Color.fromRGBO(255, 255, 255, 1.0),

@@ -11,22 +11,41 @@ import 'package:flutter/services.dart' show rootBundle;
 AppState appReducer(AppState state, action) {
   return AppState(
     isLoading: loadingReducer(state.isLoading, action),
-    sermons: sermonsReducer(state.sermons, action),
-    events: eventsReducer(state.events, action),
-    calendarEvents: calendarEventsReducer(state.calendarEvents, action),
+    currentTheme: currentThemeReducer(state.currentTheme, action),
     currentSelectedCalendarDate: currentSelectedCalendarDateReducer(
         state.currentSelectedCalendarDate, action),
-    isOnDarkTheme: isOnDarkThemeReducer(state.isOnDarkTheme, action),
+    sermons: sermonsReducer(state.sermons, action),
+    events: eventsReducer(state.events, action),
+    feed: feedReducer(state.feed, action),
   );
 }
 
 final loadingReducer = combineReducers<bool>([
-  TypedReducer<bool, SermonsLoadedAction>(_setLoadedFalse),
-  TypedReducer<bool, EventsLoadedAction>(_setLoadedFalse),
-  TypedReducer<bool, CalendarEventsLoadedAction>(_setLoadedFalse),
   TypedReducer<bool, FetchSermonsAction>(_fetchSermons),
   TypedReducer<bool, FetchEventsAction>(_fetchEvents),
-  TypedReducer<bool, FetchCalendarEventsAction>(_fetchCalendarEvents),
+  TypedReducer<bool, SermonsLoadedAction>(_setLoadedFalse),
+  TypedReducer<bool, EventsLoadedAction>(_setLoadedFalse),
+]);
+
+final sermonsReducer = combineReducers<List<Sermon>>([
+  TypedReducer<List<Sermon>, SermonsLoadedAction>(addSermonsIntoApp),
+]);
+
+final eventsReducer = combineReducers<List<Event>>([
+  TypedReducer<List<Event>, EventsLoadedAction>(addEventsIntoApp),
+]);
+
+final feedReducer = combineReducers<List<DatetimeObject>>([
+  TypedReducer<List<DatetimeObject>, FeedLoadedAction>(addFeedIntoApp),
+]);
+
+final currentSelectedCalendarDateReducer = combineReducers<String>([
+  TypedReducer<String, SetCurrentSelectedCalendarDateAction>(
+      setCurrentSelectedCalendarDate),
+]);
+
+final currentThemeReducer = combineReducers<String>([
+  TypedReducer<String, ChangeThemesAction>(setSelectedThemeState),
 ]);
 
 bool _setLoadedFalse(bool state, action) {
@@ -37,17 +56,25 @@ bool _fetchSermons(bool state, FetchSermonsAction action) {
   rootBundle.loadString("assets/test_data.json").then((data) {
     final sermons = json.decode(data)["Sermons"];
 
-    List<SermonObject> sermonObjects = [];
+    List<Sermon> sermonObjects = [];
     for (Map<String, dynamic> sermon in sermons) {
-      SermonObject sermonObject = SermonObject.fromJson(sermon);
+      Sermon sermonObject = Sermon.fromJson(sermon);
       sermonObjects.add(sermonObject);
     }
 
     action.store.dispatch(new SermonsLoadedAction(sermonObjects));
+    action.store.dispatch(new FeedLoadedAction(sermonObjects));
     print("Sermons fetched and loaded: ${sermonObjects.length}");
   });
 
   return true;
+}
+
+List<Sermon> addSermonsIntoApp(List<Sermon> state, SermonsLoadedAction action) {
+  List<Sermon> newSermons = [];
+  newSermons.addAll(state);
+  newSermons.addAll(action.sermons);
+  return newSermons;
 }
 
 bool _fetchEvents(bool state, FetchEventsAction action) {
@@ -56,99 +83,41 @@ bool _fetchEvents(bool state, FetchEventsAction action) {
 
     List<Event> eventObjects = [];
     for (Map<String, dynamic> event in events) {
-      Event eventObject = Event.fromJson(event);
-      eventObjects.add(eventObject);
+      List<Event> individualEvents = createEventsFrom(event);
+      eventObjects.addAll(individualEvents);
     }
 
     action.store.dispatch(new EventsLoadedAction(eventObjects));
+    action.store.dispatch(new FeedLoadedAction(eventObjects));
     print("Events fetched and loaded: ${eventObjects.length}");
   });
 
   return true;
 }
 
-bool _fetchCalendarEvents(bool state, FetchCalendarEventsAction action) {
-  rootBundle.loadString("assets/test_data.json").then((data) {
-    final calendarEvents = json.decode(data)["Events"];
-
-    Map<DateTime, List<Event>> calendarEventObjects = {};
-    for (Map<String, dynamic> event in calendarEvents) {
-      Event eventObject = Event.fromJson(event);
-
-      DateTime startDate = eventObject.startDate;
-      DateTime endDate = eventObject.endDate;
-
-      if (startDate != null &&
-          endDate != null &&
-          !ifEmptyOrNull(startDate.toString()) &&
-          !ifEmptyOrNull(endDate.toString())) {
-        DateTime eventStartDate =
-            new DateTime(startDate.year, startDate.month, startDate.day);
-
-        DateTime eventEndDate =
-            new DateTime(endDate.year, endDate.month, endDate.day);
-
-        for (DateTime eventDay in onlyDaysInRange(
-            eventStartDate, eventEndDate.add(Duration(days: 1)))) {
-          if (calendarEventObjects[eventDay] == null) {
-            calendarEventObjects[eventDay] = new List<Event>();
-          }
-          calendarEventObjects[eventDay].add(eventObject);
-        }
-      }
-    }
-
-    action.store.dispatch(new CalendarEventsLoadedAction(calendarEventObjects));
-    print("Calendar events fetched and loaded: ${calendarEventObjects.length}");
-  });
-
-  return true;
+List<Event> addEventsIntoApp(List<Event> state, EventsLoadedAction action) {
+  List<Event> newEvents = [];
+  newEvents.addAll(state);
+  newEvents.addAll(action.events);
+  return newEvents;
 }
-
-final sermonsReducer = combineReducers<List<SermonObject>>([
-  TypedReducer<List<SermonObject>, SermonsLoadedAction>(loadSermonsIntoApp),
-]);
-
-List<SermonObject> loadSermonsIntoApp(
-    List<SermonObject> state, SermonsLoadedAction action) {
-  return action.sermons;
-}
-
-final calendarEventsReducer = combineReducers<Map<DateTime, List<Event>>>([
-  TypedReducer<Map<DateTime, List<Event>>, CalendarEventsLoadedAction>(
-      loadCalendarEventsIntoApp),
-]);
-
-Map<DateTime, List<Event>> loadCalendarEventsIntoApp(
-    Map<DateTime, List<Event>> state, CalendarEventsLoadedAction action) {
-  return action.calendarEvents;
-}
-
-final eventsReducer = combineReducers<List<Event>>([
-  TypedReducer<List<Event>, EventsLoadedAction>(loadEventsIntoApp),
-]);
-
-List<Event> loadEventsIntoApp(List<Event> state, EventsLoadedAction action) {
-  return action.events;
-}
-
-final currentSelectedCalendarDateReducer = combineReducers<String>([
-  TypedReducer<String, SetCurrentSelectedCalendarAction>(
-      setCurrentSelectedCalendarDate),
-]);
 
 String setCurrentSelectedCalendarDate(
-    String state, SetCurrentSelectedCalendarAction action) {
+    String state, SetCurrentSelectedCalendarDateAction action) {
   print("Calendar selected date set to: ${action.date}");
   return action.date;
 }
 
-final isOnDarkThemeReducer = combineReducers<bool>([
-  TypedReducer<bool, SwitchThemesAction>(setIsOnDarkTheme),
-]);
+String setSelectedThemeState(String state, ChangeThemesAction action) {
+  print("New Theme: ${action.newTheme}");
+  setSelectedTheme(action.newTheme);
+  return action.newTheme;
+}
 
-bool setIsOnDarkTheme(bool state, SwitchThemesAction action) {
-  print("Activated Dark Theme: ${action.isOnDarkTheme}");
-  setStoreSelectedTheme(action.isOnDarkTheme);
-  return action.isOnDarkTheme;
+List<DatetimeObject> addFeedIntoApp(
+    List<DatetimeObject> state, FeedLoadedAction action) {
+  List<DatetimeObject> newFeed = [];
+  newFeed.addAll(state);
+  newFeed.addAll(action.feed);
+  return newFeed;
 }

@@ -1,10 +1,9 @@
 import 'package:service_application/Utils/DataUtils.dart';
 import "package:service_application/Store/State.dart";
 
-List<SermonObject> sermonsSelector(AppState state) => state.sermons;
+List<Sermon> sermonsSelector(AppState state) => state.sermons;
 List<Event> eventsSelector(AppState state) => state.events;
-Map<DateTime, List<Event>> calendarEventsSelector(AppState state) =>
-    state.calendarEvents;
+List<DatetimeObject> feedSelector(AppState state) => state.feed;
 String currentSelectedCalendarDateSelector(AppState state) =>
     state.currentSelectedCalendarDate;
-bool isOnDarkThemeSelector(AppState state) => state.isOnDarkTheme;
+String currentThemeSelector(AppState state) => state.currentTheme;

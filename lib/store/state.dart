@@ -1,41 +1,42 @@
 import 'package:meta/meta.dart';
+import "package:service_application/Globals/Themes.dart";
 import 'package:service_application/Utils/DataUtils.dart';
 
 @immutable
 class AppState {
   final bool isLoading;
-  final List<SermonObject> sermons;
+  final List<Sermon> sermons;
   final List<Event> events;
-  final Map<DateTime, List<Event>> calendarEvents;
+  final List<DatetimeObject> feed;
   final String currentSelectedCalendarDate;
-  final bool isOnDarkTheme;
+  final String currentTheme;
 
   AppState(
       {this.isLoading = false,
       this.sermons = const [],
       this.events = const [],
-      this.calendarEvents = const {},
+      this.feed = const [],
       this.currentSelectedCalendarDate = "",
-      this.isOnDarkTheme = true});
+      this.currentTheme = LIGHT_BLUE});
 
   factory AppState.loading() => AppState(isLoading: true);
 
   AppState copyWith({
     bool isLoading,
-    List<SermonObject> sermons,
+    List<Sermon> sermons,
     List<Event> events,
-    Map<DateTime, List<Event>> calendarEvents,
+    List<DatetimeObject> feed,
     String currentSelectedCalendarDate,
-    bool isOnDarkTheme,
+    String currentTheme,
   }) {
     return AppState(
         isLoading: isLoading ?? this.isLoading,
         sermons: sermons ?? this.sermons,
         events: events ?? this.events,
-        calendarEvents: calendarEvents ?? this.calendarEvents,
+        feed: feed ?? this.feed,
         currentSelectedCalendarDate:
             currentSelectedCalendarDate ?? this.currentSelectedCalendarDate,
-        isOnDarkTheme: isOnDarkTheme ?? this.isOnDarkTheme);
+        currentTheme: currentTheme ?? this.currentTheme);
   }
 
   @override
@@ -43,9 +44,9 @@ class AppState {
       isLoading.hashCode ^
       sermons.hashCode ^
       events.hashCode ^
-      calendarEvents.hashCode ^
+      feed.hashCode ^
       currentSelectedCalendarDate.hashCode ^
-      isOnDarkTheme.hashCode;
+      currentTheme.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -55,12 +56,12 @@ class AppState {
           isLoading == other.isLoading &&
           sermons == other.sermons &&
           events == other.events &&
-          calendarEvents == other.calendarEvents &&
+          feed == other.feed &&
           currentSelectedCalendarDate == other.currentSelectedCalendarDate &&
-          isOnDarkTheme == other.isOnDarkTheme;
+          currentTheme == other.currentTheme;
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, sermons: $sermons, events: $events, calendarEvents: $calendarEvents, currentSelectedCalendarDate: $currentSelectedCalendarDate, isOnDarkTheme: $isOnDarkTheme}';
+    return 'AppState{isLoading: $isLoading, sermons: $sermons, events: $events, feed: $feed, currentSelectedCalendarDate: $currentSelectedCalendarDate, currentTheme: $currentTheme}';
   }
 }

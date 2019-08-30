@@ -2,7 +2,6 @@ import 'package:service_application/Utils/DataUtils.dart';
 import 'package:service_application/Store/State.dart';
 import 'package:redux/redux.dart';
 
-/// Sermon Actions
 class FetchSermonsAction {
   final Store<AppState> store;
 
@@ -15,62 +14,27 @@ class FetchSermonsAction {
 }
 
 class SermonsLoadedAction {
-  final List<SermonObject> sermons;
+  final List<Sermon> sermons;
 
   SermonsLoadedAction(this.sermons);
 
   @override
   String toString() {
-    return 'SermonsLoadedAction{Sermons: $sermons}';
+    return 'SermonsLoadedAction{sermons: $sermons}';
   }
 }
 
 class SermonSelectedAction {
-  final SermonObject sermon;
+  final Sermon sermon;
 
   SermonSelectedAction(this.sermon);
 
   @override
   String toString() {
-    return 'SermonSelectedAction{Sermon: $sermon}';
+    return 'SermonSelectedAction{sermon: $sermon}';
   }
 }
 
-///Calendar Event Actions
-class FetchCalendarEventsAction {
-  final Store<AppState> store;
-
-  FetchCalendarEventsAction(this.store);
-
-  @override
-  String toString() {
-    return 'Fetching calendar events...';
-  }
-}
-
-class CalendarEventsLoadedAction {
-  final Map<DateTime, List<Event>> calendarEvents;
-
-  CalendarEventsLoadedAction(this.calendarEvents);
-
-  @override
-  String toString() {
-    return 'CalendarEventsLoadedAction{Calendar events: $calendarEvents}';
-  }
-}
-
-class SetCurrentSelectedCalendarAction {
-  final String date;
-
-  SetCurrentSelectedCalendarAction(this.date);
-
-  @override
-  String toString() {
-    return 'SetCurrentSelectedCalendarAction{Current Selected Calendar Date: $date}';
-  }
-}
-
-///Event Actions
 class FetchEventsAction {
   final Store<AppState> store;
 
@@ -89,7 +53,7 @@ class EventsLoadedAction {
 
   @override
   String toString() {
-    return 'EventsLoadedAction{Events: $events}';
+    return 'EventsLoadedAction{events: $events}';
   }
 }
 
@@ -100,17 +64,39 @@ class EventSelectedAction {
 
   @override
   String toString() {
-    return 'EventSelectedAction{Event: $event}';
+    return 'EventSelectedAction{event: $event}';
   }
 }
 
-class SwitchThemesAction {
-  final bool isOnDarkTheme;
+class SetCurrentSelectedCalendarDateAction {
+  final String date;
 
-  SwitchThemesAction(this.isOnDarkTheme);
+  SetCurrentSelectedCalendarDateAction(this.date);
 
   @override
   String toString() {
-    return 'SwitchThemesAction{IsOnDarkTheme: $isOnDarkTheme}';
+    return 'SetCurrentSelectedCalendarDateAction{date: $date}';
+  }
+}
+
+class ChangeThemesAction {
+  final String newTheme;
+
+  ChangeThemesAction(this.newTheme);
+
+  @override
+  String toString() {
+    return 'ChangeThemesAction{newTheme: $newTheme}';
+  }
+}
+
+class FeedLoadedAction {
+  final List<DatetimeObject> feed;
+
+  FeedLoadedAction(this.feed);
+
+  @override
+  String toString() {
+    return 'FeedLoadedAction{feed: $feed}';
   }
 }

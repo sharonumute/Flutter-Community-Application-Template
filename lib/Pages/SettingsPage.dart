@@ -16,7 +16,7 @@ class SettingsPageContainer extends StatelessWidget {
       },
       builder: (context, vm) {
         return SettingsPage(
-          currentIsOnDarkMode: vm.currentIsOnDarkMode,
+          currentTheme: vm.currentTheme,
         );
       },
     );
@@ -24,11 +24,11 @@ class SettingsPageContainer extends StatelessWidget {
 }
 
 class SettingsPage extends StatefulWidget {
-  final bool currentIsOnDarkMode;
+  final String currentTheme;
 
   SettingsPage({
     Key key,
-    @required this.currentIsOnDarkMode,
+    @required this.currentTheme,
   }) : super(key: key);
 
   @override
@@ -43,7 +43,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: new ListView.builder(
         itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
-          return new Text("${widget.currentIsOnDarkMode}");
+          return new Text("${widget.currentTheme}");
         },
       ),
     );
@@ -51,15 +51,15 @@ class _SettingsPageState extends State<SettingsPage> {
 }
 
 class _ViewModel {
-  final bool currentIsOnDarkMode;
+  final String currentTheme;
 
   _ViewModel({
-    @required this.currentIsOnDarkMode,
+    @required this.currentTheme,
   });
 
   factory _ViewModel.from(Store<AppState> store) {
     return _ViewModel(
-      currentIsOnDarkMode: isOnDarkThemeSelector(store.state),
+      currentTheme: currentThemeSelector(store.state),
     );
   }
 }

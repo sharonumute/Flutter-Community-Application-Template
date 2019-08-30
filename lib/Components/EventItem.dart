@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:service_application/Globals/Values.dart';
-import 'package:service_application/Components/ExpandableImage.dart';
-import 'package:service_application/Components/ExpandableTextBox.dart';
+import 'package:service_application/Pages/ComponentPages/EventItemPage.dart';
 import 'package:service_application/Utils/CommonUtils.dart';
 import 'package:service_application/Utils/DataUtils.dart';
 import 'package:service_application/Utils/DateUtils.dart';
 import 'package:service_application/Store/State.dart';
 import 'package:service_application/Store/Actions.dart';
-import 'package:service_application/Constants/ErrorMessages.dart';
+import 'package:service_application/Strings/ErrorMessages.dart';
+import 'package:service_application/Utils/WidgetUtils.dart';
 
 class EventItemContainer extends StatelessWidget {
   final Event event;
@@ -26,10 +26,7 @@ class EventItemContainer extends StatelessWidget {
       },
       builder: (context, vm) {
         return EventItem(
-          startDate: event.startDate,
-          title: event.title,
-          details: event.details,
-          imageUrl: event.imageUrl,
+          event: event,
           numberOfLinesOnMinimized: numberOfLinesOnMinimized,
           onEventSelected: vm.onEventSelected,
         );
@@ -41,18 +38,12 @@ class EventItemContainer extends StatelessWidget {
 class EventItem extends StatefulWidget {
   EventItem({
     Key key,
-    this.title,
-    this.startDate,
-    this.imageUrl,
-    this.details,
+    this.event,
     this.numberOfLinesOnMinimized,
     this.onEventSelected,
   }) : super(key: key);
 
-  final String title;
-  final DateTime startDate;
-  final String imageUrl;
-  final String details;
+  final Event event;
   final int numberOfLinesOnMinimized;
   final Function onEventSelected;
 
@@ -61,10 +52,19 @@ class EventItem extends StatefulWidget {
 }
 
 class _EventItemState extends State<EventItem> {
-  bool _expanded = false;
+  void _openEvent() {
+    Navigator.of(context).push(
+      new MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          return EventItemPage(event: widget.event);
+        },
+      ),
+    );
+  }
 
   void _onEventSelected() {
-    this._toggleExpansion();
+    this._openEvent();
+
     try {
       widget.onEventSelected();
     } on NoSuchMethodError {
@@ -72,29 +72,12 @@ class _EventItemState extends State<EventItem> {
     }
   }
 
-  void _toggleExpansion() {
-    setState(() {
-      _expanded = !_expanded;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    print("Event Item Expanded: " + '$_expanded');
-
-    Widget eventItem = new Card(
-      margin: _expanded
-          ? const EdgeInsets.only(
-              left: marginpaddingFromScreenHover,
-              right: marginpaddingFromScreenHover,
-              top: 0.0,
-              bottom: 15.0)
-          : const EdgeInsets.only(
-              left: marginpaddingFromScreenFlat,
-              right: marginpaddingFromScreenFlat,
-              top: 0.0,
-              bottom: 20.0),
-      elevation: _expanded ? cardHover : cardResting,
+    return new Card(
+      color: widget.event.color,
+      margin: const EdgeInsets.only(bottom: marginpaddingFromScreenFlat),
+      elevation: cardResting,
       clipBehavior: Clip.antiAlias,
       shape: new RoundedRectangleBorder(
         borderRadius: new BorderRadius.circular(boxborderRadius),
@@ -107,61 +90,23 @@ class _EventItemState extends State<EventItem> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              //Date and chevron icon row
-              new Row(
-                children: <Widget>[
-                  Expanded(
-                    child: widget.startDate == null
-                        ? new Padding(
-                            padding: EdgeInsets.all(dividerPadding),
-                          )
-                        : new Text(
-                            "${presentationFullDayFormat(widget.startDate)}",
-                            style: Theme.of(context).textTheme.body1,
-                          ), // if there's no date, replace with blank spacing
-                  ),
-                  new Icon(
-                    _expanded ? Icons.expand_less : Icons.expand_more,
-                    size: iconSize,
-                  )
-                ],
+              new Text(
+                widget.event.title,
+                style: Theme.of(context).textTheme.body1,
               ),
-              // Header
-              ifEmptyOrNull(widget.title)
-                  ? null
-                  : new Text(
-                      widget.title,
-                      style: Theme.of(context).textTheme.headline,
-                    ),
-              // Details
-              ifEmptyOrNull(widget.details)
-                  ? null
-                  : new ExpandableTextBox(
-                      text: widget.details,
-                      numberOfMinimalLines:
-                          widget.numberOfLinesOnMinimized ?? 4,
-                      expanded: _expanded,
-                      textStyle: Theme.of(context).textTheme.body2,
-                    ),
-              // Blank spacing
-              new Padding(
-                padding: EdgeInsets.all(dividerPadding),
-              ),
-              // Event image
-              ifEmptyOrNull(widget.imageUrl)
-                  ? null
-                  : new ExpandableImage(
-                      imageUrl: widget.imageUrl,
-                      height: imageHeightStandard,
-                    ),
-            ].where(objectIsNotNull).toList(),
+              ifObjectIsNotNull(widget.event.startDate) &&
+                      ifObjectIsNotNull(widget.event.endDate)
+                  ? new Text(
+                      startToEndTime(
+                          widget.event.startDate, widget.event.endDate),
+                      style: Theme.of(context).textTheme.caption,
+                    )
+                  : null,
+            ].where(ifObjectIsNotNull).toList(),
           ),
         ),
       ),
     );
-
-    return new ExpansionCrossFade(
-        collapsed: eventItem, expanded: eventItem, isExpanded: _expanded);
   }
 }
 

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:service_application/Components/EventItemDateBucket.dart';
 import 'package:service_application/Globals/Values.dart';
 import 'package:service_application/Components/Calendar.dart';
 import 'package:service_application/Store/Selectors.dart';
@@ -21,7 +22,7 @@ class CalendarPageContainer extends StatelessWidget {
       },
       builder: (context, vm) {
         return CalendarPage(
-            events: vm.calendarEvents,
+            events: vm.events,
             userSelectedCalendarDate: vm.currentSelectedCalendarDate,
             setCurrentSelectedCalendarDate: vm.setCurrentSelectedCalendarDate);
       },
@@ -30,7 +31,7 @@ class CalendarPageContainer extends StatelessWidget {
 }
 
 class CalendarPage extends StatefulWidget {
-  final Map<DateTime, List<Event>> events;
+  final List<Event> events;
   final String userSelectedCalendarDate;
   final Function setCurrentSelectedCalendarDate;
 
@@ -46,17 +47,19 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  /// DateTime shouldn't have Time
   List<Widget> _currentDisplayedEvents = [];
 
   void changeCurrentDisplayedDates(DateTime day) {
     List<Widget> eventsToDisplay = [];
-    List<Event> eventsThisDay = widget.events[day];
+    List<Event> eventsThisDay = widget.events
+        .where((event) => event.isInRange(
+            new DateTime(day.year, day.month, day.day, 0, 0, 0),
+            new DateTime(day.year, day.month, day.day, 23, 59, 59)))
+        .toList();
 
     if (eventsThisDay != null && eventsThisDay.isNotEmpty) {
-      for (Event event in eventsThisDay) {
-        eventsToDisplay.add(new EventItemContainer(event: event));
-      }
+      eventsToDisplay
+          .add(new EventItemDateBucket(date: day, events: eventsThisDay));
     }
 
     setState(() {
@@ -98,23 +101,23 @@ class _CalendarPageState extends State<CalendarPage> {
 }
 
 class _ViewModel {
-  final Map<DateTime, List<Event>> calendarEvents;
+  final List<Event> events;
   final String currentSelectedCalendarDate;
   final Function setCurrentSelectedCalendarDate;
 
   _ViewModel({
-    @required this.calendarEvents,
+    @required this.events,
     @required this.currentSelectedCalendarDate,
     @required this.setCurrentSelectedCalendarDate,
   });
 
   factory _ViewModel.from(Store<AppState> store) {
     return _ViewModel(
-        calendarEvents: calendarEventsSelector(store.state),
+        events: eventsSelector(store.state),
         currentSelectedCalendarDate:
             currentSelectedCalendarDateSelector(store.state),
         setCurrentSelectedCalendarDate: (DateTime userSelectedDate) =>
-            store.dispatch(new SetCurrentSelectedCalendarAction(
+            store.dispatch(new SetCurrentSelectedCalendarDateAction(
                 userSelectedDate.toString())));
   }
 }

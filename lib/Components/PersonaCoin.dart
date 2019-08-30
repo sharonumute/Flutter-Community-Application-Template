@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:service_application/Components/ExpandableImage.dart';
+import 'package:service_application/Components/CustomImage.dart';
 import 'package:service_application/Globals/Values.dart';
 import "package:service_application/Utils/DataUtils.dart";
 import 'package:service_application/Utils/WidgetUtils.dart';
@@ -27,11 +27,13 @@ class PersonaCoin extends StatelessWidget {
             title: new Center(
               child: new Column(
                 children: <Widget>[
-                  returnCircleImage(
-                    new ExpandableImage(
+                  returnCircleWidget(
+                    new CustomImage(
                       imageUrl: person.imageUrl,
                       height: 80,
                       width: 80,
+                      imageFallbackType: FallbackType.textboy,
+                      imageFallbackTextboyText: person.name,
                     ),
                   ),
                   new Padding(
@@ -65,15 +67,16 @@ class PersonaCoin extends StatelessWidget {
 
     return new Container(
       margin: const EdgeInsets.only(right: marginForAvatarImages),
-      child: returnCircleImage(Ink.image(
-        image: new NetworkImage(person.imageUrl),
-        fit: BoxFit.cover,
-        height: diameter,
-        width: diameter,
-        child: InkWell(
-          onTap: _showPersonaInfo,
+      child: returnCircleWidget(
+        new CustomImage(
+          imageUrl: person.imageUrl,
+          height: diameter,
+          width: diameter,
+          imageFallbackType: FallbackType.textboy,
+          imageFallbackTextboyText: person.name,
+          onClick: _showPersonaInfo,
         ),
-      )),
+      ),
     );
   }
 }

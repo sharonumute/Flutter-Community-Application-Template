@@ -27,7 +27,7 @@ class SermonPageContainer extends StatelessWidget {
 }
 
 class SermonPage extends StatefulWidget {
-  final List<SermonObject> sermons;
+  final List<Sermon> sermons;
 
   SermonPage({Key key, @required this.sermons}) : super(key: key);
 
@@ -51,7 +51,7 @@ class _SermonPageState extends State<SermonPage> {
 }
 
 class _ViewModel {
-  final List<SermonObject> sermons;
+  final List<Sermon> sermons;
 
   _ViewModel({
     @required this.sermons,

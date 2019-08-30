@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/Components/ExpandableTextBox.dart';
+import 'package:service_application/Components/CustomText.dart';
 import 'package:service_application/Components/PersonaCoin.dart';
 import 'package:service_application/Globals/Values.dart';
+import 'package:service_application/Pages/ComponentPages/SermonItemPage.dart';
 import 'package:service_application/Utils/CommonUtils.dart';
 import 'package:service_application/Utils/DataUtils.dart';
 import 'package:service_application/Utils/DateUtils.dart';
 import 'package:service_application/Store/State.dart';
 import 'package:service_application/Store/Actions.dart';
-import 'package:service_application/Constants/ErrorMessages.dart';
+import 'package:service_application/Strings/ErrorMessages.dart';
 
 class SermonItemContainer extends StatelessWidget {
-  final SermonObject sermon;
+  final Sermon sermon;
   final int numberOfLinesOnMinimized;
 
   SermonItemContainer({Key key, this.sermon, this.numberOfLinesOnMinimized})
@@ -28,8 +29,8 @@ class SermonItemContainer extends StatelessWidget {
         return SermonItem(
           title: sermon.title,
           date: sermon.date,
-          preacher: sermon.preacher,
-          sermon: sermon.sermon,
+          preacher: sermon.author,
+          sermon: sermon.content,
           numberOfLinesOnMinimized: numberOfLinesOnMinimized,
           onSermonSelected: vm.onSermonSelected,
         );
@@ -62,53 +63,12 @@ class SermonItem extends StatelessWidget {
       Navigator.of(context).push(
         new MaterialPageRoute<void>(
           builder: (BuildContext context) {
-            return new Scaffold(
-                appBar: new AppBar(
-                  elevation: 0,
-                  backgroundColor: Theme.of(context).backgroundColor,
-                  iconTheme: Theme.of(context).iconTheme,
-                ),
-                body: new ListView(
-                  padding: const EdgeInsets.all(paddingFromScreen),
-                  children: <Widget>[
-                    new Text(
-                      title,
-                      style: Theme.of(context).textTheme.display1,
-                    ),
-                    new Padding(
-                      padding: EdgeInsets.all(dividerPadding),
-                    ),
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        new Row(
-                          children: <Widget>[
-                            new PersonaCoin(
-                              person: preacher,
-                              diameter: 20.0,
-                            ),
-                            new Text(
-                              preacher.name,
-                              style: Theme.of(context).textTheme.body2,
-                            ),
-                          ],
-                        ),
-                        new Text(
-                          "${presentationFullDayFormat(date)}",
-                          style: Theme.of(context).textTheme.caption,
-                        ),
-                      ],
-                    ),
-                    new Padding(
-                      padding: EdgeInsets.all(dividerPadding * 2),
-                    ),
-                    new ExpandableTextBox(
-                      text: sermon,
-                      expanded: true,
-                      textStyle: Theme.of(context).textTheme.body2,
-                    ),
-                  ],
-                ));
+            return SermonItemPage(
+              title: title,
+              date: date,
+              preacher: preacher,
+              sermon: sermon,
+            );
           },
         ),
       );
@@ -116,6 +76,7 @@ class SermonItem extends StatelessWidget {
 
     void _onSermonSelected() {
       _openSermon();
+
       try {
         onSermonSelected();
       } on NoSuchMethodError {
@@ -175,13 +136,13 @@ class SermonItem extends StatelessWidget {
               // sermon
               ifEmptyOrNull(sermon)
                   ? null
-                  : new ExpandableTextBox(
+                  : new CustomText(
                       text: sermon,
                       numberOfMinimalLines: numberOfLinesOnMinimized ?? 2,
                       expanded: false,
                       textStyle: Theme.of(context).textTheme.body2,
                     ),
-            ].where(objectIsNotNull).toList(),
+            ].where(ifObjectIsNotNull).toList(),
           ),
         ),
       ),
@@ -196,7 +157,7 @@ class _ViewModel {
     @required this.onSermonSelected,
   });
 
-  factory _ViewModel.from(Store<AppState> store, SermonObject sermon) {
+  factory _ViewModel.from(Store<AppState> store, Sermon sermon) {
     return _ViewModel(
       onSermonSelected: () => store.dispatch(SermonSelectedAction(sermon)),
     );

@@ -54,7 +54,7 @@ class CalendarTile extends StatelessWidget {
                         size: 6.0,
                       )
                     : null,
-              ].where(objectIsNotNull).toList(),
+              ].where(ifObjectIsNotNull).toList(),
             )),
       );
     } else {
@@ -101,7 +101,7 @@ class CalendarTile extends StatelessWidget {
                         size: 6.0,
                       )
                     : null,
-              ].where(objectIsNotNull).toList(),
+              ].where(ifObjectIsNotNull).toList(),
             )),
       );
     }

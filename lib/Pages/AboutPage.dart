@@ -16,7 +16,7 @@ class AboutPageContainer extends StatelessWidget {
       },
       builder: (context, vm) {
         return AboutPage(
-          currentIsOnDarkMode: vm.currentIsOnDarkMode,
+          currentTheme: vm.currentTheme,
         );
       },
     );
@@ -24,11 +24,11 @@ class AboutPageContainer extends StatelessWidget {
 }
 
 class AboutPage extends StatefulWidget {
-  final bool currentIsOnDarkMode;
+  final String currentTheme;
 
   AboutPage({
     Key key,
-    @required this.currentIsOnDarkMode,
+    @required this.currentTheme,
   }) : super(key: key);
 
   @override
@@ -40,21 +40,21 @@ class _AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(),
-      body: new Text("${widget.currentIsOnDarkMode}"),
+      body: new Text("${widget.currentTheme}"),
     );
   }
 }
 
 class _ViewModel {
-  final bool currentIsOnDarkMode;
+  final String currentTheme;
 
   _ViewModel({
-    @required this.currentIsOnDarkMode,
+    @required this.currentTheme,
   });
 
   factory _ViewModel.from(Store<AppState> store) {
     return _ViewModel(
-      currentIsOnDarkMode: isOnDarkThemeSelector(store.state),
+      currentTheme: currentThemeSelector(store.state),
     );
   }
 }

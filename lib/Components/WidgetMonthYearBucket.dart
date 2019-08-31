@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:service_application/Utils/DateUtils.dart';
+import 'package:service_application/Utils/WidgetUtils.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 class WidgetMonthYearBucket extends StatelessWidget {
@@ -21,6 +22,10 @@ class WidgetMonthYearBucket extends StatelessWidget {
       itemsInThisBucket.add(
         item,
       );
+    }
+
+    if (itemsInThisBucket.isEmpty) {
+      return nullWidget();
     }
 
     return new Card(

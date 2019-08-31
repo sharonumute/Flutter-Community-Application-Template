@@ -10,6 +10,7 @@ import 'package:service_application/Pages/HomepageTabPages/SermonPage.dart';
 import 'package:service_application/Pages/Routes.dart';
 import 'package:service_application/Store/Actions.dart';
 import 'package:service_application/Globals/Themes.dart';
+import 'package:service_application/Globals/Values.dart';
 import 'package:service_application/Utils/PreferenceUtils.dart';
 import 'package:service_application/Strings/AppDetails.dart';
 import 'package:service_application/Utils/WidgetUtils.dart';
@@ -54,13 +55,31 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> with SingleTickerProviderStateMixin {
+  // controls the text label we use as a search bar
+  TextEditingController _filter = new TextEditingController();
   TabController _tabController;
+  String _searchTerm = "";
+  Icon _searchIcon = new Icon(Icons.search);
+  Widget _appBarTitle = new Text(APP_TITLE_BAR);
 
   @override
   void initState() {
     super.initState();
     widget.onAppStarted();
     _tabController = new TabController(length: 3, vsync: this, initialIndex: 0);
+    _searchTerm = "";
+
+    _filter.addListener(() {
+      if (_filter.text.isEmpty) {
+        setState(() {
+          _searchTerm = "";
+        });
+      } else {
+        setState(() {
+          _searchTerm = _filter.text;
+        });
+      }
+    });
   }
 
   @override
@@ -71,6 +90,53 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    Widget searchBar = new Padding(
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
+      child: new TextField(
+        controller: _filter,
+        style: TextStyle(
+          color: normalBlackText,
+        ),
+        keyboardAppearance: Theme.of(context).brightness,
+        cursorColor: normalBlackText,
+        decoration: new InputDecoration(
+            prefixIcon: new Icon(
+              Icons.search,
+              color: normalBlackText,
+            ),
+            hintText: 'Search',
+            filled: true,
+            fillColor: dafaultWhite,
+            labelStyle: TextStyle(
+              color: normalBlackText,
+            ),
+            hintStyle: TextStyle(
+              color: helperBlackText,
+            ),
+            helperStyle: TextStyle(
+              color: helperBlackText,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(500)),
+              gapPadding: 0,
+            ),
+            contentPadding: const EdgeInsets.all(0)),
+      ),
+    );
+
+    void _searchPressed() {
+      setState(() {
+        if (this._searchIcon.icon == Icons.search) {
+          this._searchIcon = new Icon(Icons.close);
+          this._appBarTitle = searchBar;
+        } else {
+          this._searchIcon = new Icon(Icons.search);
+          this._appBarTitle = new Text(APP_TITLE_BAR);
+          _filter.clear();
+        }
+      });
+    }
+
     Icon currentThemeIcon = Icon(Icons.brightness_2);
     bool isCurrentlyOnADarkTheme = false;
     if (DARK_THEMES.contains(widget.currentTheme)) {
@@ -80,11 +146,11 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
     Map<Widget, Widget> homepageTabs = {
       new Tab(icon: Icon(Icons.rss_feed), text: "Feed"):
-          new FeedPageContainer(),
+          new FeedPageContainer(searchTerm: _searchTerm),
       new Tab(icon: Icon(Icons.event), text: "Calendar"):
-          new CalendarPageContainer(),
+          new CalendarPageContainer(searchTerm: _searchTerm),
       new Tab(icon: Icon(Icons.local_library), text: "Sermons"):
-          new SermonPageContainer(),
+          new SermonPageContainer(searchTerm: _searchTerm),
     };
 
     Widget drawerHeader = UserAccountsDrawerHeader(
@@ -104,7 +170,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             return new Scaffold(
               appBar: new AppBar(
                 centerTitle: true,
-                title: new Text(APP_TITLE_BAR),
+                title: _appBarTitle,
                 bottom: new TabBar(
                   controller: _tabController,
                   labelStyle: Theme.of(context).textTheme.subhead,
@@ -112,6 +178,13 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                   tabs: homepageTabs.keys.toList(),
                 ),
                 elevation: 0,
+                actions: <Widget>[
+                  IconButton(
+                    icon: _searchIcon,
+                    onPressed: _searchPressed,
+                    tooltip: MaterialLocalizations.of(context).searchFieldLabel,
+                  ),
+                ],
               ),
               body: new TabBarView(
                 controller: _tabController,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:service_application/Components/EventItemDateBucket.dart';
 import 'package:service_application/Components/SermonItem.dart';
 import 'package:service_application/Globals/Values.dart';
+import 'package:service_application/Utils/CommonUtils.dart';
 import 'package:service_application/Utils/DataUtils.dart';
 import 'package:service_application/Utils/DateUtils.dart';
 
@@ -38,7 +39,8 @@ Color getRandomColor() {
 }
 
 Map<DateTime, List<Widget>> getMonthYearBucketOrder(
-    List<DatetimeObject> dateTimeObjectsToOrder) {
+    List<DatetimeObject> dateTimeObjectsToOrder,
+    {String filterTitleBy}) {
   List<DatetimeObject> dateTimeObjectsToOrderSorted = dateTimeObjectsToOrder
     ..sort((a, b) => b.compareTo(a))
     ..toList();
@@ -57,9 +59,14 @@ Map<DateTime, List<Widget>> getMonthYearBucketOrder(
       }
 
       List<DatetimeObject> itemsThisMonthYear = dateTimeObjectsToOrderSorted
-          .where((item) => item.isInRange(
-              new DateTime.utc(monthYear.year, monthYear.month, 1),
-              getMonthEnd(monthYear.year, monthYear.month)))
+          .where((item) =>
+              item.isInRange(
+                  new DateTime.utc(monthYear.year, monthYear.month, 1),
+                  getMonthEnd(monthYear.year, monthYear.month)) &&
+              item
+                  .getTitle()
+                  .toLowerCase()
+                  .contains(filterTitleBy.toLowerCase()))
           .toList();
 
       monthYearDateTimeObject[monthYear] = itemsThisMonthYear;
@@ -134,8 +141,11 @@ Map<DateTime, List<Widget>> getMonthYearBucketOrder(
       }
     }
 
-    monthYearWidgets[monthYear] = widgetsInThisMonthYear;
+    monthYearWidgets[monthYear] =
+        widgetsInThisMonthYear.where(ifObjectIsNotNull).toList();
   }
 
   return monthYearWidgets;
 }
+
+Widget nullWidget() => new Container();

@@ -10,7 +10,9 @@ import 'package:service_application/Utils/DataUtils.dart';
 import 'package:service_application/Utils/WidgetUtils.dart';
 
 class FeedPageContainer extends StatelessWidget {
-  FeedPageContainer({Key key}) : super(key: key);
+  final String searchTerm;
+
+  FeedPageContainer({Key key, this.searchTerm}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class FeedPageContainer extends StatelessWidget {
       builder: (context, vm) {
         return FeedPage(
           feed: vm.feed,
+          searchTerm: searchTerm,
         );
       },
     );
@@ -29,8 +32,9 @@ class FeedPageContainer extends StatelessWidget {
 
 class FeedPage extends StatefulWidget {
   final List<DatetimeObject> feed;
+  final String searchTerm;
 
-  FeedPage({Key key, @required this.feed}) : super(key: key);
+  FeedPage({Key key, @required this.feed, this.searchTerm}) : super(key: key);
 
   @override
   _FeedPageState createState() => new _FeedPageState();
@@ -41,7 +45,7 @@ class _FeedPageState extends State<FeedPage> {
   Widget build(BuildContext context) {
     // Get Widgets of DatetimeObjects in monthYear buckets
     Map<DateTime, List<Widget>> monthYearWidgets =
-        getMonthYearBucketOrder(widget.feed);
+        getMonthYearBucketOrder(widget.feed, filterTitleBy: widget.searchTerm);
 
     // Get iterable list of month year pairs
     List<DateTime> monthYears = monthYearWidgets.keys.toList();

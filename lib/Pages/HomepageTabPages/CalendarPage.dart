@@ -11,7 +11,9 @@ import 'package:service_application/Utils/DataUtils.dart';
 import 'package:service_application/Store/Actions.dart';
 
 class CalendarPageContainer extends StatelessWidget {
-  CalendarPageContainer({Key key}) : super(key: key);
+  final String searchTerm;
+
+  CalendarPageContainer({Key key, this.searchTerm}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +23,18 @@ class CalendarPageContainer extends StatelessWidget {
       },
       builder: (context, vm) {
         return CalendarPage(
-            events: vm.events,
-            userSelectedCalendarDate: vm.currentSelectedCalendarDate,
-            setCurrentSelectedCalendarDate: vm.setCurrentSelectedCalendarDate);
+          events: vm.events,
+          userSelectedCalendarDate: vm.currentSelectedCalendarDate,
+          setCurrentSelectedCalendarDate: vm.setCurrentSelectedCalendarDate,
+          searchTerm: searchTerm,
+        );
       },
     );
   }
 }
 
 class CalendarPage extends StatefulWidget {
+  final String searchTerm;
   final List<Event> events;
   final String userSelectedCalendarDate;
   final Function setCurrentSelectedCalendarDate;
@@ -38,7 +43,8 @@ class CalendarPage extends StatefulWidget {
       {Key key,
       @required this.events,
       @required this.userSelectedCalendarDate,
-      @required this.setCurrentSelectedCalendarDate})
+      @required this.setCurrentSelectedCalendarDate,
+      this.searchTerm})
       : super(key: key);
 
   @override
@@ -51,9 +57,14 @@ class _CalendarPageState extends State<CalendarPage> {
   void changeCurrentDisplayedDates(DateTime day) {
     List<Widget> eventsToDisplay = [];
     List<Event> eventsThisDay = widget.events
-        .where((event) => event.isInRange(
-            new DateTime.utc(day.year, day.month, day.day, 0, 0, 0),
-            new DateTime.utc(day.year, day.month, day.day, 23, 59, 59)))
+        .where((event) =>
+            event.isInRange(
+                new DateTime.utc(day.year, day.month, day.day, 0, 0, 0),
+                new DateTime.utc(day.year, day.month, day.day, 23, 59, 59)) &&
+            event
+                .getTitle()
+                .toLowerCase()
+                .contains(widget.searchTerm.toLowerCase()))
         .toList();
 
     if (eventsThisDay != null && eventsThisDay.isNotEmpty) {

@@ -10,7 +10,9 @@ import 'package:service_application/Utils/DataUtils.dart';
 import 'package:service_application/Utils/WidgetUtils.dart';
 
 class SermonPageContainer extends StatelessWidget {
-  SermonPageContainer({Key key}) : super(key: key);
+  final String searchTerm;
+
+  SermonPageContainer({Key key, this.searchTerm}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class SermonPageContainer extends StatelessWidget {
       builder: (context, vm) {
         return SermonPage(
           sermons: vm.sermons,
+          searchTerm: searchTerm,
         );
       },
     );
@@ -29,8 +32,10 @@ class SermonPageContainer extends StatelessWidget {
 
 class SermonPage extends StatefulWidget {
   final List<Sermon> sermons;
+  final String searchTerm;
 
-  SermonPage({Key key, @required this.sermons}) : super(key: key);
+  SermonPage({Key key, @required this.sermons, this.searchTerm})
+      : super(key: key);
 
   @override
   _SermonPageState createState() => new _SermonPageState();
@@ -40,8 +45,9 @@ class _SermonPageState extends State<SermonPage> {
   @override
   Widget build(BuildContext context) {
     // Get Widgets of Sermons in monthYear buckets
-    Map<DateTime, List<Widget>> monthYearWidgets =
-        getMonthYearBucketOrder(widget.sermons);
+    Map<DateTime, List<Widget>> monthYearWidgets = getMonthYearBucketOrder(
+        widget.sermons,
+        filterTitleBy: widget.searchTerm);
 
     // Get iterable list of month year pairs
     List<DateTime> monthYears = monthYearWidgets.keys.toList();

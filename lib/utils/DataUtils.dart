@@ -4,6 +4,7 @@ import 'package:service_application/Utils/WidgetUtils.dart';
 
 abstract class DatetimeObject implements Comparable<DatetimeObject> {
   DateTime getComparisonDate();
+  String getTitle();
 
   @override
   int compareTo(DatetimeObject other) {
@@ -52,6 +53,11 @@ class Event extends DatetimeObject {
               .withOpacity(0.8) ??
           getRandomColor(),
     );
+  }
+
+  @override
+  String getTitle() {
+    return this.title;
   }
 
   @override
@@ -221,6 +227,11 @@ class Sermon extends DatetimeObject {
       imageUrl: parsedJson['image_url'],
       author: new Person.fromJson(parsedJson['preacher']),
     );
+  }
+
+  @override
+  String getTitle() {
+    return this.title;
   }
 
   @override

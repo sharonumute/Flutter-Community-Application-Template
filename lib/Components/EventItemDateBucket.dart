@@ -34,6 +34,10 @@ class EventItemDateBucket extends StatelessWidget {
       );
     }
 
+    if (eventsInThisBucket.isEmpty) {
+      return nullWidget();
+    }
+
     return new Card(
       color: Colors.transparent,
       margin: const EdgeInsets.all(0),

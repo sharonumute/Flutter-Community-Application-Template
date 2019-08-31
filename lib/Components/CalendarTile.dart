@@ -64,9 +64,7 @@ class CalendarTile extends StatelessWidget {
             decoration: isSelected
                 ? new BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Theme.of(context).brightness == Brightness.light
-                        ? Theme.of(context).primaryColor
-                        : Theme.of(context).primaryTextTheme.body1.color,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   )
                 : new BoxDecoration(),
             alignment: Alignment.center,
@@ -77,30 +75,25 @@ class CalendarTile extends StatelessWidget {
                   Utils.formatDay(date).toString(),
                   style: isSelected
                       ? new TextStyle(
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? Theme.of(context)
-                                      .primaryTextTheme
-                                      .body1
-                                      .foreground
-                                      .color
-                                  : Theme.of(context).primaryColor,
+                          color: Theme.of(context).primaryColor,
                         )
                       : dateStyles,
                   textAlign: TextAlign.center,
                 ),
-                hasEvent
-                    ? new Padding(
-                        padding: EdgeInsets.all(2.0),
-                      )
-                    : null,
+                new Padding(
+                  padding: EdgeInsets.all(2.0),
+                ),
                 hasEvent
                     ? new Icon(
                         Icons.brightness_1,
                         color: this.validEventTest[0].color,
                         size: 6.0,
                       )
-                    : null,
+                    : new Icon(
+                        Icons.brightness_1,
+                        color: Theme.of(context).primaryColor.withOpacity(0),
+                        size: 6.0,
+                      ),
               ].where(ifObjectIsNotNull).toList(),
             )),
       );

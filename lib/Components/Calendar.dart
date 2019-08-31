@@ -74,7 +74,8 @@ class _CalendarState extends State<Calendar> {
     if (widget.showCalendarPickerIcon) {
       rightInnerIcon = new IconButton(
         onPressed: () => selectDateFromPicker(),
-        icon: new Icon(Icons.calendar_today),
+        icon: new Icon(Icons.calendar_today,
+            color: Theme.of(context).colorScheme.onPrimary),
       );
     } else {
       rightInnerIcon = new Container();
@@ -83,11 +84,13 @@ class _CalendarState extends State<Calendar> {
     if (widget.showChevronsToChangeRange) {
       leftOuterIcon = new IconButton(
         onPressed: isExpanded ? previousMonth : previousWeek,
-        icon: new Icon(Icons.chevron_left),
+        icon: new Icon(Icons.chevron_left,
+            color: Theme.of(context).colorScheme.onPrimary),
       );
       rightOuterIcon = new IconButton(
         onPressed: isExpanded ? nextMonth : nextWeek,
-        icon: new Icon(Icons.chevron_right),
+        icon: new Icon(Icons.chevron_right,
+            color: Theme.of(context).colorScheme.onPrimary),
       );
     } else {
       leftOuterIcon = new Container();
@@ -96,7 +99,12 @@ class _CalendarState extends State<Calendar> {
 
     if (widget.showTodayAction) {
       leftInnerIcon = new InkWell(
-        child: new Text('Today'),
+        child: new Text(
+          'Today',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
+        ),
         onTap: resetToToday,
       );
     } else {
@@ -110,7 +118,10 @@ class _CalendarState extends State<Calendar> {
         leftInnerIcon ?? new Container(),
         new Text(
           displayMonth,
-          style: Theme.of(context).textTheme.title,
+          style: Theme.of(context)
+              .textTheme
+              .title
+              .copyWith(color: Theme.of(context).colorScheme.onPrimary),
         ),
         rightInnerIcon ?? new Container(),
         rightOuterIcon ?? new Container(),
@@ -147,7 +158,7 @@ class _CalendarState extends State<Calendar> {
             isDayOfWeek: true,
             dayOfWeek: day,
             dayOfWeekStyles:
-                new TextStyle(color: Theme.of(context).textTheme.body1.color),
+                new TextStyle(color: Theme.of(context).colorScheme.onPrimary),
           ),
         );
       },
@@ -203,11 +214,12 @@ class _CalendarState extends State<Calendar> {
     TextStyle dateStyles;
     if (isExpanded) {
       dateStyles = monthStarted && !monthEnded
-          ? new TextStyle(color: Theme.of(context).textTheme.body1.color)
-          : new TextStyle(color: Theme.of(context).disabledColor);
+          ? new TextStyle(color: Theme.of(context).colorScheme.onPrimary)
+          : new TextStyle(
+              color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.38));
     } else {
       dateStyles =
-          new TextStyle(color: Theme.of(context).textTheme.body1.color);
+          new TextStyle(color: Theme.of(context).colorScheme.onPrimary);
     }
     return dateStyles;
   }
@@ -221,6 +233,7 @@ class _CalendarState extends State<Calendar> {
             padding: new EdgeInsets.only(left: paddingFromWalls),
             child: new Text(
               Utils.fullDayFormat(selectedDate),
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
             ),
           ),
           new IconButton(
@@ -230,6 +243,7 @@ class _CalendarState extends State<Calendar> {
             icon: isExpanded
                 ? new Icon(Icons.arrow_drop_up)
                 : new Icon(Icons.arrow_drop_down),
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
         ],
       );
@@ -243,7 +257,10 @@ class _CalendarState extends State<Calendar> {
     return new Card(
       color: Theme.of(context).primaryColor,
       margin: const EdgeInsets.all(0),
-      elevation: cardResting,
+      elevation: 0,
+      shape: new RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(0),
+      ),
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

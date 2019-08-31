@@ -66,7 +66,12 @@ class EventItemDateBucket extends StatelessWidget {
                             child: new Center(
                               child: new Text(
                                 formatDay(date),
-                                style: Theme.of(context).textTheme.title,
+                                style:
+                                    Theme.of(context).textTheme.title.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary,
+                                        ),
                               ),
                             ),
                           ),

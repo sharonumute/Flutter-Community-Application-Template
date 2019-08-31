@@ -2,8 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:service_application/Globals/Themes.dart';
+import 'package:service_application/Globals/Values.dart';
 import 'package:service_application/Store/Selectors.dart';
 import 'package:service_application/Store/State.dart';
+import 'package:service_application/Utils/WidgetUtils.dart';
 
 class SettingsPageContainer extends StatelessWidget {
   SettingsPageContainer({Key key}) : super(key: key);
@@ -38,13 +41,54 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
+    Widget themeSetting = new Card(
+      margin: const EdgeInsets.only(
+          top: marginpaddingFromScreenFlat,
+          bottom: marginpaddingFromScreenFlat),
+      child: new Container(
+        padding: const EdgeInsets.fromLTRB(paddingFromWalls, paddingFromScreen,
+            paddingFromWalls, paddingFromScreen),
+        child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new Text("Themes"),
+            sixPointPadding,
+            new Wrap(
+              spacing: marginpaddingFromScreenFlat,
+              children: <Widget>[
+                Chip(
+                  backgroundColor: Theme.of(context).accentColor,
+                  label: Text("Light Blue Theme"),
+                ),
+                Chip(
+                  backgroundColor: Theme.of(context).primaryColorLight,
+                  label: Text(" Dark Black Theme"),
+                ),
+                Chip(
+                  backgroundColor: Theme.of(context).primaryColorLight,
+                  label: Text("Dark Night Teal Theme"),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+
     return new Scaffold(
-      appBar: new AppBar(),
-      body: new ListView.builder(
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int index) {
-          return new Text("${widget.currentTheme}");
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              floating: false,
+              pinned: true,
+            ),
+          ];
         },
+        body: ListView(
+          shrinkWrap: true,
+          children: <Widget>[themeSetting],
+        ),
       ),
     );
   }

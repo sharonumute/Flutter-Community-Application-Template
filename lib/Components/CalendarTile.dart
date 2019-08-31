@@ -91,7 +91,7 @@ class CalendarTile extends StatelessWidget {
                       )
                     : new Icon(
                         Icons.brightness_1,
-                        color: Theme.of(context).primaryColor.withOpacity(0),
+                        color: Colors.transparent,
                         size: 6.0,
                       ),
               ].where(ifObjectIsNotNull).toList(),

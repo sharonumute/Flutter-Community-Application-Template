@@ -20,7 +20,7 @@ And the following object models:
 
 <img src="screenshots/Screenshot_1570933467.png"
      alt="Feed"
-     style="height: 600px; margin-right:100%;" />
+     style="height: 100px; margin-right:100%;" />
 Feed Page showing Event Objects and Article Objects
 
 Event Objects get grouped and organized by day
@@ -29,7 +29,7 @@ While Artcle and Event Objects on the feed, are grouped into month-year pairs
 
 <img src="screenshots/Screenshot_1570933481.png"
      alt="Calendar"
-     style="height: 600px; margin-right:100%; margin-top: 30px;" />
+     style="height: 10px; margin-right:100%; margin-top: 30px;" />
 Calendar Page Showing Calendar Widgets and Events
 
 <img src="screenshots/Screenshot_1570933484.png"

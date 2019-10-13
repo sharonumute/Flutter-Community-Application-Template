@@ -1,7 +1,9 @@
-import "package:service_application/Store/State.dart";
-import 'package:service_application/Store/Actions.dart';
-import 'package:service_application/Utils/PreferenceUtils.dart';
-import 'package:service_application/Utils/DataUtils.dart';
+import "package:community_application/Store/State.dart";
+import 'package:community_application/Store/Actions.dart';
+import 'package:community_application/Utils/PreferenceUtils.dart';
+import 'package:community_application/Models/Event.dart';
+import 'package:community_application/Models/Article.dart';
+import 'package:community_application/Models/DateTimeObject.dart';
 import 'package:redux/redux.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
@@ -12,21 +14,21 @@ AppState appReducer(AppState state, action) {
     currentTheme: currentThemeReducer(state.currentTheme, action),
     currentSelectedCalendarDate: currentSelectedCalendarDateReducer(
         state.currentSelectedCalendarDate, action),
-    sermons: sermonsReducer(state.sermons, action),
+    articles: articlesReducer(state.articles, action),
     events: eventsReducer(state.events, action),
     feed: feedReducer(state.feed, action),
   );
 }
 
 final loadingReducer = combineReducers<bool>([
-  TypedReducer<bool, FetchSermonsAction>(_fetchSermons),
+  TypedReducer<bool, FetchArticlesAction>(_fetchArticles),
   TypedReducer<bool, FetchEventsAction>(_fetchEvents),
-  TypedReducer<bool, SermonsLoadedAction>(_setLoadedFalse),
+  TypedReducer<bool, ArticlesLoadedAction>(_setLoadedFalse),
   TypedReducer<bool, EventsLoadedAction>(_setLoadedFalse),
 ]);
 
-final sermonsReducer = combineReducers<List<Sermon>>([
-  TypedReducer<List<Sermon>, SermonsLoadedAction>(addSermonsIntoApp),
+final articlesReducer = combineReducers<List<Article>>([
+  TypedReducer<List<Article>, ArticlesLoadedAction>(addArticlesIntoApp),
 ]);
 
 final eventsReducer = combineReducers<List<Event>>([
@@ -50,29 +52,30 @@ bool _setLoadedFalse(bool state, action) {
   return false;
 }
 
-bool _fetchSermons(bool state, FetchSermonsAction action) {
+bool _fetchArticles(bool state, FetchArticlesAction action) {
   rootBundle.loadString("assets/test_data.json").then((data) {
-    final sermons = json.decode(data)["Sermons"];
+    final articles = json.decode(data)["Articles"];
 
-    List<Sermon> sermonObjects = [];
-    for (Map<String, dynamic> sermon in sermons) {
-      Sermon sermonObject = Sermon.fromJson(sermon);
-      sermonObjects.add(sermonObject);
+    List<Article> articleObjects = [];
+    for (Map<String, dynamic> article in articles) {
+      Article articleObject = Article.fromJson(article);
+      articleObjects.add(articleObject);
     }
 
-    action.store.dispatch(new SermonsLoadedAction(sermonObjects));
-    action.store.dispatch(new FeedLoadedAction(sermonObjects));
-    print("Sermons fetched and loaded: ${sermonObjects.length}");
+    action.store.dispatch(new ArticlesLoadedAction(articleObjects));
+    action.store.dispatch(new FeedLoadedAction(articleObjects));
+    print("Articles fetched and loaded: ${articleObjects.length}");
   });
 
   return true;
 }
 
-List<Sermon> addSermonsIntoApp(List<Sermon> state, SermonsLoadedAction action) {
-  List<Sermon> newSermons = [];
-  newSermons.addAll(state);
-  newSermons.addAll(action.sermons);
-  return newSermons;
+List<Article> addArticlesIntoApp(
+    List<Article> state, ArticlesLoadedAction action) {
+  List<Article> newArticles = [];
+  newArticles.addAll(state);
+  newArticles.addAll(action.articles);
+  return newArticles;
 }
 
 bool _fetchEvents(bool state, FetchEventsAction action) {
@@ -115,6 +118,7 @@ String setSelectedThemeState(String state, ChangeThemesAction action) {
 List<DatetimeObject> addFeedIntoApp(
     List<DatetimeObject> state, FeedLoadedAction action) {
   List<DatetimeObject> newFeed = [];
+
   newFeed.addAll(state);
   newFeed.addAll(action.feed);
   return newFeed;

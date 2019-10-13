@@ -1,7 +1,7 @@
 library service_app.themes;
 
 import 'package:flutter/material.dart';
-import 'package:service_application/Globals/Values.dart';
+import 'package:community_application/Globals/Values.dart';
 
 const LIGHT_BLUE = "LIGHTBLUE";
 const DARK_BLUE = "DARKBLUE";

@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 /// `numberOf_MinimalLines`: The number of lines shown when minimized
 ///
 /// `expanded`: Boolean that decides if box should be expanded or not
-class CustomText extends StatelessWidget {
-  CustomText(
+class TextWidget extends StatelessWidget {
+  TextWidget(
       {Key key,
       this.text,
       this.numberOfMinimalLines,

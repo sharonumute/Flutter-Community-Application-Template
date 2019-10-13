@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:service_application/Globals/Values.dart';
-import 'package:service_application/Utils/CommonUtils.dart';
-import 'package:service_application/Pages/ComponentPages/CustomImagePage.dart';
-import 'package:service_application/Utils/StringUtils.dart';
-import 'package:service_application/Utils/WidgetUtils.dart';
+import 'package:community_application/Globals/Values.dart';
+import 'package:community_application/Utils/CommonUtils.dart';
+import 'package:community_application/Pages/ComponentPages/ImageWidgetPage.dart';
+import 'package:community_application/Utils/StringUtils.dart';
+import 'package:community_application/Utils/WidgetUtils.dart';
 
 enum FallbackType { color, image, textboy }
 
-/// Create an image object that expands on click/tap
+/// Create an image object that
+/// - Expands on click/tap
+/// - Can possess a bottom shadow effect: `tint?`
+/// - Can use a fallback image: `imageFallbackFilename`
+/// - Can use a fallback color: `imageFallbackColor`
+/// - Can use a fallback textboy: `imageFallbackTextboyText`
 ///
 /// `image`: The content image url
-
+///
 /// `height`: Height of object when minimized, parent control width
 ///
 /// `width`: Width of object when minimized, if undefined, parent control width
-class CustomImage extends StatefulWidget {
+///
+/// `imageFallbackType`: Specify the image widget's fallback type: `color` or `image` or`textboy`
+class ImageWidget extends StatefulWidget {
   final String imageUrl;
   final double height;
   final double width;
@@ -25,7 +32,7 @@ class CustomImage extends StatefulWidget {
   final String imageFallbackTextboyText;
   final void Function() onClick;
 
-  CustomImage(
+  ImageWidget(
       {Key key,
       this.imageUrl,
       this.height,
@@ -39,10 +46,10 @@ class CustomImage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _CustomImageState createState() => new _CustomImageState();
+  _ImageWidgetState createState() => new _ImageWidgetState();
 }
 
-class _CustomImageState extends State<CustomImage> {
+class _ImageWidgetState extends State<ImageWidget> {
   bool imageLoaded = false;
   Image networkImage;
 

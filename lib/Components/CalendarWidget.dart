@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:community_application/Components/ExpansionCrossFade.dart';
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
-import 'package:service_application/Components/CalendarTile.dart';
-import 'package:service_application/Utils/DataUtils.dart';
-import 'package:service_application/Utils/DateUtils.dart';
+import 'package:community_application/Components/CalendarWidgetTile.dart';
+import 'package:community_application/Models/Event.dart';
+import 'package:community_application/Utils/DateUtils.dart';
 import 'package:date_utils/date_utils.dart';
-import 'package:service_application/Globals/Values.dart';
+import 'package:community_application/Globals/Values.dart';
 
 typedef DayBuilder(BuildContext context, DateTime day);
 

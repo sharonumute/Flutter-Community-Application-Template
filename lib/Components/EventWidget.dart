@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/Globals/Values.dart';
-import 'package:service_application/Pages/ComponentPages/EventItemPage.dart';
-import 'package:service_application/Utils/CommonUtils.dart';
-import 'package:service_application/Utils/DataUtils.dart';
-import 'package:service_application/Utils/DateUtils.dart';
-import 'package:service_application/Store/State.dart';
-import 'package:service_application/Store/Actions.dart';
+import 'package:community_application/Globals/Values.dart';
+import 'package:community_application/Pages/ComponentPages/EventWidgetPage.dart';
+import 'package:community_application/Utils/CommonUtils.dart';
+import 'package:community_application/Models/Event.dart';
+import 'package:community_application/Utils/DateUtils.dart';
+import 'package:community_application/Store/State.dart';
+import 'package:community_application/Store/Actions.dart';
 
-class EventItemContainer extends StatelessWidget {
+class EventWidgetContainer extends StatelessWidget {
   final Event event;
   final int numberOfLinesOnMinimized;
 
-  EventItemContainer({Key key, this.event, this.numberOfLinesOnMinimized})
+  EventWidgetContainer({Key key, this.event, this.numberOfLinesOnMinimized})
       : super(key: key);
 
   @override
@@ -23,38 +23,38 @@ class EventItemContainer extends StatelessWidget {
         return _ViewModel.from(store, event);
       },
       builder: (context, vm) {
-        return EventItem(
+        return EventWidget(
           event: event,
           numberOfLinesOnMinimized: numberOfLinesOnMinimized,
-          onEventSelected: vm.onEventSelected,
+          callback: vm.callback,
         );
       },
     );
   }
 }
 
-class EventItem extends StatefulWidget {
-  EventItem({
+class EventWidget extends StatefulWidget {
+  EventWidget({
     Key key,
     this.event,
     this.numberOfLinesOnMinimized,
-    this.onEventSelected,
+    this.callback,
   }) : super(key: key);
 
   final Event event;
   final int numberOfLinesOnMinimized;
-  final Function onEventSelected;
+  final Function callback;
 
   @override
-  _EventItemState createState() => new _EventItemState();
+  _EventWidgetState createState() => new _EventWidgetState();
 }
 
-class _EventItemState extends State<EventItem> {
+class _EventWidgetState extends State<EventWidget> {
   void _openEvent() {
     Navigator.of(context).push(
       new MaterialPageRoute<void>(
         builder: (BuildContext context) {
-          return EventItemPage(event: widget.event);
+          return EventWidgetPage(event: widget.event);
         },
       ),
     );
@@ -62,7 +62,7 @@ class _EventItemState extends State<EventItem> {
 
   void _onEventSelected() {
     this._openEvent();
-    widget.onEventSelected();
+    widget.callback();
   }
 
   @override
@@ -104,15 +104,15 @@ class _EventItemState extends State<EventItem> {
 }
 
 class _ViewModel {
-  final Function onEventSelected;
+  final Function callback;
 
   _ViewModel({
-    @required this.onEventSelected,
+    @required this.callback,
   });
 
   factory _ViewModel.from(Store<AppState> store, Event event) {
     return _ViewModel(
-      onEventSelected: () => store.dispatch(EventSelectedAction(event)),
+      callback: () => store.dispatch(EventSelectedAction(event)),
     );
   }
 }

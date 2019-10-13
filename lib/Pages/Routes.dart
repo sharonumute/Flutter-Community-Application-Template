@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:service_application/Pages/SettingsPage.dart';
-import 'package:service_application/Pages/AboutPage.dart';
+import 'package:community_application/Pages/SettingsPage.dart';
+import 'package:community_application/Pages/AboutPage.dart';
 
 const SETTINGS_PAGE = '/settings';
 const ABOUT_PAGE = '/about';

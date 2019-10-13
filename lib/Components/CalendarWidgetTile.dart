@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:date_utils/date_utils.dart';
-import 'package:service_application/Utils/CommonUtils.dart';
-import 'package:service_application/Utils/DataUtils.dart';
+import 'package:community_application/Utils/CommonUtils.dart';
+import 'package:community_application/Models/Event.dart';
 
 /// Modification of `https://pub.dartlang.org/packages/flutter_calendar#-readme-tab-` to include events
 class CalendarTile extends StatelessWidget {

@@ -1,2 +1,2 @@
-const APP_NAME = "Victory Chapel Mobile";
-const APP_TITLE_BAR = "Victory Chapel";
+const APP_NAME = "Sample Community Mobile";
+const COMMUNITY_NAME = "Sample Community";

@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/Store/Selectors.dart';
-import 'package:service_application/Store/State.dart';
+import 'package:community_application/Store/Selectors.dart';
+import 'package:community_application/Store/State.dart';
 
 class AboutPageContainer extends StatelessWidget {
   AboutPageContainer({Key key}) : super(key: key);

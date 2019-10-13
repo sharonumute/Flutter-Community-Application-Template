@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:service_application/Globals/Values.dart';
+import 'package:community_application/Globals/Values.dart';
 
+/// Image preview page when an image widget is clicked
 class ExpandableImagePage extends StatelessWidget {
   ExpandableImagePage({
     Key key,

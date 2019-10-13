@@ -1,81 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/Components/CustomText.dart';
-import 'package:service_application/Components/PersonaCoin.dart';
-import 'package:service_application/Globals/Values.dart';
-import 'package:service_application/Pages/ComponentPages/SermonItemPage.dart';
-import 'package:service_application/Utils/CommonUtils.dart';
-import 'package:service_application/Utils/DataUtils.dart';
-import 'package:service_application/Utils/DateUtils.dart';
-import 'package:service_application/Store/State.dart';
-import 'package:service_application/Store/Actions.dart';
+import 'package:community_application/Globals/Values.dart';
+import 'package:community_application/Utils/CommonUtils.dart';
+import 'package:community_application/Utils/DateUtils.dart';
+import 'package:community_application/Components/TextWidget.dart';
+import 'package:community_application/Components/PersonaCoin.dart';
+import 'package:community_application/Pages/ComponentPages/ArticleWidgetPage.dart';
+import 'package:community_application/Models/Person.dart';
+import 'package:community_application/Models/Article.dart';
+import 'package:community_application/Store/State.dart';
+import 'package:community_application/Store/Actions.dart';
 
-class SermonItemContainer extends StatelessWidget {
-  final Sermon sermon;
+class ArticleWidgetContainer extends StatelessWidget {
+  final Article article;
   final int numberOfLinesOnMinimized;
 
-  SermonItemContainer({Key key, this.sermon, this.numberOfLinesOnMinimized})
+  ArticleWidgetContainer({Key key, this.article, this.numberOfLinesOnMinimized})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
       converter: (Store<AppState> store) {
-        return _ViewModel.from(store, sermon);
+        return _ViewModel.from(store, article);
       },
       builder: (context, vm) {
-        return SermonItem(
-          title: sermon.title,
-          date: sermon.date,
-          preacher: sermon.author,
-          sermon: sermon.content,
+        return ArticleWidget(
+          title: article.title,
+          date: article.date,
+          author: article.author,
+          article: article.content,
           numberOfLinesOnMinimized: numberOfLinesOnMinimized,
-          onSermonSelected: vm.onSermonSelected,
+          callback: vm.callback,
         );
       },
     );
   }
 }
 
-class SermonItem extends StatelessWidget {
-  SermonItem(
+class ArticleWidget extends StatelessWidget {
+  ArticleWidget(
       {Key key,
       this.title,
       this.date,
-      this.preacher,
-      this.sermon,
+      this.author,
+      this.article,
       this.numberOfLinesOnMinimized = 2,
-      this.onSermonSelected})
+      this.callback})
       : super(key: key);
 
   final String title;
   final DateTime date;
-  final Person preacher;
-  final String sermon;
+  final Person author;
+  final String article;
   final int numberOfLinesOnMinimized;
-  final Function onSermonSelected;
+  final Function callback;
 
   @override
   Widget build(BuildContext context) {
-    void _openSermon() {
+    void _openArticle() {
       Navigator.of(context).push(
         new MaterialPageRoute<void>(
           builder: (BuildContext context) {
-            return SermonItemPage(
+            return ArticleWidgetPage(
               title: title,
               date: date,
-              preacher: preacher,
-              sermon: sermon,
+              author: author,
+              article: article,
             );
           },
         ),
       );
     }
 
-    void _onSermonSelected() {
-      _openSermon();
-      onSermonSelected();
+    void _onArticleSelected() {
+      _openArticle();
+      callback();
     }
 
     return new Card(
@@ -86,7 +87,7 @@ class SermonItem extends StatelessWidget {
         borderRadius: new BorderRadius.circular(0),
       ),
       child: InkWell(
-        onTap: _onSermonSelected,
+        onTap: _onArticleSelected,
         child: Container(
           padding: const EdgeInsets.all(paddingFromWalls),
           child: new Column(
@@ -102,9 +103,9 @@ class SermonItem extends StatelessWidget {
                   ),
                   new Row(
                     children: <Widget>[
-                      new PersonaCoin(person: preacher, diameter: 20.0),
+                      new PersonaCoin(person: author, diameter: 20.0),
                       new Text(
-                        preacher.name,
+                        author.name,
                         style: Theme.of(context).textTheme.body2,
                       ),
                     ],
@@ -121,11 +122,11 @@ class SermonItem extends StatelessWidget {
               new Padding(
                 padding: EdgeInsets.all(dividerPadding / 3),
               ),
-              // sermon
-              ifEmptyOrNull(sermon)
+              // article
+              ifStringEmptyOrNull(article)
                   ? null
-                  : new CustomText(
-                      text: sermon,
+                  : new TextWidget(
+                      text: article,
                       numberOfMinimalLines: numberOfLinesOnMinimized ?? 2,
                       expanded: false,
                       textStyle: Theme.of(context).textTheme.body2,
@@ -139,15 +140,15 @@ class SermonItem extends StatelessWidget {
 }
 
 class _ViewModel {
-  final Function onSermonSelected;
+  final Function callback;
 
   _ViewModel({
-    @required this.onSermonSelected,
+    @required this.callback,
   });
 
-  factory _ViewModel.from(Store<AppState> store, Sermon sermon) {
+  factory _ViewModel.from(Store<AppState> store, Article article) {
     return _ViewModel(
-      onSermonSelected: () => store.dispatch(SermonSelectedAction(sermon)),
+      callback: () => store.dispatch(ArticleSelectedAction(article)),
     );
   }
 }

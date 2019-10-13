@@ -2,18 +2,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/Components/EventItemDateBucket.dart';
-import 'package:service_application/Globals/Values.dart';
-import 'package:service_application/Components/Calendar.dart';
-import 'package:service_application/Store/Selectors.dart';
-import 'package:service_application/Store/State.dart';
-import 'package:service_application/Utils/DataUtils.dart';
-import 'package:service_application/Store/Actions.dart';
+import 'package:community_application/Components/EventWidgetDayDateBucket.dart';
+import 'package:community_application/Globals/Values.dart';
+import 'package:community_application/Components/CalendarWidget.dart';
+import 'package:community_application/Store/Selectors.dart';
+import 'package:community_application/Store/State.dart';
+import 'package:community_application/Models/Event.dart';
+import 'package:community_application/Store/Actions.dart';
 
 class CalendarPageContainer extends StatelessWidget {
-  final String searchTerm;
+  final String searchValue;
 
-  CalendarPageContainer({Key key, this.searchTerm}) : super(key: key);
+  CalendarPageContainer({Key key, this.searchValue}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class CalendarPageContainer extends StatelessWidget {
           events: vm.events,
           userSelectedCalendarDate: vm.currentSelectedCalendarDate,
           setCurrentSelectedCalendarDate: vm.setCurrentSelectedCalendarDate,
-          searchTerm: searchTerm,
+          searchValue: searchValue,
         );
       },
     );
@@ -34,7 +34,7 @@ class CalendarPageContainer extends StatelessWidget {
 }
 
 class CalendarPage extends StatefulWidget {
-  final String searchTerm;
+  final String searchValue;
   final List<Event> events;
   final String userSelectedCalendarDate;
   final Function setCurrentSelectedCalendarDate;
@@ -44,7 +44,7 @@ class CalendarPage extends StatefulWidget {
       @required this.events,
       @required this.userSelectedCalendarDate,
       @required this.setCurrentSelectedCalendarDate,
-      this.searchTerm})
+      this.searchValue})
       : super(key: key);
 
   @override
@@ -64,12 +64,12 @@ class _CalendarPageState extends State<CalendarPage> {
             event
                 .getTitle()
                 .toLowerCase()
-                .contains(widget.searchTerm.toLowerCase()))
+                .contains(widget.searchValue.toLowerCase()))
         .toList();
 
     if (eventsThisDay != null && eventsThisDay.isNotEmpty) {
       eventsToDisplay
-          .add(new EventItemDateBucket(date: day, events: eventsThisDay));
+          .add(new EventWidgetDateBucket(date: day, events: eventsThisDay));
     }
 
     setState(() {

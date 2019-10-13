@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/Globals/Themes.dart';
-import 'package:service_application/Globals/Values.dart';
-import 'package:service_application/Store/Selectors.dart';
-import 'package:service_application/Store/State.dart';
-import 'package:service_application/Utils/WidgetUtils.dart';
+import 'package:community_application/Globals/Themes.dart';
+import 'package:community_application/Globals/Values.dart';
+import 'package:community_application/Store/Selectors.dart';
+import 'package:community_application/Store/State.dart';
+import 'package:community_application/Utils/WidgetUtils.dart';
 
 class SettingsPageContainer extends StatelessWidget {
   SettingsPageContainer({Key key}) : super(key: key);

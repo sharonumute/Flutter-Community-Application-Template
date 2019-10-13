@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/service_application.iml" filepath="$PROJECT_DIR$/service_application.iml" />
-      <module fileurl="file://$PROJECT_DIR$/service_application_android.iml" filepath="$PROJECT_DIR$/service_application_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/community_application.iml" filepath="$PROJECT_DIR$/community_application.iml" />
+      <module fileurl="file://$PROJECT_DIR$/community_application_android.iml" filepath="$PROJECT_DIR$/community_application_android.iml" />
     </modules>
   </component>
 </project>

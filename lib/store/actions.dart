@@ -1,37 +1,39 @@
-import 'package:service_application/Utils/DataUtils.dart';
-import 'package:service_application/Store/State.dart';
+import 'package:community_application/Models/Event.dart';
+import 'package:community_application/Models/Article.dart';
+import 'package:community_application/Models/DateTimeObject.dart';
+import 'package:community_application/Store/State.dart';
 import 'package:redux/redux.dart';
 
-class FetchSermonsAction {
+class FetchArticlesAction {
   final Store<AppState> store;
 
-  FetchSermonsAction(this.store);
+  FetchArticlesAction(this.store);
 
   @override
   String toString() {
-    return 'Fetching sermons...';
+    return 'Fetching articles...';
   }
 }
 
-class SermonsLoadedAction {
-  final List<Sermon> sermons;
+class ArticlesLoadedAction {
+  final List<Article> articles;
 
-  SermonsLoadedAction(this.sermons);
+  ArticlesLoadedAction(this.articles);
 
   @override
   String toString() {
-    return 'SermonsLoadedAction{sermons: $sermons}';
+    return 'ArticlesLoadedAction{articles: $articles}';
   }
 }
 
-class SermonSelectedAction {
-  final Sermon sermon;
+class ArticleSelectedAction {
+  final Article article;
 
-  SermonSelectedAction(this.sermon);
+  ArticleSelectedAction(this.article);
 
   @override
   String toString() {
-    return 'SermonSelectedAction{sermon: $sermon}';
+    return 'ArticleSelectedAction{article: $article}';
   }
 }
 

@@ -1,26 +1,10 @@
+import 'dart:math';
+
+import 'package:community_application/Models/DateTimeObject.dart';
 import 'package:flutter/material.dart';
-import 'package:service_application/Utils/DateUtils.dart';
-import 'package:service_application/Utils/WidgetUtils.dart';
-
-abstract class DatetimeObject implements Comparable<DatetimeObject> {
-  DateTime getComparisonDate();
-  String getTitle();
-
-  @override
-  int compareTo(DatetimeObject other) {
-    if (this.getComparisonDate().isAfter(other.getComparisonDate())) {
-      return 1;
-    } else if (this
-        .getComparisonDate()
-        .isAtSameMomentAs(other.getComparisonDate())) {
-      return 0;
-    } else {
-      return -1;
-    }
-  }
-
-  bool isInRange(DateTime start, DateTime end);
-}
+import 'package:community_application/Utils/DateUtils.dart';
+import 'package:community_application/Utils/WidgetUtils.dart';
+import 'package:flutter/material.dart' as prefix0;
 
 class Event extends DatetimeObject {
   DateTime startDate;
@@ -67,40 +51,33 @@ class Event extends DatetimeObject {
 
   @override
   bool isInRange(DateTime startDate, DateTime endDate) {
-    DateTime start = startDate.toUtc();
-    DateTime end = endDate.toUtc();
-
-    if (end == null) {
-      if (isOnOrAfter(this.startDate, start)) {
-        return true;
-      }
-      return false;
+    if (endDate == null) {
+      return isOnOrAfter(this.startDate, startDate.toUtc());
     }
 
-    if (start == null) {
-      if (isOnOrBefore(this.endDate, end)) {
-        return true;
-      }
-      return false;
+    if (startDate == null) {
+      return isOnOrBefore(this.endDate, endDate.toUtc());
     }
 
-    if (isOnOrAfter(this.startDate, start) && isOnOrBefore(this.endDate, end)) {
+    if (isOnOrAfter(this.startDate, startDate.toUtc()) &&
+        isOnOrBefore(this.endDate, endDate.toUtc())) {
       return true;
     }
 
-    if (isOnOrBefore(this.startDate, start) &&
-        isOnOrBefore(this.endDate, end) &&
-        isOnOrAfter(this.endDate, start)) {
+    if (isOnOrBefore(this.startDate, startDate.toUtc()) &&
+        isOnOrBefore(this.endDate, endDate.toUtc()) &&
+        isOnOrAfter(this.endDate, startDate.toUtc())) {
       return true;
     }
 
-    if (isOnOrBefore(this.startDate, end) &&
-        isOnOrAfter(this.startDate, start) &&
-        isOnOrAfter(this.endDate, end)) {
+    if (isOnOrBefore(this.startDate, endDate.toUtc()) &&
+        isOnOrAfter(this.startDate, startDate.toUtc()) &&
+        isOnOrAfter(this.endDate, endDate.toUtc())) {
       return true;
     }
 
-    if (isOnOrBefore(this.startDate, start) && isOnOrAfter(this.endDate, end)) {
+    if (isOnOrBefore(this.startDate, startDate.toUtc()) &&
+        isOnOrAfter(this.endDate, endDate.toUtc())) {
       return true;
     }
     return false;
@@ -119,8 +96,8 @@ List<Event> createEventsFrom(Map<String, dynamic> parsedJson) {
   if (reocurrenceEndDateString == null) {
     reocurrenceEndDate = maxDate;
   } else {
-    reocurrenceEndDate =
-        DateTime.parse(parsedJson['recurrence']['end']).toUtc();
+    reocurrenceEndDate = minDate(
+        DateTime.parse(parsedJson['recurrence']['end']).toUtc(), maxDate);
   }
 
   if (isRecurringEvent) {
@@ -201,106 +178,5 @@ List<Event> onGoingEventHandler(
     events.add(Event.fromJson(parsedJson,
         preferredStartDate: startDate, preferredEndDate: endDate));
     return events;
-  }
-}
-
-class Sermon extends DatetimeObject {
-  String title;
-  String content;
-  DateTime date;
-  Person author;
-  String imageUrl;
-
-  Sermon({
-    this.date,
-    this.title,
-    this.content,
-    this.imageUrl,
-    this.author,
-  });
-
-  factory Sermon.fromJson(Map<String, dynamic> parsedJson) {
-    return Sermon(
-      date: DateTime.parse(parsedJson['date']).toUtc(),
-      title: parsedJson['title'],
-      content: parsedJson['sermon'],
-      imageUrl: parsedJson['image_url'],
-      author: new Person.fromJson(parsedJson['preacher']),
-    );
-  }
-
-  @override
-  String getTitle() {
-    return this.title;
-  }
-
-  @override
-  DateTime getComparisonDate() {
-    return this.date.toUtc();
-  }
-
-  @override
-  bool isInRange(DateTime startDate, DateTime endDate) {
-    DateTime start = startDate.toUtc();
-    DateTime end = endDate.toUtc();
-
-    if (end == null) {
-      if (isOnOrAfter(this.date, start)) {
-        return true;
-      }
-      return false;
-    }
-
-    if (start == null) {
-      if (isOnOrBefore(this.date, end)) {
-        return true;
-      }
-      return false;
-    }
-
-    return isOnOrAfter(this.date, start) && isOnOrBefore(this.date, end);
-  }
-}
-
-class Person {
-  String name;
-  String imageUrl;
-  String personInformation;
-
-  Person({
-    this.name,
-    this.imageUrl,
-    this.personInformation,
-  });
-
-  factory Person.fromJson(Map<String, dynamic> parsedJson) {
-    return Person(
-      name: parsedJson['name'],
-      imageUrl: parsedJson['image_url'],
-      personInformation: parsedJson['person_information'],
-    );
-  }
-}
-
-/// From of `https://pub.dartlang.org/packages/flutter_calendar#-readme-tab-` to include events
-class ExpansionCrossFade extends StatelessWidget {
-  final Widget collapsed;
-  final Widget expanded;
-  final bool isExpanded;
-
-  ExpansionCrossFade({this.collapsed, this.expanded, this.isExpanded});
-
-  @override
-  Widget build(BuildContext context) {
-    return new AnimatedCrossFade(
-      firstChild: collapsed,
-      secondChild: expanded,
-      firstCurve: const Interval(0.0, 1.0, curve: Curves.fastOutSlowIn),
-      secondCurve: const Interval(0.0, 1.0, curve: Curves.fastOutSlowIn),
-      sizeCurve: Curves.decelerate,
-      crossFadeState:
-          isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-      duration: const Duration(milliseconds: 300),
-    );
   }
 }

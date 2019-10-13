@@ -2,17 +2,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/Components/WidgetMonthYearBucket.dart';
-import 'package:service_application/Globals/Values.dart';
-import 'package:service_application/Store/Selectors.dart';
-import 'package:service_application/Store/State.dart';
-import 'package:service_application/Utils/DataUtils.dart';
-import 'package:service_application/Utils/WidgetUtils.dart';
+import 'package:community_application/Components/WidgetMonthYearBucket.dart';
+import 'package:community_application/Globals/Values.dart';
+import 'package:community_application/Store/Selectors.dart';
+import 'package:community_application/Store/State.dart';
+import 'package:community_application/Models/DateTimeObject.dart';
+import 'package:community_application/Utils/WidgetUtils.dart';
 
 class FeedPageContainer extends StatelessWidget {
-  final String searchTerm;
+  final String searchValue;
 
-  FeedPageContainer({Key key, this.searchTerm}) : super(key: key);
+  FeedPageContainer({Key key, this.searchValue}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class FeedPageContainer extends StatelessWidget {
       builder: (context, vm) {
         return FeedPage(
           feed: vm.feed,
-          searchTerm: searchTerm,
+          searchValue: searchValue,
         );
       },
     );
@@ -32,9 +32,9 @@ class FeedPageContainer extends StatelessWidget {
 
 class FeedPage extends StatefulWidget {
   final List<DatetimeObject> feed;
-  final String searchTerm;
+  final String searchValue;
 
-  FeedPage({Key key, @required this.feed, this.searchTerm}) : super(key: key);
+  FeedPage({Key key, @required this.feed, this.searchValue}) : super(key: key);
 
   @override
   _FeedPageState createState() => new _FeedPageState();
@@ -44,8 +44,10 @@ class _FeedPageState extends State<FeedPage> {
   @override
   Widget build(BuildContext context) {
     // Get Widgets of DatetimeObjects in monthYear buckets
-    Map<DateTime, List<Widget>> monthYearWidgets =
-        getMonthYearBucketOrder(widget.feed, filterTitleBy: widget.searchTerm);
+    Map<DateTime, List<Widget>> monthYearWidgets = getMonthYearBucketOrder(
+        widget.feed,
+        filterTitleBy: widget.searchValue,
+        dontIncludeFuture: true);
 
     // Get iterable list of month year pairs
     List<DateTime> monthYears = monthYearWidgets.keys.toList();

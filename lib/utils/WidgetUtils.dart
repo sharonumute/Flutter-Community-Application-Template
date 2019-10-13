@@ -1,11 +1,13 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:service_application/Components/EventItemDateBucket.dart';
-import 'package:service_application/Components/SermonItem.dart';
-import 'package:service_application/Globals/Values.dart';
-import 'package:service_application/Utils/CommonUtils.dart';
-import 'package:service_application/Utils/DataUtils.dart';
-import 'package:service_application/Utils/DateUtils.dart';
+import 'package:community_application/Components/EventWidgetDayDateBucket.dart';
+import 'package:community_application/Components/ArticleWidget.dart';
+import 'package:community_application/Globals/Values.dart';
+import 'package:community_application/Utils/CommonUtils.dart';
+import 'package:community_application/Models/Event.dart';
+import 'package:community_application/Models/Article.dart';
+import 'package:community_application/Models/DateTimeObject.dart';
+import 'package:community_application/Utils/DateUtils.dart';
 
 Widget returnCircleWidget(Widget image, {Color color = Colors.transparent}) {
   return new Material(
@@ -40,7 +42,8 @@ Color getRandomColor() {
 
 Map<DateTime, List<Widget>> getMonthYearBucketOrder(
     List<DatetimeObject> dateTimeObjectsToOrder,
-    {String filterTitleBy}) {
+    {String filterTitleBy,
+    bool dontIncludeFuture = false}) {
   List<DatetimeObject> dateTimeObjectsToOrderSorted = dateTimeObjectsToOrder
     ..sort((a, b) => b.compareTo(a))
     ..toList();
@@ -52,6 +55,11 @@ Map<DateTime, List<Widget>> getMonthYearBucketOrder(
   List<DateTime> checkedMonthYearPairs = [];
   for (DatetimeObject item in dateTimeObjectsToOrderSorted) {
     DateTime itemDate = item.getComparisonDate();
+
+    if (dontIncludeFuture && itemDate.isAfter(new DateTime.now().toUtc())) {
+      continue;
+    }
+
     DateTime monthYear = new DateTime.utc(itemDate.year, itemDate.month);
     if (!checkedMonthYearPairs.contains(monthYear)) {
       if (monthYearDateTimeObject[monthYear] == null) {
@@ -94,6 +102,11 @@ Map<DateTime, List<Widget>> getMonthYearBucketOrder(
           currentMonthYearObjectDate.month,
           currentMonthYearObjectDate.day);
 
+      if (dontIncludeFuture &&
+          currentMonthYearObjectDay.isAfter(new DateTime.now().toUtc())) {
+        continue;
+      }
+
       if (!checkedDaysInCurrentMonthYearPair
           .contains(currentMonthYearObjectDay)) {
         List<DatetimeObject> dateTimeObjectThisDay = monthYearObjects
@@ -115,25 +128,26 @@ Map<DateTime, List<Widget>> getMonthYearBucketOrder(
             .toList();
 
         List<Event> eventsInThisDay = [];
-        List<Sermon> sermonsInThisDay = [];
+        List<Article> articlesInThisDay = [];
         if (dateTimeObjectThisDay != null && dateTimeObjectThisDay.isNotEmpty) {
           for (DatetimeObject object in dateTimeObjectThisDay) {
-            if (object.runtimeType == Sermon) {
-              sermonsInThisDay.add(object);
+            if (object.runtimeType == Article) {
+              articlesInThisDay.add(object);
             } else if (object.runtimeType == Event) {
               eventsInThisDay.add(object);
             }
           }
         }
 
-        // Add Sermons in this day as individual sermon widgets
-        for (Sermon sermon in sermonsInThisDay) {
-          widgetsInThisMonthYear.add(new SermonItemContainer(sermon: sermon));
+        // Add Articles in this day as individual article widgets
+        for (Article article in articlesInThisDay) {
+          widgetsInThisMonthYear
+              .add(new ArticleWidgetContainer(article: article));
         }
 
-        // Add Eevnts in this day into a single EventItemDateBucket widget
+        // Add Eevnts in this day into a single EventWidgetDateBucket widget
         if (eventsInThisDay.isNotEmpty) {
-          widgetsInThisMonthYear.add(new EventItemDateBucket(
+          widgetsInThisMonthYear.add(new EventWidgetDateBucket(
               date: currentMonthYearObjectDay, events: eventsInThisDay));
         }
 

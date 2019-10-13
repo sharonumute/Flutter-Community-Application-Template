@@ -1,11 +1,13 @@
 import 'package:meta/meta.dart';
-import "package:service_application/Globals/Themes.dart";
-import 'package:service_application/Utils/DataUtils.dart';
+import "package:community_application/Globals/Themes.dart";
+import 'package:community_application/Models/Event.dart';
+import 'package:community_application/Models/Article.dart';
+import 'package:community_application/Models/DateTimeObject.dart';
 
 @immutable
 class AppState {
   final bool isLoading;
-  final List<Sermon> sermons;
+  final List<Article> articles;
   final List<Event> events;
   final List<DatetimeObject> feed;
   final String currentSelectedCalendarDate;
@@ -13,7 +15,7 @@ class AppState {
 
   AppState(
       {this.isLoading = false,
-      this.sermons = const [],
+      this.articles = const [],
       this.events = const [],
       this.feed = const [],
       this.currentSelectedCalendarDate = "",
@@ -23,7 +25,7 @@ class AppState {
 
   AppState copyWith({
     bool isLoading,
-    List<Sermon> sermons,
+    List<Article> articles,
     List<Event> events,
     List<DatetimeObject> feed,
     String currentSelectedCalendarDate,
@@ -31,7 +33,7 @@ class AppState {
   }) {
     return AppState(
         isLoading: isLoading ?? this.isLoading,
-        sermons: sermons ?? this.sermons,
+        articles: articles ?? this.articles,
         events: events ?? this.events,
         feed: feed ?? this.feed,
         currentSelectedCalendarDate:
@@ -42,7 +44,7 @@ class AppState {
   @override
   int get hashCode =>
       isLoading.hashCode ^
-      sermons.hashCode ^
+      articles.hashCode ^
       events.hashCode ^
       feed.hashCode ^
       currentSelectedCalendarDate.hashCode ^
@@ -54,7 +56,7 @@ class AppState {
       other is AppState &&
           runtimeType == other.runtimeType &&
           isLoading == other.isLoading &&
-          sermons == other.sermons &&
+          articles == other.articles &&
           events == other.events &&
           feed == other.feed &&
           currentSelectedCalendarDate == other.currentSelectedCalendarDate &&
@@ -62,6 +64,6 @@ class AppState {
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, sermons: $sermons, events: $events, feed: $feed, currentSelectedCalendarDate: $currentSelectedCalendarDate, currentTheme: $currentTheme}';
+    return 'AppState{isLoading: $isLoading, articles: $articles, events: $events, feed: $feed, currentSelectedCalendarDate: $currentSelectedCalendarDate, currentTheme: $currentTheme}';
   }
 }

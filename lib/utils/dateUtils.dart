@@ -101,3 +101,10 @@ DateTime getMonthEnd(int year, int month) {
   int nextMonth = month == 12 ? 1 : month + 1;
   return new DateTime.utc(year, nextMonth, 0);
 }
+
+DateTime minDate(DateTime first, DateTime second) {
+  if (first.isBefore(second)) {
+    return first;
+  }
+  return second;
+}

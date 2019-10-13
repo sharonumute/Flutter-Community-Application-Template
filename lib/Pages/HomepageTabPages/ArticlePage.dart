@@ -2,17 +2,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/Components/WidgetMonthYearBucket.dart';
-import 'package:service_application/Globals/Values.dart';
-import 'package:service_application/Store/Selectors.dart';
-import 'package:service_application/Store/State.dart';
-import 'package:service_application/Utils/DataUtils.dart';
-import 'package:service_application/Utils/WidgetUtils.dart';
+import 'package:community_application/Components/WidgetMonthYearBucket.dart';
+import 'package:community_application/Globals/Values.dart';
+import 'package:community_application/Store/Selectors.dart';
+import 'package:community_application/Store/State.dart';
+import 'package:community_application/Models/Article.dart';
+import 'package:community_application/Utils/WidgetUtils.dart';
 
-class SermonPageContainer extends StatelessWidget {
-  final String searchTerm;
+class ArticlePageContainer extends StatelessWidget {
+  final String searchValue;
 
-  SermonPageContainer({Key key, this.searchTerm}) : super(key: key);
+  ArticlePageContainer({Key key, this.searchValue}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,33 +21,33 @@ class SermonPageContainer extends StatelessWidget {
         return _ViewModel.from(store);
       },
       builder: (context, vm) {
-        return SermonPage(
-          sermons: vm.sermons,
-          searchTerm: searchTerm,
+        return ArticlePage(
+          articles: vm.articles,
+          searchValue: searchValue,
         );
       },
     );
   }
 }
 
-class SermonPage extends StatefulWidget {
-  final List<Sermon> sermons;
-  final String searchTerm;
+class ArticlePage extends StatefulWidget {
+  final List<Article> articles;
+  final String searchValue;
 
-  SermonPage({Key key, @required this.sermons, this.searchTerm})
+  ArticlePage({Key key, @required this.articles, this.searchValue})
       : super(key: key);
 
   @override
-  _SermonPageState createState() => new _SermonPageState();
+  _ArticlePageState createState() => new _ArticlePageState();
 }
 
-class _SermonPageState extends State<SermonPage> {
+class _ArticlePageState extends State<ArticlePage> {
   @override
   Widget build(BuildContext context) {
-    // Get Widgets of Sermons in monthYear buckets
+    // Get Widgets of Articles in monthYear buckets
     Map<DateTime, List<Widget>> monthYearWidgets = getMonthYearBucketOrder(
-        widget.sermons,
-        filterTitleBy: widget.searchTerm);
+        widget.articles,
+        filterTitleBy: widget.searchValue);
 
     // Get iterable list of month year pairs
     List<DateTime> monthYears = monthYearWidgets.keys.toList();
@@ -67,17 +67,17 @@ class _SermonPageState extends State<SermonPage> {
 }
 
 class _ViewModel {
-  final List<Sermon> sermons;
+  final List<Article> articles;
 
   _ViewModel({
-    @required this.sermons,
+    @required this.articles,
   });
 
   factory _ViewModel.from(Store<AppState> store) {
-    final sermons = sermonsSelector(store.state);
+    final articles = articlesSelector(store.state);
 
     return _ViewModel(
-      sermons: sermons,
+      articles: articles,
     );
   }
 }

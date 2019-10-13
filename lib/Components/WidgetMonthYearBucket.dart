@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:service_application/Utils/DateUtils.dart';
-import 'package:service_application/Utils/WidgetUtils.dart';
+import 'package:community_application/Utils/DateUtils.dart';
+import 'package:community_application/Utils/WidgetUtils.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
+/// Organize all events into buckets for each month-year pair
 class WidgetMonthYearBucket extends StatelessWidget {
   final List<Widget> items;
   final DateTime date;

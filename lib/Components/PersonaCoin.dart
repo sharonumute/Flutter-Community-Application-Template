@@ -1,10 +1,11 @@
+import 'package:community_application/Strings/WidgetTexts.dart';
 import 'package:flutter/material.dart';
-import 'package:service_application/Components/CustomImage.dart';
-import 'package:service_application/Globals/Values.dart';
-import "package:service_application/Utils/DataUtils.dart";
-import 'package:service_application/Utils/WidgetUtils.dart';
+import 'package:community_application/Components/ImageWidget.dart';
+import 'package:community_application/Globals/Values.dart';
+import 'package:community_application/Utils/WidgetUtils.dart';
+import 'package:community_application/Models/Person.dart';
 
-/// Create a circular persona object that expands to show
+/// Create a circular persona avatar object that expands to show
 /// Full persona information on click
 ///
 /// `person`: Person object containing all necessary details
@@ -28,7 +29,7 @@ class PersonaCoin extends StatelessWidget {
               child: new Column(
                 children: <Widget>[
                   returnCircleWidget(
-                    new CustomImage(
+                    new ImageWidget(
                       imageUrl: person.imageUrl,
                       height: 80,
                       width: 80,
@@ -54,7 +55,7 @@ class PersonaCoin extends StatelessWidget {
             ),
             actions: <Widget>[
               new FlatButton(
-                child: new Text('OK'),
+                child: new Text(OK),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -68,7 +69,7 @@ class PersonaCoin extends StatelessWidget {
     return new Container(
       margin: const EdgeInsets.only(right: marginForAvatarImages),
       child: returnCircleWidget(
-        new CustomImage(
+        new ImageWidget(
           imageUrl: person.imageUrl,
           height: diameter,
           width: diameter,

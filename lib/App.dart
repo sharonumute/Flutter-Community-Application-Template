@@ -1,19 +1,20 @@
+import 'package:community_application/Strings/WidgetTexts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:service_application/Store/Selectors.dart';
-import 'package:service_application/Store/State.dart';
-import 'package:service_application/Pages/HomepageTabPages/FeedPage.dart';
-import 'package:service_application/Pages/HomepageTabPages/CalendarPage.dart';
-import 'package:service_application/Pages/HomepageTabPages/SermonPage.dart';
-import 'package:service_application/Pages/Routes.dart';
-import 'package:service_application/Store/Actions.dart';
-import 'package:service_application/Globals/Themes.dart';
-import 'package:service_application/Globals/Values.dart';
-import 'package:service_application/Utils/PreferenceUtils.dart';
-import 'package:service_application/Strings/AppDetails.dart';
-import 'package:service_application/Utils/WidgetUtils.dart';
+import 'package:community_application/Store/Selectors.dart';
+import 'package:community_application/Store/State.dart';
+import 'package:community_application/Pages/HomepageTabPages/FeedPage.dart';
+import 'package:community_application/Pages/HomepageTabPages/CalendarPage.dart';
+import 'package:community_application/Pages/HomepageTabPages/ArticlePage.dart';
+import 'package:community_application/Pages/Routes.dart';
+import 'package:community_application/Store/Actions.dart';
+import 'package:community_application/Globals/Themes.dart';
+import 'package:community_application/Globals/Values.dart';
+import 'package:community_application/Utils/PreferenceUtils.dart';
+import 'package:community_application/Strings/AppDetails.dart';
+import 'package:community_application/Utils/WidgetUtils.dart';
 
 class AppContainer extends StatelessWidget {
   AppContainer({Key key}) : super(key: key);
@@ -58,25 +59,25 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   // controls the text label we use as a search bar
   TextEditingController _filter = new TextEditingController();
   TabController _tabController;
-  String _searchTerm = "";
+  String _searchValue = "";
   Icon _searchIcon = new Icon(Icons.search);
-  Widget _appBarTitle = new Text(APP_TITLE_BAR);
+  Widget _appBarTitle = new Text(COMMUNITY_NAME);
 
   @override
   void initState() {
     super.initState();
     widget.onAppStarted();
     _tabController = new TabController(length: 3, vsync: this, initialIndex: 0);
-    _searchTerm = "";
+    _searchValue = "";
 
     _filter.addListener(() {
       if (_filter.text.isEmpty) {
         setState(() {
-          _searchTerm = "";
+          _searchValue = "";
         });
       } else {
         setState(() {
-          _searchTerm = _filter.text;
+          _searchValue = _filter.text;
         });
       }
     });
@@ -100,38 +101,39 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         keyboardAppearance: Theme.of(context).brightness,
         cursorColor: normalBlackText,
         decoration: new InputDecoration(
-            prefixIcon: new Icon(
-              Icons.search,
-              color: normalBlackText,
-            ),
-            hintText: 'Search',
-            filled: true,
-            fillColor: dafaultWhite,
-            labelStyle: TextStyle(
-              color: normalBlackText,
-            ),
-            hintStyle: TextStyle(
-              color: helperBlackText,
-            ),
-            helperStyle: TextStyle(
-              color: helperBlackText,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(500)),
-              gapPadding: 0,
-            ),
-            contentPadding: const EdgeInsets.all(0)),
+          prefixIcon: new Icon(
+            Icons.search,
+            color: normalBlackText,
+          ),
+          hintText: SEARCH_HINT,
+          filled: true,
+          fillColor: dafaultWhite,
+          labelStyle: TextStyle(
+            color: normalBlackText,
+          ),
+          hintStyle: TextStyle(
+            color: helperBlackText,
+          ),
+          helperStyle: TextStyle(
+            color: helperBlackText,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(500)),
+            gapPadding: 0,
+          ),
+          contentPadding: const EdgeInsets.all(0),
+        ),
       ),
     );
 
-    void _searchPressed() {
+    void _onSearch() {
       setState(() {
         if (this._searchIcon.icon == Icons.search) {
           this._searchIcon = new Icon(Icons.close);
           this._appBarTitle = searchBar;
         } else {
           this._searchIcon = new Icon(Icons.search);
-          this._appBarTitle = new Text(APP_TITLE_BAR);
+          this._appBarTitle = new Text(COMMUNITY_NAME);
           _filter.clear();
         }
       });
@@ -145,12 +147,12 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     }
 
     Map<Widget, Widget> homepageTabs = {
-      new Tab(icon: Icon(Icons.rss_feed), text: "Feed"):
-          new FeedPageContainer(searchTerm: _searchTerm),
-      new Tab(icon: Icon(Icons.event), text: "Calendar"):
-          new CalendarPageContainer(searchTerm: _searchTerm),
-      new Tab(icon: Icon(Icons.local_library), text: "Sermons"):
-          new SermonPageContainer(searchTerm: _searchTerm),
+      new Tab(icon: Icon(Icons.rss_feed), text: FEED_TAB):
+          new FeedPageContainer(searchValue: _searchValue),
+      new Tab(icon: Icon(Icons.event), text: CALENDAR_TAB):
+          new CalendarPageContainer(searchValue: _searchValue),
+      new Tab(icon: Icon(Icons.local_library), text: ARTICLE_TAB):
+          new ArticlePageContainer(searchValue: _searchValue),
     };
 
     Widget drawerHeader = UserAccountsDrawerHeader(
@@ -181,7 +183,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                 actions: <Widget>[
                   IconButton(
                     icon: _searchIcon,
-                    onPressed: _searchPressed,
+                    onPressed: _onSearch,
                     tooltip: MaterialLocalizations.of(context).searchFieldLabel,
                   ),
                 ],
@@ -259,7 +261,7 @@ class _ViewModel {
         isLoading: store.state.isLoading,
         onAppStarted: () {
           store.dispatch(new FetchEventsAction(store));
-          store.dispatch(new FetchSermonsAction(store));
+          store.dispatch(new FetchArticlesAction(store));
           store.dispatch(new SetCurrentSelectedCalendarDateAction(
               (new DateTime.now()).toString()));
           getCurrentTheme().then((currentSavedTheme) {

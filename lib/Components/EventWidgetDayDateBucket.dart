@@ -1,16 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:service_application/Globals/Values.dart';
-import 'package:service_application/Utils/DataUtils.dart';
-import 'package:service_application/Components/EventItem.dart';
-import 'package:service_application/Utils/DateUtils.dart';
-import 'package:service_application/Utils/WidgetUtils.dart';
+import 'package:community_application/Globals/Values.dart';
+import 'package:community_application/Models/Event.dart';
+import 'package:community_application/Models/DateTimeObject.dart';
+import 'package:community_application/Components/EventWidget.dart';
+import 'package:community_application/Utils/DateUtils.dart';
+import 'package:community_application/Utils/WidgetUtils.dart';
 
-class EventItemDateBucket extends StatelessWidget {
+/// Organize all events of a specific day into a bucket of events for that day
+class EventWidgetDateBucket extends StatelessWidget {
   final List<Event> events;
   final DateTime date;
 
-  EventItemDateBucket({
+  EventWidgetDateBucket({
     Key key,
     @required this.events,
     @required this.date,
@@ -27,7 +29,7 @@ class EventItemDateBucket extends StatelessWidget {
         new Row(
           children: <Widget>[
             new Expanded(
-              child: new EventItemContainer(event: event),
+              child: new EventWidgetContainer(event: event),
             ),
           ],
         ),

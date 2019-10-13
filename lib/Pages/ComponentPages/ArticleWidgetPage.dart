@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:service_application/Components/CustomText.dart';
-import 'package:service_application/Components/PersonaCoin.dart';
-import 'package:service_application/Globals/Values.dart';
-import 'package:service_application/Utils/DataUtils.dart';
-import 'package:service_application/Utils/DateUtils.dart';
-import 'package:service_application/Utils/WidgetUtils.dart';
+import 'package:community_application/Components/TextWidget.dart';
+import 'package:community_application/Components/PersonaCoin.dart';
+import 'package:community_application/Globals/Values.dart';
+import 'package:community_application/Models/Person.dart';
+import 'package:community_application/Utils/DateUtils.dart';
+import 'package:community_application/Utils/WidgetUtils.dart';
 
-class SermonItemPage extends StatelessWidget {
-  SermonItemPage({
+/// Page of article content, when an article widget is clicked
+class ArticleWidgetPage extends StatelessWidget {
+  ArticleWidgetPage({
     Key key,
     this.title,
     this.date,
-    this.preacher,
-    this.sermon,
+    this.author,
+    this.article,
   }) : super(key: key);
 
   final String title;
   final DateTime date;
-  final Person preacher;
-  final String sermon;
+  final Person author;
+  final String article;
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +30,11 @@ class SermonItemPage extends StatelessWidget {
         new Row(
           children: <Widget>[
             new PersonaCoin(
-              person: preacher,
+              person: author,
               diameter: 20.0,
             ),
             new Text(
-              preacher.name,
+              author.name,
               style: Theme.of(context).textTheme.body2,
             ),
           ],
@@ -61,8 +62,8 @@ class SermonItemPage extends StatelessWidget {
           sixPointPadding,
           personaAndDateRow,
           twelvePointPadding,
-          new CustomText(
-            text: sermon,
+          new TextWidget(
+            text: article,
             expanded: true,
             textStyle: Theme.of(context).textTheme.body2,
           ),

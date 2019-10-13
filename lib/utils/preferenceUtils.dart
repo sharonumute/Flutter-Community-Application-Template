@@ -1,5 +1,5 @@
 import 'dart:async';
-import "package:service_application/Globals/Themes.dart";
+import "package:community_application/Globals/Themes.dart";
 import 'package:shared_preferences/shared_preferences.dart';
 
 const THEME_KEY = "SERVICE_APP_USER_THEME";

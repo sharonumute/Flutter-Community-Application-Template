@@ -1,8 +1,8 @@
-bool ifEmptyOrNull(String text) {
+bool ifObjectIsNotNull(Object o) => o != null;
+
+bool ifStringEmptyOrNull(String text) {
   if (text == null || text.isEmpty) {
     return true;
   }
   return false;
 }
-
-bool ifObjectIsNotNull(Object o) => o != null;

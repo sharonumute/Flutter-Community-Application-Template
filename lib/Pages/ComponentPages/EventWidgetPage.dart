@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:service_application/Components/CustomImage.dart';
-import 'package:service_application/Components/CustomText.dart';
-import 'package:service_application/Globals/Values.dart';
-import 'package:service_application/Utils/CommonUtils.dart';
-import 'package:service_application/Utils/DataUtils.dart';
-import 'package:service_application/Utils/DateUtils.dart';
-import 'package:service_application/Utils/WidgetUtils.dart';
+import 'package:community_application/Components/ImageWidget.dart';
+import 'package:community_application/Components/TextWidget.dart';
+import 'package:community_application/Globals/Values.dart';
+import 'package:community_application/Utils/CommonUtils.dart';
+import 'package:community_application/Models/Event.dart';
+import 'package:community_application/Utils/DateUtils.dart';
+import 'package:community_application/Utils/WidgetUtils.dart';
 
-class EventItemPage extends StatelessWidget {
-  EventItemPage({
+/// Page of event content, when an event widget is clicked
+class EventWidgetPage extends StatelessWidget {
+  EventWidgetPage({
     Key key,
     this.event,
   }) : super(key: key);
@@ -40,7 +41,7 @@ class EventItemPage extends StatelessWidget {
               floating: false,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
-                background: CustomImage(
+                background: ImageWidget(
                   imageUrl: event.imageUrl,
                   height: 150,
                   tint: true,
@@ -64,7 +65,7 @@ class EventItemPage extends StatelessWidget {
               children: dateAndTimeRow,
             ),
             sixPointPadding,
-            new CustomText(
+            new TextWidget(
               text: event.details,
               expanded: true,
               textStyle: Theme.of(context).textTheme.body2,
